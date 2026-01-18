@@ -1,0 +1,85 @@
+import type { StructureResolver } from 'sanity/structure'
+import { CogIcon, MenuIcon, DocumentsIcon, RocketIcon, UsersIcon, CommentIcon, HelpCircleIcon, LinkIcon } from '@sanity/icons'
+
+// Singleton document IDs
+const SINGLETON_IDS = ['siteSettings', 'navigation']
+
+/**
+ * Custom Studio structure with organized sections and singletons.
+ * Singletons are enforced here via fixed document IDs.
+ * 
+ * @see https://www.sanity.io/docs/structure-builder-cheat-sheet
+ */
+export const structure: StructureResolver = (S) =>
+  S.list()
+    .title('Content')
+    .items([
+      // Content Section
+      S.listItem()
+        .title('Pages')
+        .icon(DocumentsIcon)
+        .child(S.documentTypeList('page').title('Pages')),
+
+      S.listItem()
+        .title('Services')
+        .icon(RocketIcon)
+        .child(S.documentTypeList('service').title('Services')),
+
+      S.listItem()
+        .title('Team Members')
+        .icon(UsersIcon)
+        .child(S.documentTypeList('teamMember').title('Team Members')),
+
+      S.listItem()
+        .title('Testimonials')
+        .icon(CommentIcon)
+        .child(S.documentTypeList('testimonial').title('Testimonials')),
+
+      S.listItem()
+        .title('FAQs')
+        .icon(HelpCircleIcon)
+        .child(S.documentTypeList('faq').title('FAQs')),
+
+      S.divider(),
+
+      // Singletons Section
+      S.listItem()
+        .title('Site Settings')
+        .icon(CogIcon)
+        .child(
+          S.document()
+            .schemaType('siteSettings')
+            .documentId('siteSettings')
+            .title('Site Settings')
+        ),
+
+      S.listItem()
+        .title('Navigation')
+        .icon(MenuIcon)
+        .child(
+          S.document()
+            .schemaType('navigation')
+            .documentId('navigation')
+            .title('Navigation')
+        ),
+
+      S.divider(),
+
+      // Utilities Section
+      S.listItem()
+        .title('Redirects')
+        .icon(LinkIcon)
+        .child(S.documentTypeList('redirect').title('Redirects')),
+
+      // Filter out singletons and already-listed types from the default list
+      ...S.documentTypeListItems().filter(
+        (listItem) => {
+          const id = listItem.getId()
+          return (
+            id &&
+            !SINGLETON_IDS.includes(id) &&
+            !['page', 'service', 'teamMember', 'testimonial', 'faq', 'redirect'].includes(id)
+          )
+        }
+      ),
+    ])

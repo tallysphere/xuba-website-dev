@@ -1,0 +1,358 @@
+---
+alwaysApply: true
+---
+
+# Xuba Website Project Rules
+
+This document contains **strict rules** that MUST be followed for the Xuba website project. These rules ensure consistency, type safety, and adherence to Next.js 16 + React 19 + Sanity best practices.
+
+## 1. TypeScript Strict Type Safety
+
+### NEVER Use These Types
+- ❌ `any` - Always use specific types or generics
+- ❌ `unknown` without narrowing - Must narrow before use
+- ❌ Implicit `null` returns - Use explicit return types
+- ❌ Non-null assertions (`!`) without justification
+
+### ALWAYS Do This
+- ✅ Define explicit return types for all functions
+- ✅ Use `satisfies` operator for type checking object literals
+- ✅ Use discriminated unions over boolean flags
+- ✅ Use `const` assertions for literal types
+- ✅ Type all function parameters explicitly
+
+```typescript
+// ❌ Bad
+function getData(id) {
+  return fetch(`/api/${id}`).then(r => r.json())
+}
+
+// ✅ Good
+async function getData(id: string): Promise<PageData> {
+  const response = await fetch(`/api/${id}`)
+  return response.json() as PageData
+}
+```
+
+### Null Handling
+- Use optional chaining (`?.`) for potentially undefined values
+- Use nullish coalescing (`??`) for default values
+- Prefer `undefined` over `null` in new code
+- Use `NonNullable<T>` utility type when needed
+
+## 2. Next.js 16 + React 19 Rules
+
+### Server Components (Default)
+- All components are Server Components by default
+- Only add `'use client'` when you NEED client-side features:
+  - `useState`, `useEffect`, `useContext`
+  - Event handlers (`onClick`, `onChange`)
+  - Browser APIs (`localStorage`, `window`)
+
+### NEVER Do This in Next.js 16
+- ❌ `export const dynamic = 'force-static'` (incompatible with cacheComponents)
+- ❌ `export const fetchCache` (raises build error)
+- ❌ `export const revalidate` (raises build error)
+- ❌ `export const dynamicParams` (raises build error)
+- ❌ Empty `await headers()` or `await cookies()` just to mark as dynamic
+- ❌ `loading.tsx` for PPR shell generation (deprecated)
+
+### ALWAYS Do This
+- ✅ `await params` and `await searchParams` (they are Promises)
+- ✅ Use `await connection()` to mark component as dynamic
+- ✅ Wrap client components in `<Suspense>` with fallback
+- ✅ Use Server Actions (`'use server'`) for mutations
+
+```typescript
+// ❌ Bad - params is a Promise in Next.js 15+
+export default function Page({ params }: { params: { slug: string } }) {
+  return <div>{params.slug}</div>
+}
+
+// ✅ Good
+export default async function Page({ 
+  params 
+}: { 
+  params: Promise<{ slug: string }> 
+}) {
+  const { slug } = await params
+  return <div>{slug}</div>
+}
+```
+
+### Minimize React Hooks
+- ❌ Avoid `useEffect` - Prefer Server Components for data fetching
+- ❌ Avoid `useMemo` - React Compiler handles optimization
+- ❌ Avoid `useCallback` - React Compiler handles optimization
+- ✅ Use hooks ONLY when necessary for genuine client-side interactivity
+
+```typescript
+// ❌ Bad - Unnecessary useEffect for data fetching
+'use client'
+function Posts() {
+  const [posts, setPosts] = useState([])
+  useEffect(() => {
+    fetch('/api/posts').then(r => r.json()).then(setPosts)
+  }, [])
+  return <PostList posts={posts} />
+}
+
+// ✅ Good - Server Component
+async function Posts() {
+  const posts = await getPosts()
+  return <PostList posts={posts} />
+}
+```
+
+## 3. Sanity Schema Rules
+
+### ALWAYS Use Helper Functions
+```typescript
+import { defineType, defineField, defineArrayMember } from 'sanity'
+
+// ✅ ALWAYS use these - never raw objects
+defineType({ ... })
+defineField({ ... })
+defineArrayMember({ ... })
+```
+
+### Model Data, Not Presentation
+- ❌ Bad: `bigHeroText`, `redButton`, `threeColumnRow`
+- ✅ Good: `heroStatement`, `callToAction`, `featuresSection`
+
+### Field Naming
+- Use camelCase for field names
+- Use descriptive names with context
+- Avoid abbreviations unless universally understood
+
+### References vs Objects
+| Use References | Use Objects |
+|----------------|-------------|
+| Reusable content (team members, services) | Page-specific content (SEO, hero) |
+| Needs independent editing | Doesn't make sense alone |
+| Shared across documents | Copied, not linked |
+
+### Icons
+- ALWAYS assign icons from `@sanity/icons` to document and object types
+- Improves Studio UX significantly
+
+### Validation
+- ALWAYS add `validation: (rule) => rule.required()` for essential fields
+- Use `slug` type with source option for URL slugs
+- Add custom validation for business rules
+
+## 4. GROQ Query Rules
+
+### ALWAYS Use defineQuery
+```typescript
+import { defineQuery } from 'next-sanity'
+
+// ✅ Enables TypeGen - ALWAYS do this
+export const PAGE_QUERY = defineQuery(`
+  *[_type == "page" && slug.current == $slug][0]{
+    _id,
+    title,
+    "slug": slug.current
+  }
+`)
+
+// ❌ Never use raw strings
+const query = `*[_type == "page"]`
+```
+
+### Query Structure Best Practices
+1. **Filter first** - `*[_type == "page"]`
+2. **Order explicitly** - `| order(publishedAt desc)`
+3. **Slice for pagination** - `[0...10]`
+4. **Project only needed fields** - `{ _id, title, slug }`
+
+### Reference Expansion
+```groq
+// ❌ Bad - Returns only _ref
+*[_type == "page"]{ author }
+
+// ✅ Good - Expands reference
+*[_type == "page"]{ author->{ name, image } }
+
+// ✅ Array of references
+*[_type == "page"]{ categories[]->{ title, slug } }
+```
+
+### Use coalesce() for Fallbacks
+```groq
+*[_type == "page"][0]{
+  "title": coalesce(seo.title, title, "Untitled"),
+  "description": coalesce(seo.description, excerpt, "")
+}
+```
+
+### Query File Organization
+- ALL queries go in `src/sanity/lib/queries.ts`
+- Export each query as a named constant
+- Use SCREAMING_SNAKE_CASE for query names
+- Group related queries together
+
+## 5. Sanity + Next.js Integration Rules
+
+### Data Fetching with sanityFetch
+```typescript
+import { sanityFetch } from '@/sanity/lib/live'
+
+// ✅ Always use sanityFetch from live.ts
+const { data } = await sanityFetch({ query: PAGE_QUERY, params: { slug } })
+```
+
+### Visual Editing (Stega)
+```typescript
+import { stegaClean } from '@sanity/client/stega'
+
+// ❌ Bad - Stega characters break comparisons
+if (align === 'center') { ... }
+
+// ✅ Good - Clean before comparing
+if (stegaClean(align) === 'center') { ... }
+```
+
+### Metadata / SEO - Critical
+```typescript
+// ✅ ALWAYS set stega: false for metadata
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { data } = await sanityFetch({
+    query: SEO_QUERY,
+    params: await params,
+    stega: false // 👈 CRITICAL - Stega in <title> destroys SEO
+  })
+  return { title: data?.title }
+}
+```
+
+### Static Params
+```typescript
+export async function generateStaticParams() {
+  const { data } = await sanityFetch({
+    query: SLUGS_QUERY,
+    perspective: 'published', // 👈 No drafts
+    stega: false // 👈 Clean values
+  })
+  return data
+}
+```
+
+### React Keys - ALWAYS Use _key
+```typescript
+// ❌ Bad - Breaks Visual Editing
+{items.map((item, i) => <Component key={i} {...item} />)}
+
+// ✅ Good - Use Sanity's _key
+{items.map((item) => <Component key={item._key} {...item} />)}
+```
+
+## 6. File & Folder Structure
+
+### Naming Conventions
+- **Files**: kebab-case (`hero-section.tsx`, `page-query.ts`)
+- **Components**: PascalCase (`HeroSection`, `PageBuilder`)
+- **Functions**: camelCase (`getPageData`, `formatDate`)
+- **Constants**: SCREAMING_SNAKE_CASE (`PAGE_QUERY`, `API_VERSION`)
+
+### Sanity Schema Structure
+```
+src/sanity/schemaTypes/
+├── index.ts              # Exports all types
+├── documents/            # Document types (page, service, etc.)
+├── objects/              # Reusable objects (seo, link, etc.)
+├── blocks/               # Page builder blocks (hero, features, etc.)
+└── shared/               # Shared field definitions
+```
+
+### Component Structure
+```
+src/components/
+├── ui/                   # Base UI components (Button, Card)
+├── blocks/               # Page builder block components
+├── layout/               # Layout components (Header, Footer)
+└── [feature]/            # Feature-specific components
+```
+
+## 7. Code Style
+
+### Imports Order
+1. React/Next.js imports
+2. Third-party imports
+3. Internal imports (aliases)
+4. Relative imports
+5. Type imports
+
+### Export Patterns
+- Prefer named exports over default exports
+- Exception: Page components use default export (Next.js convention)
+
+### Comments
+- Use JSDoc for public functions
+- Avoid obvious comments
+- Document "why", not "what"
+
+## 8. Error Handling
+
+### Server Components
+```typescript
+import { notFound } from 'next/navigation'
+
+export default async function Page({ params }: Props) {
+  const { data } = await sanityFetch({ query: PAGE_QUERY, params: await params })
+  
+  if (!data) {
+    notFound() // 👈 Use Next.js notFound()
+  }
+  
+  return <PageContent data={data} />
+}
+```
+
+### Guard Clauses
+- Handle errors at the beginning of functions
+- Use early returns for error conditions
+- Place happy path last
+
+## 9. Performance Rules
+
+### Images
+- ALWAYS use `next/image` component
+- Provide width and height or use fill
+- Use Sanity's image URL builder for transformations
+
+### Code Splitting
+- Use `dynamic()` for heavy components not needed immediately
+- Wrap in Suspense with meaningful fallback
+
+### Fetching
+- Fetch data in Server Components
+- Use `Promise.all()` for parallel fetches
+- Cache appropriately with Sanity's Live Content API
+
+## 10. Security
+
+### Environment Variables
+- Server-only secrets: No prefix (e.g., `SANITY_API_READ_TOKEN`)
+- Public variables: `NEXT_PUBLIC_` prefix
+- NEVER expose tokens in client bundles
+
+### Input Validation
+- Validate all user inputs with Zod
+- Sanitize before database operations
+- Use parameterized queries (GROQ params)
+
+---
+
+## Quick Reference
+
+| Rule | Do | Don't |
+|------|-----|-------|
+| Types | Explicit types everywhere | `any`, unnarrowed `unknown` |
+| Data Fetching | Server Components | `useEffect` for fetching |
+| Queries | `defineQuery()` | Raw GROQ strings |
+| React Keys | `item._key` | Array index |
+| Metadata | `stega: false` | Stega in `<head>` |
+| Params | `await params` | Sync params access |
+| Schemas | `defineType/Field/ArrayMember` | Raw objects |
+| Hooks | Only when necessary | `useEffect`, `useMemo` everywhere |

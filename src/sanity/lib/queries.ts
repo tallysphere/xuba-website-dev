@@ -1,0 +1,359 @@
+import { defineQuery } from 'next-sanity'
+
+// =============================================================================
+// Site Settings & Navigation Queries
+// =============================================================================
+
+/**
+ * Fetches global site settings.
+ * Used in layout for site name, logo, contact info, and default SEO.
+ */
+export const SITE_SETTINGS_QUERY = defineQuery(`
+  *[_type == "siteSettings"][0]{
+    siteName,
+    logo,
+    favicon,
+    "defaultSeo": {
+      "title": coalesce(defaultSeo.title, siteName),
+      "description": defaultSeo.description,
+      "image": defaultSeo.image,
+      "noIndex": defaultSeo.noIndex == true
+    },
+    contact {
+      phone,
+      email,
+      address,
+      businessHours
+    },
+    socialLinks[] {
+      _key,
+      platform,
+      url
+    },
+    analytics {
+      googleAnalyticsId,
+      googleTagManagerId
+    }
+  }
+`)
+
+/**
+ * Fetches site navigation for header and footer.
+ */
+export const NAVIGATION_QUERY = defineQuery(`
+  *[_type == "navigation"][0]{
+    mainNav[] {
+      _key,
+      label,
+      "link": link {
+        linkType,
+        externalUrl,
+        openInNewTab,
+        "internalHref": internalLink->slug.current
+      },
+      children[] {
+        _key,
+        label,
+        "link": link {
+          linkType,
+          externalUrl,
+          openInNewTab,
+          "internalHref": internalLink->slug.current
+        }
+      }
+    },
+    ctaButton {
+      label,
+      "link": link {
+        linkType,
+        externalUrl,
+        openInNewTab,
+        "internalHref": internalLink->slug.current
+      }
+    },
+    footerColumns[] {
+      _key,
+      title,
+      links[] {
+        _key,
+        label,
+        linkType,
+        externalUrl,
+        openInNewTab,
+        "internalHref": internalLink->slug.current
+      }
+    },
+    legalLinks[] {
+      _key,
+      label,
+      linkType,
+      externalUrl,
+      openInNewTab,
+      "internalHref": internalLink->slug.current
+    }
+  }
+`)
+
+// =============================================================================
+// Page Queries
+// =============================================================================
+
+/**
+ * Fetches a page by slug with expanded page builder content.
+ */
+export const PAGE_QUERY = defineQuery(`
+  *[_type == "page" && slug.current == $slug][0]{
+    _id,
+    _type,
+    title,
+    "slug": slug.current,
+    "seo": {
+      "title": coalesce(seo.title, title),
+      "description": coalesce(seo.description, ""),
+      "image": seo.image,
+      "noIndex": seo.noIndex == true,
+      "canonicalUrl": seo.canonicalUrl
+    },
+    pageBuilder[] {
+      _key,
+      _type,
+      ...,
+      _type == "servicesGrid" => {
+        ...,
+        services[]-> {
+          _id,
+          title,
+          "slug": slug.current,
+          shortDescription,
+          icon,
+          featuredImage
+        }
+      },
+      _type == "teamGrid" => {
+        ...,
+        teamMembers[]-> {
+          _id,
+          name,
+          "slug": slug.current,
+          role,
+          image,
+          location,
+          socialLinks
+        }
+      },
+      _type == "faqSection" => {
+        ...,
+        faqs[]-> {
+          _id,
+          question,
+          answer,
+          category
+        }
+      }
+    }
+  }
+`)
+
+/**
+ * Fetches all page slugs for static generation.
+ */
+export const PAGE_SLUGS_QUERY = defineQuery(`
+  *[_type == "page" && defined(slug.current)]{
+    "slug": slug.current
+  }
+`)
+
+// =============================================================================
+// Service Queries
+// =============================================================================
+
+/**
+ * Fetches all services for listing page.
+ */
+export const SERVICES_QUERY = defineQuery(`
+  *[_type == "service"] | order(order asc, title asc) {
+    _id,
+    title,
+    "slug": slug.current,
+    shortDescription,
+    icon,
+    featuredImage
+  }
+`)
+
+/**
+ * Fetches a single service by slug with full details.
+ */
+export const SERVICE_QUERY = defineQuery(`
+  *[_type == "service" && slug.current == $slug][0]{
+    _id,
+    _type,
+    title,
+    "slug": slug.current,
+    shortDescription,
+    icon,
+    featuredImage,
+    features[] {
+      _key,
+      title,
+      description,
+      icon
+    },
+    body,
+    relatedServices[]-> {
+      _id,
+      title,
+      "slug": slug.current,
+      shortDescription,
+      icon
+    },
+    "seo": {
+      "title": coalesce(seo.title, title),
+      "description": coalesce(seo.description, shortDescription),
+      "image": coalesce(seo.image, featuredImage),
+      "noIndex": seo.noIndex == true,
+      "canonicalUrl": seo.canonicalUrl
+    }
+  }
+`)
+
+/**
+ * Fetches all service slugs for static generation.
+ */
+export const SERVICE_SLUGS_QUERY = defineQuery(`
+  *[_type == "service" && defined(slug.current)]{
+    "slug": slug.current
+  }
+`)
+
+// =============================================================================
+// Team Member Queries
+// =============================================================================
+
+/**
+ * Fetches all active team members.
+ */
+export const TEAM_MEMBERS_QUERY = defineQuery(`
+  *[_type == "teamMember" && isActive == true] | order(order asc, name asc) {
+    _id,
+    name,
+    "slug": slug.current,
+    role,
+    image,
+    bio,
+    location,
+    email,
+    socialLinks[] {
+      _key,
+      platform,
+      url
+    }
+  }
+`)
+
+/**
+ * Fetches a single team member by slug.
+ */
+export const TEAM_MEMBER_QUERY = defineQuery(`
+  *[_type == "teamMember" && slug.current == $slug][0]{
+    _id,
+    name,
+    "slug": slug.current,
+    role,
+    image,
+    bio,
+    location,
+    email,
+    socialLinks[] {
+      _key,
+      platform,
+      url
+    }
+  }
+`)
+
+// =============================================================================
+// FAQ Queries
+// =============================================================================
+
+/**
+ * Fetches all FAQs, optionally filtered by category.
+ */
+export const FAQS_QUERY = defineQuery(`
+  *[_type == "faq" && ($category == "" || category == $category)] | order(order asc) {
+    _id,
+    question,
+    answer,
+    category
+  }
+`)
+
+// =============================================================================
+// Testimonial Queries
+// =============================================================================
+
+/**
+ * Fetches all testimonials.
+ */
+export const TESTIMONIALS_QUERY = defineQuery(`
+  *[_type == "testimonial"] | order(featured desc, order asc) {
+    _id,
+    quote,
+    author,
+    role,
+    company,
+    image,
+    companyLogo,
+    featured
+  }
+`)
+
+/**
+ * Fetches featured testimonials only.
+ */
+export const FEATURED_TESTIMONIALS_QUERY = defineQuery(`
+  *[_type == "testimonial" && featured == true] | order(order asc) {
+    _id,
+    quote,
+    author,
+    role,
+    company,
+    image,
+    companyLogo
+  }
+`)
+
+// =============================================================================
+// SEO & Sitemap Queries
+// =============================================================================
+
+/**
+ * Fetches all slugs for sitemap generation.
+ */
+export const SITEMAP_QUERY = defineQuery(`
+  {
+    "pages": *[_type == "page" && !(seo.noIndex == true) && defined(slug.current)]{
+      "slug": slug.current,
+      _updatedAt
+    },
+    "services": *[_type == "service" && !(seo.noIndex == true) && defined(slug.current)]{
+      "slug": slug.current,
+      _updatedAt
+    }
+  }
+`)
+
+// =============================================================================
+// Redirect Queries
+// =============================================================================
+
+/**
+ * Fetches all enabled redirects for Next.js config.
+ */
+export const REDIRECTS_QUERY = defineQuery(`
+  *[_type == "redirect" && isEnabled == true]{
+    source,
+    destination,
+    permanent
+  }
+`)

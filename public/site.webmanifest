@@ -1,0 +1,20 @@
+{
+  "name": "Xuba IT Services",
+  "short_name": "Xuba",
+  "description": " Located in Hamilton, Waikato, New Zealand, Xuba offers a robust range of IT support products and services including Cloud technology, Helpdesk remote support, System deployment, Server support and security, Network configuration, Proactive IT Support, Incident Support, & SMB IT Guidance.",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
+  "display": "standalone"
+}
