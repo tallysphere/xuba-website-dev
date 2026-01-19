@@ -1,11 +1,10 @@
-'use client'
-
-import React from 'react'
 import Image from 'next/image'
 import { Spotlight } from '@/components/Spotlight'
-
-import CountUp from 'react-countup'
 import ContactSection from '@/components/ContactSection'
+import CountUpStats from '@/components/CountUpStats'
+import { sanityFetch } from '@/sanity/lib/live'
+import { TEAM_MEMBERS_QUERY } from '@/sanity/lib/queries'
+import { urlFor } from '@/sanity/lib/image'
 
 const stats = [
   { label: 'Years in Business', value: '10', postfix: '' },
@@ -13,67 +12,11 @@ const stats = [
   { label: 'Projects', value: '1000', postfix: '+' },
 ]
 
-const team = [
-  {
-    name: 'Tom Cook',
-    role: 'Co-Founder / CEO',
-    imageUrl:
-      'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80',
-    location: 'Toronto, Canada',
-  },
-  {
-    name: 'Michael Foster',
-    role: 'Co-Founder / CTO',
-    imageUrl:
-      'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80',
-    location: 'Glasgow, Scotland',
-  },
-  {
-    name: 'Dries Vincent',
-    role: 'Business Relations',
-    imageUrl:
-      'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80',
-    location: 'Niagara Falls, Canada',
-  },
-  {
-    name: 'Lindsay Walton',
-    role: 'Front-end Developer',
-    imageUrl:
-      'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80',
-    location: 'London, England',
-  },
-  {
-    name: 'Leslie Alexander',
-    role: 'Front-end Developer',
-    imageUrl:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80',
-    location: 'Toronto, Canada',
-  },
-  {
-    name: 'Courtney Henry',
-    role: 'Designer',
-    imageUrl:
-      'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80',
-    location: 'Toronto, Canada',
-  },
+export default async function AboutPage() {
+  const { data: teamMembers } = await sanityFetch({
+    query: TEAM_MEMBERS_QUERY,
+  })
 
-  {
-    name: 'Whitney Francis',
-    role: 'Copywriter',
-    imageUrl:
-      'https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80',
-    location: 'Toronto, Canada',
-  },
-  {
-    name: 'Leonard Krasner',
-    role: 'Senior Designer',
-    imageUrl:
-      'https://images.unsplash.com/photo-1519345182560-3f2917c472ef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80',
-    location: 'Toronto, Canada',
-  },
-]
-
-export default function AboutPage() {
   return (
     <div className='w-full min-h-screen flex flex-col items-center justify-center bg-xuba-purple-900 py-12 sm:py-20 overflow-x-hidden'>
       <Spotlight />
@@ -213,22 +156,7 @@ export default function AboutPage() {
                 </p>
               </div>
               <div className='lg:flex lg:flex-auto lg:justify-center'>
-                <dl className='w-full max-w-sm mx-auto space-y-6 sm:space-y-8 lg:w-64 xl:w-80'>
-                  {stats.map((stat) => (
-                    <div
-                      key={stat.label}
-                      className='flex flex-col-reverse gap-y-3 sm:gap-y-4 text-center lg:text-left'
-                    >
-                      <dt className='text-base leading-7 text-gray-400'>
-                        {stat.label}
-                      </dt>
-                      <dd className='text-4xl sm:text-5xl font-semibold tracking-tight text-xuba-green-500 drop-shadow-2xl drop-shadow-xuba-green-500/50'>
-                        <CountUp end={Number(stat.value)} />
-                        {stat.postfix}
-                      </dd>
-                    </div>
-                  ))}
-                </dl>
+                <CountUpStats stats={stats} />
               </div>
             </div>
           </div>
@@ -249,23 +177,29 @@ export default function AboutPage() {
             role='list'
             className='mx-auto mt-12 sm:mt-20 grid max-w-2xl grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 sm:gap-y-14 lg:mx-0 lg:max-w-none lg:grid-cols-3 xl:grid-cols-4'
           >
-            {team.map((person) => (
-              <li key={person.name} className='text-center lg:text-left'>
-                <Image
-                  alt={`${person.name} - ${person.role}`}
-                  src={person.imageUrl}
-                  className='aspect-14/13 w-full rounded-2xl object-cover'
-                  width={500}
-                  height={500}
-                />
-                <h3 className='mt-4 sm:mt-6 text-lg leading-8 font-semibold tracking-tight text-white'>
-                  {person.name}
-                </h3>
-                <p className='text-base leading-7 text-gray-300'>
-                  {person.role}
-                </p>
-              </li>
-            ))}
+            {teamMembers.map((member) => {
+              const imageUrl = member.image
+                ? urlFor(member.image).width(500).height(500).fit('crop').url()
+                : 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&facepad=8&w=500&h=500&q=80'
+
+              return (
+                <li key={member._id} className='text-center lg:text-left'>
+                  <Image
+                    alt={member.image?.alt ?? `${member.name} - ${member.role}`}
+                    src={imageUrl}
+                    className='aspect-14/13 w-full rounded-2xl object-cover'
+                    width={500}
+                    height={500}
+                  />
+                  <h3 className='mt-4 sm:mt-6 text-lg leading-8 font-semibold tracking-tight text-white'>
+                    {member.name}
+                  </h3>
+                  <p className='text-base leading-7 text-gray-300'>
+                    {member.role}
+                  </p>
+                </li>
+              )
+            })}
           </ul>
         </div>
       </main>
