@@ -1,5 +1,5 @@
 import { defineField, defineType, defineArrayMember } from 'sanity'
-import { GridIcon } from '@sanity/icons'
+import { BookIcon } from '@sanity/icons'
 
 /**
  * Services Grid block for displaying service cards.
@@ -8,7 +8,7 @@ export const servicesGridType = defineType({
   name: 'servicesGrid',
   title: 'Services Grid',
   type: 'object',
-  icon: GridIcon,
+  icon: BookIcon,
   fields: [
     defineField({
       name: 'title',
@@ -63,7 +63,7 @@ export const servicesGridType = defineType({
       return {
         title: `Services Grid: ${title || 'Untitled'}`,
         subtitle: count > 0 ? `${count} selected services` : 'All services',
-        media: GridIcon,
+        media: BookIcon,
       }
     },
   },

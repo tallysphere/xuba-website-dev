@@ -21,10 +21,10 @@ export const seoType = defineType({
       name: 'description',
       title: 'Meta Description',
       type: 'text',
-      rows: 3,
-      description: 'Brief description for search results (150-160 characters recommended)',
+      rows: 4,
+      description: 'Description for search results (up to 300 characters)',
       validation: (rule) =>
-        rule.max(160).warning('Meta descriptions should be under 160 characters'),
+        rule.max(300).warning('Meta descriptions should be under 300 characters'),
     }),
     defineField({
       name: 'image',
