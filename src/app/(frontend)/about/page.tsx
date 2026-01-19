@@ -4,7 +4,7 @@ import { Spotlight } from '@/components/Spotlight'
 import ContactSection from '@/components/ContactSection'
 import CountUpStats from '@/components/CountUpStats'
 import { sanityFetch } from '@/sanity/lib/live'
-import { TEAM_MEMBERS_QUERY, ABOUT_PAGE_QUERY } from '@/sanity/lib/queries'
+import { TEAM_MEMBERS_QUERY, ABOUT_PAGE_QUERY, CONTACT_SECTION_QUERY } from '@/sanity/lib/queries'
 import { urlFor } from '@/sanity/lib/image'
 
 /**
@@ -44,11 +44,23 @@ const defaultStats = [
 ]
 
 export default async function AboutPage() {
-  // Fetch both about page content and team members in parallel
-  const [{ data: aboutPage }, { data: teamMembers }] = await Promise.all([
+  // Fetch about page content, team members, and contact section in parallel
+  const [{ data: aboutPage }, { data: teamMembers }, { data: contactData }] = await Promise.all([
     sanityFetch({ query: ABOUT_PAGE_QUERY }),
     sanityFetch({ query: TEAM_MEMBERS_QUERY }),
+    sanityFetch({ query: CONTACT_SECTION_QUERY }),
   ])
+
+  // Contact section props
+  const contactProps = {
+    heading: contactData?.contactSection?.heading ?? undefined,
+    subheading: contactData?.contactSection?.subheading ?? undefined,
+    ctaLabel: contactData?.contactSection?.ctaLabel ?? undefined,
+    ctaLink: contactData?.contactSection?.ctaLink ?? undefined,
+    address: contactData?.contact?.address ?? undefined,
+    phone: contactData?.contact?.phone ?? undefined,
+    email: contactData?.contact?.email ?? undefined,
+  }
 
   // Use Sanity stats or fallback to defaults
   const stats = aboutPage?.stats?.length
@@ -257,7 +269,7 @@ export default async function AboutPage() {
         </div>
       </main>
       <div className='w-full px-4 sm:px-6 lg:px-8'>
-        <ContactSection />
+        <ContactSection {...contactProps} />
       </div>
     </div>
   )

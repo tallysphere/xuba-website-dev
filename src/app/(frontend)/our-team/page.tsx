@@ -3,13 +3,26 @@ import { Spotlight } from '@/components/Spotlight'
 import TiltedCard from '@/components/TiltedCard/TiltedCard'
 import Link from 'next/link'
 import { sanityFetch } from '@/sanity/lib/live'
-import { TEAM_MEMBERS_QUERY } from '@/sanity/lib/queries'
+import { TEAM_MEMBERS_QUERY, CONTACT_SECTION_QUERY } from '@/sanity/lib/queries'
 import { urlFor } from '@/sanity/lib/image'
 
 export default async function OurTeamPage() {
-  const { data: teamMembers } = await sanityFetch({
-    query: TEAM_MEMBERS_QUERY,
-  })
+  // Fetch team members and contact section data in parallel
+  const [{ data: teamMembers }, { data: contactData }] = await Promise.all([
+    sanityFetch({ query: TEAM_MEMBERS_QUERY }),
+    sanityFetch({ query: CONTACT_SECTION_QUERY }),
+  ])
+
+  // Contact section props
+  const contactProps = {
+    heading: contactData?.contactSection?.heading ?? undefined,
+    subheading: contactData?.contactSection?.subheading ?? undefined,
+    ctaLabel: contactData?.contactSection?.ctaLabel ?? undefined,
+    ctaLink: contactData?.contactSection?.ctaLink ?? undefined,
+    address: contactData?.contact?.address ?? undefined,
+    phone: contactData?.contact?.phone ?? undefined,
+    email: contactData?.contact?.email ?? undefined,
+  }
 
   return (
     <div className='bg-xuba-purple-900 py-20 sm:py-32 lg:py-56 overflow-x-hidden'>
@@ -139,7 +152,7 @@ export default async function OurTeamPage() {
         </ul>
       </div>
       <div className='px-4 sm:px-6 lg:px-8'>
-        <ContactSection />
+        <ContactSection {...contactProps} />
       </div>
     </div>
   )

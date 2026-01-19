@@ -9,7 +9,29 @@ import {
   MailIcon,
 } from 'lucide-react'
 
-const ContactSection = () => {
+interface ContactSectionProps {
+  heading?: string
+  subheading?: string
+  ctaLabel?: string
+  ctaLink?: string
+  address?: string
+  phone?: string
+  email?: string
+}
+
+const ContactSection = ({
+  heading = 'We are here to help you with your IT needs',
+  subheading = 'Get in touch with us Today.',
+  ctaLabel = 'Get in touch',
+  ctaLink = '/contact',
+  address = '15 King Street, Frankton, Hamilton, NZ',
+  phone = '0800 33 22 11',
+  email = 'hello@xuba.co.nz',
+}: ContactSectionProps) => {
+  // Format phone for href (remove spaces)
+  const phoneHref = `tel:${phone.replace(/\s/g, '')}`
+  const emailHref = `mailto:${email}`
+
   return (
     <section className='w-full grid grid-cols-1 md:grid-cols-3 my-20 md:my-40 justify-start relative z-20 max-w-7xl mx-auto bg-gradient-to-br from-gray-100 to-white dark:from-neutral-900 dark:to-xuba-purple-900'>
       <GridLineHorizontal className='top-0' offset='200px' />
@@ -17,25 +39,20 @@ const ContactSection = () => {
       <GridLineVertical className='left-0' offset='80px' />
       <GridLineVertical className='left-auto right-0' offset='80px' />
       <div className='md:col-span-2 p-8 md:p-14 md:text-start text-center'>
-        <h2 className=' text-neutral-500 dark:text-neutral-200 text-xl md:text-3xl tracking-tight font-medium'>
-          We are here to help you{' '}
-          <span className='font-bold text-black dark:text-white'>
-            with your IT needs
-          </span>
+        <h2 className='text-neutral-500 dark:text-neutral-200 text-xl md:text-3xl tracking-tight font-medium'>
+          {heading}
         </h2>
-        <p className=' text-neutral-500 mt-4 max-w-lg dark:text-neutral-200 text-2xl tracking-tight font-medium'>
-          Get in touch with us{' '}
-          <span className='text-xuba-green-500'>Today.</span>
+        <p className='text-neutral-500 mt-4 max-w-lg dark:text-neutral-200 text-2xl tracking-tight font-medium'>
+          {subheading}
         </p>
 
         <div className='flex items-start sm:items-center flex-col sm:flex-row sm:gap-4 mt-10'>
           <Link
-            href='/contact'
+            href={ctaLink}
             className='relative md:w-56 w-full gap-1 rounded-none border-2 bg-gray-100 dark:bg-transparent border-gray-600 dark:border-white text-center text-sm text-gray-800 dark:text-white font-medium px-2 py-2 shadow-lg dark:shadow-xl dark:shadow-xuba-purple-500/40'
           >
-  
             <div className='text-gray-700 dark:text-white font-semibold text-lg text-nowrap tracking-tight flex items-center justify-center'>
-              Get in touch
+              {ctaLabel}
               <ArrowRight className='w-4 h-4 ml-2' />
             </div>
           </Link>
@@ -50,23 +67,21 @@ const ContactSection = () => {
             className='flex items-center gap-3 text-neutral-600 dark:text-neutral-300 hover:text-xuba-green-500 dark:hover:text-xuba-green-400 transition-colors justify-center md:justify-start'
           >
             <Building2Icon className='w-5 h-5 text-xuba-green-500 shrink-0' />
-            <span className='text-sm'>
-              15 King Street, Frankton, Hamilton, NZ
-            </span>
+            <span className='text-sm'>{address}</span>
           </a>
           <a
-            href='tel:0800332211'
+            href={phoneHref}
             className='flex items-center gap-3 text-neutral-600 dark:text-neutral-300 hover:text-xuba-green-500 dark:hover:text-xuba-green-400 transition-colors justify-center md:justify-start'
           >
             <PhoneCallIcon className='w-5 h-5 text-xuba-green-500 shrink-0' />
-            <span className='text-sm'>0800 33 22 11</span>
+            <span className='text-sm'>{phone}</span>
           </a>
           <a
-            href='mailto:hello@xuba.co.nz'
+            href={emailHref}
             className='flex items-center gap-3 text-neutral-600 dark:text-neutral-300 hover:text-xuba-green-500 dark:hover:text-xuba-green-400 transition-colors justify-center md:justify-start'
           >
             <MailIcon className='w-5 h-5 text-xuba-green-500 shrink-0' />
-            <span className='text-sm'>hello@xuba.co.nz</span>
+            <span className='text-sm'>{email}</span>
           </a>
         </div>
       </div>

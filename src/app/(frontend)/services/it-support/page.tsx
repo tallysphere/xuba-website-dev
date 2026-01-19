@@ -15,7 +15,7 @@ import {
   HardDrive,
   RefreshCw,
 } from 'lucide-react'
-import { WhyXuba } from '@/sections/Home/WhyXuba'
+import WhyXuba from '../../../../../sections/Home/WhyXuba'
 import { AnimatedBeam } from '@/components/ui/animated-beam'
 import { BentoGrid, BentoCard } from '@/components/ui/bento-grid'
 

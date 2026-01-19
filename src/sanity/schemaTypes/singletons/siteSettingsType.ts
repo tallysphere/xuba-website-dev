@@ -96,6 +96,40 @@ export const siteSettingsType = defineType({
         }),
       ],
     }),
+    defineField({
+      name: 'contactSection',
+      title: 'Contact Section',
+      type: 'object',
+      description: 'Content for the reusable Contact Section component',
+      fields: [
+        defineField({
+          name: 'heading',
+          title: 'Heading',
+          type: 'string',
+          description: 'Main heading text',
+          initialValue: 'We are here to help you with your IT needs',
+        }),
+        defineField({
+          name: 'subheading',
+          title: 'Subheading',
+          type: 'string',
+          description: 'Text below the heading',
+          initialValue: 'Get in touch with us Today.',
+        }),
+        defineField({
+          name: 'ctaLabel',
+          title: 'CTA Button Label',
+          type: 'string',
+          initialValue: 'Get in touch',
+        }),
+        defineField({
+          name: 'ctaLink',
+          title: 'CTA Button Link',
+          type: 'string',
+          initialValue: '/contact',
+        }),
+      ],
+    }),
   ],
   preview: {
     select: {

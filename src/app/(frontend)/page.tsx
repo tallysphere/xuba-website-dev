@@ -4,7 +4,7 @@ import HomeHero from '../../../sections/Home/Hero'
 import { HomeServices } from '../../../sections/Home/HomeServices'
 import WhyXuba from '../../../sections/Home/WhyXuba'
 import { sanityFetch } from '@/sanity/lib/live'
-import { HOMEPAGE_QUERY } from '@/sanity/lib/queries'
+import { HOMEPAGE_QUERY, CONTACT_SECTION_QUERY } from '@/sanity/lib/queries'
 import { urlFor } from '@/sanity/lib/image'
 
 /**
@@ -35,9 +35,11 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Home() {
-  const { data: homepage } = await sanityFetch({
-    query: HOMEPAGE_QUERY,
-  })
+  // Fetch homepage and contact section data in parallel
+  const [{ data: homepage }, { data: contactData }] = await Promise.all([
+    sanityFetch({ query: HOMEPAGE_QUERY }),
+    sanityFetch({ query: CONTACT_SECTION_QUERY }),
+  ])
 
   // Hero section props
   const heroProps = {
@@ -62,13 +64,24 @@ export default async function Home() {
     serviceCards: homepage?.serviceCards ?? [],
   }
 
+  // Contact section props
+  const contactProps = {
+    heading: contactData?.contactSection?.heading ?? undefined,
+    subheading: contactData?.contactSection?.subheading ?? undefined,
+    ctaLabel: contactData?.contactSection?.ctaLabel ?? undefined,
+    ctaLink: contactData?.contactSection?.ctaLink ?? undefined,
+    address: contactData?.contact?.address ?? undefined,
+    phone: contactData?.contact?.phone ?? undefined,
+    email: contactData?.contact?.email ?? undefined,
+  }
+
   return (
     <main className='relative min-h-screen w-full h-full bg-xuba-purple-900'>
       <div className='p-0 m-0 flex flex-col gap-0'>
         <HomeHero {...heroProps} />
         <HomeServices {...servicesProps} />
         <WhyXuba />
-        <ContactSection />
+        <ContactSection {...contactProps} />
       </div>
     </main>
   )

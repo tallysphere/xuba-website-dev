@@ -33,6 +33,32 @@ export const SITE_SETTINGS_QUERY = defineQuery(`
     analytics {
       googleAnalyticsId,
       googleTagManagerId
+    },
+    contactSection {
+      heading,
+      subheading,
+      ctaLabel,
+      ctaLink
+    }
+  }
+`)
+
+/**
+ * Fetches contact section content and contact info from Site Settings.
+ * Used by the reusable ContactSection component.
+ */
+export const CONTACT_SECTION_QUERY = defineQuery(`
+  *[_type == "siteSettings"][0]{
+    contact {
+      phone,
+      email,
+      address
+    },
+    contactSection {
+      heading,
+      subheading,
+      ctaLabel,
+      ctaLink
     }
   }
 `)
