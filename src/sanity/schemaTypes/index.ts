@@ -13,6 +13,8 @@ import { blockContentType } from './shared/blockContentType'
 // Singletons
 import { siteSettingsType } from './singletons/siteSettingsType'
 import { navigationType, navItemType, footerColumnType } from './singletons/navigationType'
+import { aboutPageType } from './singletons/aboutPageType'
+import { contactPageType } from './singletons/contactPageType'
 
 // Documents
 import { pageType } from './documents/pageType'
@@ -59,6 +61,8 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     // Singletons
     siteSettingsType,
     navigationType,
+    aboutPageType,
+    contactPageType,
 
     // Documents
     pageType,

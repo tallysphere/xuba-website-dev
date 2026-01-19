@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { GridLineHorizontal } from './GridLines'
 import { GridLineVertical } from './GridLineVertical'
+
 import {
   ArrowRight,
   Building2Icon,
@@ -32,20 +33,7 @@ const ContactSection = () => {
             href='/contact'
             className='relative md:w-56 w-full gap-1 rounded-none border-2 bg-gray-100 dark:bg-transparent border-gray-600 dark:border-white text-center text-sm text-gray-800 dark:text-white font-medium px-2 py-2 shadow-lg dark:shadow-xl dark:shadow-xuba-purple-500/40'
           >
-            {/* <div className='absolute top-3 left-12 w-8 h-1 transition-all bg-xuba-green-500 dark:bg-xuba-purple-400' /> */}
-
-            {/* <Typewriter
-                  text='Explore our Services'
-                  className='text-gray-700 font-semibold text-lg text-nowrap tracking-tight'
-                  cursorClassName='text-gray-700'
-                  speed={70}
-                  waitTime={1500}
-                  deleteSpeed={40}
-                  cursorChar={'_'}
-                /> */}
-            {/* <span className='text-gray-700 dark:text-white font-semibold text-lg text-nowrap tracking-tight'>
-                  Explore our Services
-                </span> */}
+  
             <div className='text-gray-700 dark:text-white font-semibold text-lg text-nowrap tracking-tight flex items-center justify-center'>
               Get in touch
               <ArrowRight className='w-4 h-4 ml-2' />

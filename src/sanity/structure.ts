@@ -1,9 +1,9 @@
 import type { StructureResolver } from 'sanity/structure'
-import { CogIcon, UsersIcon } from '@sanity/icons'
+import { CogIcon, UsersIcon, InfoOutlineIcon, EnvelopeIcon } from '@sanity/icons'
 // import { MenuIcon, DocumentsIcon, RocketIcon, CommentIcon, HelpCircleIcon, LinkIcon } from '@sanity/icons'
 
 // Singleton document IDs
-const SINGLETON_IDS = ['siteSettings', 'navigation']
+const SINGLETON_IDS = ['siteSettings', 'navigation', 'aboutPage', 'contactPage']
 
 /**
  * Custom Studio structure with organized sections and singletons.
@@ -34,6 +34,26 @@ export const structure: StructureResolver = (S) =>
         .title('Team Members')
         .icon(UsersIcon)
         .child(S.documentTypeList('teamMember').title('Team Members')),
+
+      S.listItem()
+        .title('About Page')
+        .icon(InfoOutlineIcon)
+        .child(
+          S.document()
+            .schemaType('aboutPage')
+            .documentId('aboutPage')
+            .title('About Page')
+        ),
+
+      S.listItem()
+        .title('Contact Page')
+        .icon(EnvelopeIcon)
+        .child(
+          S.document()
+            .schemaType('contactPage')
+            .documentId('contactPage')
+            .title('Contact Page')
+        ),
 
       // ===========================================
       // COMMENTED OUT - UNCOMMENT WHEN NEEDED
@@ -85,7 +105,7 @@ export const structure: StructureResolver = (S) =>
           return (
             id &&
             !SINGLETON_IDS.includes(id) &&
-            !['page', 'service', 'teamMember', 'testimonial', 'faq', 'redirect', 'navigation'].includes(id)
+            !['page', 'service', 'teamMember', 'testimonial', 'faq', 'redirect', 'navigation', 'aboutPage', 'contactPage'].includes(id)
           )
         }
       ),

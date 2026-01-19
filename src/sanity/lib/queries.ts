@@ -95,6 +95,83 @@ export const NAVIGATION_QUERY = defineQuery(`
 `)
 
 // =============================================================================
+// About Page Query
+// =============================================================================
+
+/**
+ * Fetches the About Page singleton content.
+ * Used on the /about page for hero images, mission, and stats.
+ */
+export const ABOUT_PAGE_QUERY = defineQuery(`
+  *[_type == "aboutPage"][0]{
+    heroTitle,
+    heroSubtitle,
+    heroImages[] {
+      _key,
+      asset,
+      alt,
+      hotspot,
+      crop
+    },
+    missionTitle,
+    missionIntro,
+    missionBody,
+    stats[] {
+      _key,
+      label,
+      value,
+      postfix
+    },
+    teamTitle,
+    teamDescription,
+    "seo": {
+      "title": coalesce(seo.title, heroTitle, "About Us"),
+      "description": seo.description,
+      "image": seo.image,
+      "noIndex": seo.noIndex == true
+    }
+  }
+`)
+
+// =============================================================================
+// Contact Page Query
+// =============================================================================
+
+/**
+ * Fetches the Contact Page singleton content along with Site Settings contact info.
+ * Used on the /contact page.
+ */
+export const CONTACT_PAGE_QUERY = defineQuery(`
+  {
+    "contactPage": *[_type == "contactPage"][0]{
+      eyebrow,
+      title,
+      heading,
+      description,
+      responseTimeText,
+      contactLabels {
+        addressLabel,
+        phoneLabel,
+        emailLabel
+      },
+      "seo": {
+        "title": coalesce(seo.title, title, "Contact Us"),
+        "description": seo.description,
+        "image": seo.image,
+        "noIndex": seo.noIndex == true
+      }
+    },
+    "siteSettings": *[_type == "siteSettings"][0]{
+      contact {
+        phone,
+        email,
+        address
+      }
+    }
+  }
+`)
+
+// =============================================================================
 // Page Queries
 // =============================================================================
 

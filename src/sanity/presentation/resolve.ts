@@ -106,5 +106,17 @@ export const resolve: PresentationPluginOptions['resolve'] = {
       message: 'Navigation is used in the header and footer across all pages',
       tone: 'positive',
     }),
+
+    // About Page (singleton)
+    aboutPage: defineLocations({
+      message: 'About Page content is used on the /about page',
+      tone: 'positive',
+    }),
+
+    // Contact Page (singleton)
+    contactPage: defineLocations({
+      message: 'Contact Page content is used on the /contact page',
+      tone: 'positive',
+    }),
   },
 }
