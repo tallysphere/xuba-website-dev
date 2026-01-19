@@ -5,30 +5,88 @@ import React, { useEffect, useRef, useState } from 'react'
 import { motion } from 'motion/react'
 import createGlobe from 'cobe'
 import Image from 'next/image'
-// import { Button } from '@/components/ui/button'
 import { BackgroundGrids } from '@/components/BackgroundGrids'
-// import { Button } from '@/components/ui/button'
 import { ArrowRightIcon } from 'lucide-react'
 import Link from 'next/link'
 
-export function HomeServices() {
+// Service card type from Sanity
+interface ServiceCardData {
+  _key?: string
+  title: string
+  description: string | null
+  href: string | null
+  ctaLabel: string | null
+}
+
+interface HomeServicesProps {
+  title: string
+  description: string
+  serviceCards: ServiceCardData[]
+}
+
+// Default service cards (fallback if Sanity data is empty)
+const defaultServiceCards: ServiceCardData[] = [
+  {
+    title: 'Cloud Technology',
+    description: "Cloud technology that's simple, flexible and secure. Solutions for data storage, backup, and disaster recovery.",
+    href: '/services/cloud-technology',
+    ctaLabel: 'Explore Cloud Technology',
+  },
+  {
+    title: 'IT Support',
+    description: 'Remote desktop support and control, hardware management, remote data backup and restore, patch implementation, virus and spyware removal.',
+    href: '/services/it-support',
+    ctaLabel: 'Explore IT Support',
+  },
+  {
+    title: 'Server Support and Security',
+    description: 'Comprehensive server support and security solutions including firewalls, VPN setup and management, advanced spyware detection and removal, spam filtering, and robust virus.',
+    href: '/services/server-support-and-security',
+    ctaLabel: 'Explore Server Support',
+  },
+  {
+    title: 'System Deployment',
+    description: 'System Deployment including planning, introduction, installation and configuration of any and all new machines for your business.',
+    href: '/services/system-deployment',
+    ctaLabel: 'Explore System Deployment',
+  },
+  {
+    title: 'Incident Support',
+    description: 'Immediate response to IT issues to minimise downtime and maintain productivity.',
+    href: '/services/incident-support',
+    ctaLabel: 'Explore Incident Support',
+  },
+  {
+    title: 'SMB IT Guidance',
+    description: 'Guidance and support for small to medium-sized businesses to ensure optimal IT performance and security.',
+    href: '/services/smb-it-guidance',
+    ctaLabel: 'Explore SMB IT Guidance',
+  },
+]
+
+export function HomeServices({ title, description, serviceCards }: HomeServicesProps) {
+  // Use Sanity data or fall back to defaults
+  const cards = serviceCards.length > 0 ? serviceCards : defaultServiceCards
+
+  // Get card data by index with fallback
+  const getCard = (index: number) => cards[index] ?? defaultServiceCards[index]
+
   return (
     <div className='relative h-full bg-white dark:bg-xuba-purple-900 p-0 m-0 overflow-hidden'>
       <BackgroundGrids />
       <div className='mx-auto my-20 w-full max-w-7xl px-4 md:px-8'>
         <Header>
           <h2 className='text-bold text-neutral-8000 mx-auto w-fit text-center font-sans text-xl font-bold tracking-tight text-neutral-800 md:text-4xl dark:text-neutral-100'>
-            One-Stop IT Solutions
+            {title}
           </h2>
         </Header>
         <p className='mx-auto mt-4 max-w-lg text-center text-sm text-neutral-200'>
-          Explore our comprehensive IT services designed to streamline your
-          business operations
+          {description}
         </p>
         <div className='cols-1 mt-20 grid gap-4 md:auto-rows-[25rem] md:grid-cols-5'>
           <Card
-            href='/services/cloud-technology'
-            title='Cloud Technology'
+            href={getCard(0).href ?? '/services/cloud-technology'}
+            ctaLabel={getCard(0).ctaLabel ?? `Explore ${getCard(0).title}`}
             className='flex flex-col justify-between md:col-span-3'
           >
             <CardSkeletonBody>
@@ -36,26 +94,23 @@ export function HomeServices() {
             </CardSkeletonBody>
             <CardContent className='h-40'>
               <CardTitle className='md:text-2xl text-xl'>
-                Cloud Technology
+                {getCard(0).title}
               </CardTitle>
               <CardDescription>
-                Cloud technology that’s simple, flexible and secure. Solutions
-                for data storage, backup, and disaster recovery.
+                {getCard(0).description}
               </CardDescription>
             </CardContent>
           </Card>
 
           <Card
-            href='/services/it-support'
-            title='IT Support'
+            href={getCard(1).href ?? '/services/it-support'}
+            ctaLabel={getCard(1).ctaLabel ?? `Explore ${getCard(1).title}`}
             className='flex flex-col justify-between md:col-span-2'
           >
             <CardContent>
-              <CardTitle className='md:text-2xl text-xl'>IT Support</CardTitle>
+              <CardTitle className='md:text-2xl text-xl'>{getCard(1).title}</CardTitle>
               <CardDescription className='w-full'>
-                Remote desktop support and control, hardware management, remote
-                data backup and restore, patch implementation, virus and spyware
-                removal.
+                {getCard(1).description}
               </CardDescription>
             </CardContent>
             <CardSkeletonBody>
@@ -72,8 +127,8 @@ export function HomeServices() {
           </Card>
 
           <Card
-            href='/services/server-support-and-security'
-            title='Server Support and Security'
+            href={getCard(2).href ?? '/services/server-support-and-security'}
+            ctaLabel={getCard(2).ctaLabel ?? `Explore ${getCard(2).title}`}
             className='flex flex-col justify-between md:col-span-2'
           >
             <CardSkeletonBody>
@@ -81,27 +136,24 @@ export function HomeServices() {
             </CardSkeletonBody>
             <CardContent className='h-40'>
               <CardTitle className='md:text-2xl text-xl'>
-                Server Support and Security
+                {getCard(2).title}
               </CardTitle>
               <CardDescription>
-                Comprehensive server support and security solutions including
-                firewalls, VPN setup and management, advanced spyware detection
-                and removal, spam filtering, and robust virus.
+                {getCard(2).description}
               </CardDescription>
             </CardContent>
           </Card>
           <Card
-            href='/services/system-deployment'
-            title='System Deployment'
+            href={getCard(3).href ?? '/services/system-deployment'}
+            ctaLabel={getCard(3).ctaLabel ?? `Explore ${getCard(3).title}`}
             className='flex flex-col justify-between md:col-span-3'
           >
             <CardContent>
               <CardTitle className='md:text-2xl text-xl'>
-                System Deployment
+                {getCard(3).title}
               </CardTitle>
               <CardDescription>
-                System Deployment including planning, introduction, installation
-                and configuration of any and all new machines for your business.
+                {getCard(3).description}
               </CardDescription>
             </CardContent>
             <CardSkeletonBody>
@@ -120,8 +172,8 @@ export function HomeServices() {
 
         <div className='cols-1 mt-4 grid gap-4 md:auto-rows-[25rem] md:grid-cols-5'>
           <Card
-            href='/services/incident-support'
-            title='Incident Support'
+            href={getCard(4).href ?? '/services/incident-support'}
+            ctaLabel={getCard(4).ctaLabel ?? `Explore ${getCard(4).title}`}
             className='flex flex-col justify-between md:col-span-3'
           >
             <CardSkeletonBody>
@@ -129,27 +181,25 @@ export function HomeServices() {
             </CardSkeletonBody>
             <CardContent className='h-40'>
               <CardTitle className='md:text-2xl text-xl'>
-                Incident Support
+                {getCard(4).title}
               </CardTitle>
               <CardDescription>
-                Immediate response to IT issues to minimise downtime and
-                maintain productivity.
+                {getCard(4).description}
               </CardDescription>
             </CardContent>
           </Card>
 
           <Card
-            href='/services/smb-it-guidance'
-            title='SMB IT Guidance'
+            href={getCard(5).href ?? '/services/smb-it-guidance'}
+            ctaLabel={getCard(5).ctaLabel ?? `Explore ${getCard(5).title}`}
             className='flex flex-col justify-between md:col-span-2'
           >
             <CardContent>
               <CardTitle className='md:text-2xl text-xl'>
-                SMB IT Guidance
+                {getCard(5).title}
               </CardTitle>
               <CardDescription className='w-full'>
-                Guidance and support for small to medium-sized businesses to
-                ensure optimal IT performance and security.
+                {getCard(5).description}
               </CardDescription>
             </CardContent>
             <CardSkeletonBody>
@@ -532,11 +582,11 @@ const Card = ({
   children,
   className,
   href,
-  title,
+  ctaLabel,
 }: {
   children: React.ReactNode
   href: string
-  title: string
+  ctaLabel: string
   className?: string
 }) => {
   return (
@@ -553,7 +603,7 @@ const Card = ({
           href={href}
           className='group w-full h-14 rounded-none flex flex-row items-center justify-center gap-2 text-gray-50 cursor-pointer font-semibold tracking-tight hover:bg-xuba-purple-500/20 transition-all duration-300 ease-in-out shadow-2xl shadow-xuba-green-500/30'
         >
-          Explore {title}
+          {ctaLabel}
           <ArrowRightIcon className='w-4 h-4 group-hover:translate-x-1 transition-all duration-300 ease-in-out text-xuba-green-400' />
         </Link>
       </div>

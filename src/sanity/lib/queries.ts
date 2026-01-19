@@ -134,6 +134,49 @@ export const ABOUT_PAGE_QUERY = defineQuery(`
 `)
 
 // =============================================================================
+// Homepage Query
+// =============================================================================
+
+/**
+ * Fetches the Homepage singleton content.
+ * Used on the / (root) page for Hero and Services sections.
+ */
+export const HOMEPAGE_QUERY = defineQuery(`
+  *[_type == "homepage"][0]{
+    // Hero Section
+    heroHeadlinePart1,
+    heroHighlightWord,
+    heroHeadlinePart2,
+    heroDescription,
+    heroPrimaryCta {
+      label,
+      href
+    },
+    heroSecondaryCta {
+      label,
+      href
+    },
+    // Services Section
+    servicesTitle,
+    servicesDescription,
+    serviceCards[] {
+      _key,
+      title,
+      description,
+      href,
+      ctaLabel
+    },
+    // SEO
+    "seo": {
+      "title": coalesce(seo.title, "Xuba - IT Solutions"),
+      "description": seo.description,
+      "image": seo.image,
+      "noIndex": seo.noIndex == true
+    }
+  }
+`)
+
+// =============================================================================
 // Contact Page Query
 // =============================================================================
 

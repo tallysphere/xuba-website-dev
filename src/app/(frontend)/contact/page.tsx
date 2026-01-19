@@ -44,9 +44,6 @@ export default async function ContactPage() {
     query: CONTACT_PAGE_QUERY,
   })
 
-  // Debug: Log the fetched data to see what's coming from Sanity
-  console.log('Contact Page Data:', JSON.stringify(data, null, 2))
-
   const contactPage = data?.contactPage
   const siteSettings = data?.siteSettings
 

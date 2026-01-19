@@ -15,6 +15,7 @@ import { siteSettingsType } from './singletons/siteSettingsType'
 import { navigationType, navItemType, footerColumnType } from './singletons/navigationType'
 import { aboutPageType } from './singletons/aboutPageType'
 import { contactPageType } from './singletons/contactPageType'
+import { homepageType } from './singletons/homepageType'
 
 // Documents
 import { pageType } from './documents/pageType'
@@ -63,6 +64,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     navigationType,
     aboutPageType,
     contactPageType,
+    homepageType,
 
     // Documents
     pageType,

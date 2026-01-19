@@ -118,5 +118,11 @@ export const resolve: PresentationPluginOptions['resolve'] = {
       message: 'Contact Page content is used on the /contact page',
       tone: 'positive',
     }),
+
+    // Homepage (singleton)
+    homepage: defineLocations({
+      message: 'Homepage content is used on the / (root) page',
+      tone: 'positive',
+    }),
   },
 }
