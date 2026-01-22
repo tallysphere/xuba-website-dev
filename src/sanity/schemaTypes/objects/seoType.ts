@@ -24,7 +24,7 @@ export const seoType = defineType({
       rows: 4,
       description: 'Description for search results (up to 300 characters)',
       validation: (rule) =>
-        rule.max(300).warning('Meta descriptions should be under 300 characters'),
+        rule.max(500).warning('Meta descriptions should be under 300 characters'),
     }),
     defineField({
       name: 'image',
