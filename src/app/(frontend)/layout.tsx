@@ -3,6 +3,7 @@ import { VisualEditing } from 'next-sanity/visual-editing'
 import { DisableDraftMode } from '@/components/DisableDraftMode'
 import AnimatedHeader from '@/components/Header'
 import { SanityLive } from '@/sanity/lib/live'
+import { SimpleFooterWithFourGrids } from '@/components/Footer'
 
 export default async function FrontendLayout({
   children,
@@ -10,7 +11,7 @@ export default async function FrontendLayout({
   children: React.ReactNode
 }>) {
   return (
-    <section className="bg-white min-h-screen">
+    <section className="bg-background min-h-screen overflow-x-hidden">
       <AnimatedHeader />
       {children}
       <SanityLive />
@@ -20,6 +21,7 @@ export default async function FrontendLayout({
           <VisualEditing />
         </>
       )}
+      <SimpleFooterWithFourGrids />
     </section>
   )
 }

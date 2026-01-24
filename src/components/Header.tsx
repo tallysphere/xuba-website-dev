@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import Image from 'next/image'
 import { Facebook, Linkedin, Mail, Phone } from 'lucide-react'
+import { ThemeToggle } from './ThemeToggle'
 
 export default function AnimatedHeader() {
   const [isOpen, setIsOpen] = useState(false)
@@ -97,59 +98,65 @@ export default function AnimatedHeader() {
           </Link>
         </motion.div>
 
-        {/* Menu Toggle Button */}
-        <motion.button
-          className='z-50 flex items-center gap-3 focus:outline-none group'
-          onClick={toggleMenu}
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{
-            duration: 0.6,
-            ease: [0.43, 0.13, 0.23, 0.96] as const,
-          }}
-          aria-label={isOpen ? 'Close menu' : 'Open menu'}
-        >
-          <span className='hidden md:block text-xs font-medium tracking-[0.2em] text-white/70 group-hover:text-white transition-colors uppercase'>
-            {isOpen ? 'Close' : 'Menu'}
-          </span>
-          <div className='w-6 h-6 relative flex items-center justify-center'>
-            <motion.span
-              className='absolute block h-[2px] bg-xuba-green-500 origin-center'
-              animate={{
-                rotate: isOpen ? 45 : 0,
-                y: isOpen ? 0 : -4,
-                width: isOpen ? 20 : 24,
-              }}
-              transition={{
-                duration: 0.3,
-                ease: [0.43, 0.13, 0.23, 0.96] as const,
-              }}
-            />
-            <motion.span
-              className='absolute block w-6 h-[2px] bg-xuba-green-500 origin-center'
-              animate={{
-                opacity: isOpen ? 0 : 1,
-                scaleX: isOpen ? 0 : 1,
-              }}
-              transition={{
-                duration: 0.2,
-                ease: [0.43, 0.13, 0.23, 0.96] as const,
-              }}
-            />
-            <motion.span
-              className='absolute block h-[2px] bg-xuba-green-500 origin-center'
-              animate={{
-                rotate: isOpen ? -45 : 0,
-                y: isOpen ? 0 : 4,
-                width: isOpen ? 20 : 16,
-              }}
-              transition={{
-                duration: 0.3,
-                ease: [0.43, 0.13, 0.23, 0.96] as const,
-              }}
-            />
-          </div>
-        </motion.button>
+        {/* Right Side Controls */}
+        <div className='z-50 flex items-center gap-4'>
+          {/* Theme Toggle */}
+          <ThemeToggle />
+
+          {/* Menu Toggle Button */}
+          <motion.button
+            className='flex items-center gap-3 focus:outline-none group'
+            onClick={toggleMenu}
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{
+              duration: 0.6,
+              ease: [0.43, 0.13, 0.23, 0.96] as const,
+            }}
+            aria-label={isOpen ? 'Close menu' : 'Open menu'}
+          >
+            <span className='hidden md:block text-xs font-medium tracking-[0.2em] text-xuba-green-600 dark:text-white/70 group-hover:text-xuba-green-900 dark:group-hover:text-white transition-colors uppercase'>
+              {isOpen ? 'Close' : 'Menu'}
+            </span>
+            <div className='w-6 h-6 relative flex items-center justify-center'>
+              <motion.span
+                className='absolute block h-[2px] bg-xuba-green-600 dark:bg-xuba-green-500 origin-center'
+                animate={{
+                  rotate: isOpen ? 45 : 0,
+                  y: isOpen ? 0 : -4,
+                  width: isOpen ? 20 : 24,
+                }}
+                transition={{
+                  duration: 0.3,
+                  ease: [0.43, 0.13, 0.23, 0.96] as const,
+                }}
+              />
+              <motion.span
+                className='absolute block w-6 h-[2px] bg-xuba-green-600 dark:bg-xuba-green-500 origin-center'
+                animate={{
+                  opacity: isOpen ? 0 : 1,
+                  scaleX: isOpen ? 0 : 1,
+                }}
+                transition={{
+                  duration: 0.2,
+                  ease: [0.43, 0.13, 0.23, 0.96] as const,
+                }}
+              />
+              <motion.span
+                className='absolute block h-[2px] bg-xuba-green-600 dark:bg-xuba-green-500 origin-center'
+                animate={{
+                  rotate: isOpen ? -45 : 0,
+                  y: isOpen ? 0 : 4,
+                  width: isOpen ? 20 : 16,
+                }}
+                transition={{
+                  duration: 0.3,
+                  ease: [0.43, 0.13, 0.23, 0.96] as const,
+                }}
+              />
+            </div>
+          </motion.button>
+        </div>
       </header>
 
       <AnimatePresence>
@@ -222,7 +229,7 @@ export default function AnimatedHeader() {
                       href={social.href}
                       target='_blank'
                       rel='noopener noreferrer'
-                      className='w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white/60 hover:text-xuba-green-400 hover:border-xuba-green-400 transition-all duration-300'
+                      className='w-10 h-10 border border-white/20 flex items-center justify-center text-white/60 hover:text-xuba-green-400 hover:border-xuba-green-400 transition-all duration-300'
                       aria-label={social.name}
                     >
                       <social.icon className='w-4 h-4 text-xuba-green-500' />

@@ -76,7 +76,7 @@ export default async function Home() {
   }
 
   return (
-    <main className='relative min-h-screen w-full h-full bg-xuba-purple-900'>
+    <main className='relative min-h-screen w-full h-full overflow-x-hidden'>
       <div className='p-0 m-0 flex flex-col gap-0'>
         <HomeHero {...heroProps} />
         <HomeServices {...servicesProps} />

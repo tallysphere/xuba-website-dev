@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Raleway } from 'next/font/google'
 import "./globals.css";
-
+import { ThemeProvider } from "@/components/theme-provider";
 
 export const metadata: Metadata = {
   title:
@@ -22,12 +22,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-      suppressHydrationWarning
-        className={`${raleway.className} antialiased`}
-      >
-        {children}
+    <html lang="en" suppressHydrationWarning className="overflow-x-hidden">
+      <body className={`${raleway.className} antialiased overflow-x-hidden`}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

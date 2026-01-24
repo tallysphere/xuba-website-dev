@@ -1,70 +1,112 @@
 'use client'
 
 import { cn } from '@/lib/utils'
-import React, { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import { motion } from 'motion/react'
-import createGlobe from 'cobe'
+import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import { BackgroundGrids } from '@/components/BackgroundGrids'
 import { ArrowRightIcon } from 'lucide-react'
 import Link from 'next/link'
+import { Spotlight } from '@/components/Spotlight'
 
-// Service card type from Sanity
+/**
+ * Lazy load Globe component (heavy WebGL) to improve initial page load.
+ */
+const Globe = dynamic(() => import('@/components/Globe').then((mod) => mod.Globe), {
+  ssr: false,
+  loading: () => (
+    <div className='h-60 w-full bg-linear-to-b from-xuba-purple-800/50 to-transparent animate-pulse' />
+  ),
+})
+
+/**
+ * Service card data structure from Sanity CMS.
+ */
 interface ServiceCardData {
   _key?: string
+  /** Service title */
   title: string
+  /** Service description */
   description: string | null
+  /** Link to service page */
   href: string | null
+  /** Call-to-action button label */
   ctaLabel: string | null
 }
 
+/**
+ * Props for the HomeServices component.
+ */
 interface HomeServicesProps {
+  /** Section heading */
   title: string
+  /** Section description */
   description: string
+  /** Array of service cards from Sanity */
   serviceCards: ServiceCardData[]
 }
 
-// Default service cards (fallback if Sanity data is empty)
+/** Default service cards (fallback if Sanity data is empty) */
 const defaultServiceCards: ServiceCardData[] = [
   {
     title: 'Cloud Technology',
-    description: "Cloud technology that's simple, flexible and secure. Solutions for data storage, backup, and disaster recovery.",
+    description:
+      "Cloud technology that's simple, flexible and secure. Solutions for data storage, backup, and disaster recovery.",
     href: '/services/cloud-technology',
     ctaLabel: 'Explore Cloud Technology',
   },
   {
     title: 'IT Support',
-    description: 'Remote desktop support and control, hardware management, remote data backup and restore, patch implementation, virus and spyware removal.',
+    description:
+      'Remote desktop support and control, hardware management, remote data backup and restore, patch implementation, virus and spyware removal.',
     href: '/services/it-support',
     ctaLabel: 'Explore IT Support',
   },
   {
     title: 'Server Support and Security',
-    description: 'Comprehensive server support and security solutions including firewalls, VPN setup and management, advanced spyware detection and removal, spam filtering, and robust virus.',
+    description:
+      'Comprehensive server support and security solutions including firewalls, VPN setup and management, advanced spyware detection and removal, spam filtering, and robust virus.',
     href: '/services/server-support-and-security',
     ctaLabel: 'Explore Server Support',
   },
   {
     title: 'System Deployment',
-    description: 'System Deployment including planning, introduction, installation and configuration of any and all new machines for your business.',
+    description:
+      'System Deployment including planning, introduction, installation and configuration of any and all new machines for your business.',
     href: '/services/system-deployment',
     ctaLabel: 'Explore System Deployment',
   },
   {
     title: 'Incident Support',
-    description: 'Immediate response to IT issues to minimise downtime and maintain productivity.',
+    description:
+      'Immediate response to IT issues to minimise downtime and maintain productivity.',
     href: '/services/incident-support',
     ctaLabel: 'Explore Incident Support',
   },
   {
     title: 'SMB IT Guidance',
-    description: 'Guidance and support for small to medium-sized businesses to ensure optimal IT performance and security.',
+    description:
+      'Guidance and support for small to medium-sized businesses to ensure optimal IT performance and security.',
     href: '/services/smb-it-guidance',
     ctaLabel: 'Explore SMB IT Guidance',
   },
 ]
 
-export function HomeServices({ title, description, serviceCards }: HomeServicesProps) {
+/**
+ * HomeServices - Displays service cards in a bento grid layout.
+ *
+ * Features:
+ * - Theme-aware colors (xuba brand tokens)
+ * - Lazy loaded Globe animation
+ * - Reduced motion support
+ * - Accessible with proper ARIA attributes
+ */
+export function HomeServices({
+  title,
+  description,
+  serviceCards,
+}: HomeServicesProps) {
   // Use Sanity data or fall back to defaults
   const cards = serviceCards.length > 0 ? serviceCards : defaultServiceCards
 
@@ -72,15 +114,21 @@ export function HomeServices({ title, description, serviceCards }: HomeServicesP
   const getCard = (index: number) => cards[index] ?? defaultServiceCards[index]
 
   return (
-    <div className='relative h-full bg-white dark:bg-xuba-purple-900 p-0 m-0 overflow-hidden'>
-      <BackgroundGrids />
+    <section
+      aria-labelledby='services-heading'
+      className='relative h-full bg-white dark:bg-xuba-purple-900 p-0 m-0 overflow-hidden'
+    >
+
       <div className='mx-auto my-20 w-full max-w-7xl px-4 md:px-8'>
         <Header>
-          <h2 className='text-bold text-neutral-8000 mx-auto w-fit text-center font-sans text-xl font-bold tracking-tight text-neutral-800 md:text-4xl dark:text-neutral-100'>
+          <h2
+            id='services-heading'
+            className='mx-auto w-fit text-center font-sans text-xl font-bold tracking-tight text-xuba-green-900 md:text-4xl dark:text-xuba-green-50'
+          >
             {title}
           </h2>
         </Header>
-        <p className='mx-auto mt-4 max-w-lg text-center text-sm text-neutral-200'>
+        <p className='mx-auto mt-4 max-w-lg text-center text-sm text-xuba-green-600 dark:text-xuba-green-200'>
           {description}
         </p>
         <div className='cols-1 mt-20 grid gap-4 md:auto-rows-[25rem] md:grid-cols-5'>
@@ -96,9 +144,7 @@ export function HomeServices({ title, description, serviceCards }: HomeServicesP
               <CardTitle className='md:text-2xl text-xl'>
                 {getCard(0).title}
               </CardTitle>
-              <CardDescription>
-                {getCard(0).description}
-              </CardDescription>
+              <CardDescription>{getCard(0).description}</CardDescription>
             </CardContent>
           </Card>
 
@@ -108,16 +154,18 @@ export function HomeServices({ title, description, serviceCards }: HomeServicesP
             className='flex flex-col justify-between md:col-span-2'
           >
             <CardContent>
-              <CardTitle className='md:text-2xl text-xl'>{getCard(1).title}</CardTitle>
+              <CardTitle className='md:text-2xl text-xl'>
+                {getCard(1).title}
+              </CardTitle>
               <CardDescription className='w-full'>
                 {getCard(1).description}
               </CardDescription>
             </CardContent>
             <CardSkeletonBody>
-              <div className='ml-6 mt-2 h-full w-full rounded-lg border border-neutral-200 bg-neutral-100 p-4 dark:border-neutral-700 dark:bg-neutral-800'>
+              <div className='ml-6 mt-2 h-full w-full rounded-xl border border-gray-100 bg-gray-50/50 p-4 dark:border-xuba-purple-600 dark:bg-xuba-purple-800'>
                 <Image
                   src='https://assets.aceternity.com/pro/dashboard.webp'
-                  alt='Helpdesk Support'
+                  alt='IT Support dashboard showing helpdesk ticket management'
                   width={500}
                   height={500}
                   className='w-full rounded-lg object-cover'
@@ -138,9 +186,7 @@ export function HomeServices({ title, description, serviceCards }: HomeServicesP
               <CardTitle className='md:text-2xl text-xl'>
                 {getCard(2).title}
               </CardTitle>
-              <CardDescription>
-                {getCard(2).description}
-              </CardDescription>
+              <CardDescription>{getCard(2).description}</CardDescription>
             </CardContent>
           </Card>
           <Card
@@ -152,15 +198,13 @@ export function HomeServices({ title, description, serviceCards }: HomeServicesP
               <CardTitle className='md:text-2xl text-xl'>
                 {getCard(3).title}
               </CardTitle>
-              <CardDescription>
-                {getCard(3).description}
-              </CardDescription>
+              <CardDescription>{getCard(3).description}</CardDescription>
             </CardContent>
             <CardSkeletonBody>
-              <div className='ml-6 mt-2 h-full w-full rounded-lg border border-neutral-200 bg-neutral-100 p-4 dark:border-neutral-700 dark:bg-neutral-800'>
+              <div className='ml-6 mt-2 h-full w-full rounded-xl border border-gray-100 bg-gray-50/50 p-4 dark:border-xuba-purple-600 dark:bg-xuba-purple-800'>
                 <Image
                   src='https://assets.aceternity.com/pro/dashboard.webp'
-                  alt='Dashboard'
+                  alt='System deployment configuration dashboard'
                   width={500}
                   height={500}
                   className='w-full rounded-lg object-cover'
@@ -183,9 +227,7 @@ export function HomeServices({ title, description, serviceCards }: HomeServicesP
               <CardTitle className='md:text-2xl text-xl'>
                 {getCard(4).title}
               </CardTitle>
-              <CardDescription>
-                {getCard(4).description}
-              </CardDescription>
+              <CardDescription>{getCard(4).description}</CardDescription>
             </CardContent>
           </Card>
 
@@ -203,10 +245,10 @@ export function HomeServices({ title, description, serviceCards }: HomeServicesP
               </CardDescription>
             </CardContent>
             <CardSkeletonBody>
-              <div className='ml-6 mt-2 h-full w-full rounded-lg border border-neutral-200 bg-neutral-100 p-4 dark:border-neutral-700 dark:bg-neutral-800'>
+              <div className='ml-6 mt-2 h-full w-full rounded-xl border border-gray-100 bg-gray-50/50 p-4 dark:border-xuba-purple-600 dark:bg-xuba-purple-800'>
                 <Image
                   src='https://assets.aceternity.com/pro/dashboard.webp'
-                  alt='Helpdesk Support'
+                  alt='SMB IT guidance and analytics dashboard'
                   width={500}
                   height={500}
                   className='w-full rounded-lg object-cover'
@@ -216,10 +258,13 @@ export function HomeServices({ title, description, serviceCards }: HomeServicesP
           </Card>
         </div>
       </div>
-    </div>
+    </section>
   )
 }
 
+/**
+ * Animated header with decorative border.
+ */
 const Header = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className='relative mx-auto flex w-fit items-center justify-center p-4'>
@@ -228,31 +273,32 @@ const Header = ({ children }: { children: React.ReactNode }) => {
         whileInView={{ width: '100%', height: '100%' }}
         style={{ transformOrigin: 'top-left' }}
         transition={{ duration: 1, ease: 'easeInOut' }}
-        className='absolute inset-0 h-full w-full border border-neutral-200 dark:border-xuba-green-500/55'
+        className='absolute inset-0 h-full w-full border border-xuba-green-300 dark:border-xuba-green-500/55 motion-reduce:w-full motion-reduce:h-full'
+        aria-hidden='true'
       >
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1.1, ease: 'easeInOut' }}
-          className='absolute -left-1 -top-1 h-2 w-2 bg-neutral-200 dark:bg-xuba-green-500/55'
+          className='absolute -left-1 -top-1 h-2 w-2 bg-xuba-green-300 dark:bg-xuba-green-500/55'
         />
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1.1, ease: 'easeInOut' }}
-          className='absolute -right-1 -top-1 h-2 w-2 bg-neutral-200 dark:bg-xuba-green-500/55'
+          className='absolute -right-1 -top-1 h-2 w-2 bg-xuba-green-300 dark:bg-xuba-green-500/55'
         />
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1.1, ease: 'easeInOut' }}
-          className='absolute -bottom-1 -left-1 h-2 w-2 bg-neutral-200 dark:bg-xuba-green-500/55'
+          className='absolute -bottom-1 -left-1 h-2 w-2 bg-xuba-green-300 dark:bg-xuba-green-500/55'
         />
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1.1, ease: 'easeInOut' }}
-          className='absolute -bottom-1 -right-1 h-2 w-2 bg-neutral-200 dark:bg-xuba-green-500/55'
+          className='absolute -bottom-1 -right-1 h-2 w-2 bg-xuba-green-300 dark:bg-xuba-green-500/55'
         />
       </motion.div>
       {children}
@@ -260,6 +306,9 @@ const Header = ({ children }: { children: React.ReactNode }) => {
   )
 }
 
+/**
+ * Container for skeleton animation elements.
+ */
 const SkeletonContainer = ({
   children,
   ...props
@@ -268,7 +317,7 @@ const SkeletonContainer = ({
     <motion.div
       {...props}
       className={cn(
-        'relative flex h-14 w-full items-center justify-center rounded-lg bg-linear-to-b from-white to-white p-2 shadow-lg md:h-40 dark:from-neutral-800 dark:to-neutral-700',
+        'relative flex h-14 w-full items-center justify-center rounded-xl bg-linear-to-b from-white to-gray-50 p-2 shadow-sm md:h-40 dark:from-xuba-purple-800 dark:to-xuba-purple-700',
         props.className
       )}
     >
@@ -277,18 +326,24 @@ const SkeletonContainer = ({
   )
 }
 
+/**
+ * SkeletonOne - Animated code deployment visualization.
+ */
 export const SkeletonOne = () => {
   const [gradient1Duration] = useState(() => Math.random() * (7 - 2) + 2)
   const [gradient2Duration] = useState(() => Math.random() * (7 - 2) + 2)
 
   return (
-    <div className='relative flex h-full w-full items-center justify-center'>
+    <div
+      className='relative flex h-full w-full items-center justify-center'
+      aria-hidden='true'
+    >
       <svg
         width='128'
         height='69'
         viewBox='0 0 128 69'
         fill='none'
-        className='absolute -top-2 left-1/2 -translate-x-[90%] text-neutral-200 dark:text-neutral-800'
+        className='absolute -top-2 left-1/2 -translate-x-[90%] text-xuba-green-200 dark:text-xuba-purple-700'
       >
         <path
           d='M1.00002 0.5L1.00001 29.5862C1 36.2136 6.37259 41.5862 13 41.5862H115C121.627 41.5862 127 46.9588 127 53.5862L127 75'
@@ -299,6 +354,7 @@ export const SkeletonOne = () => {
           d='M1.00002 0.5L1.00001 29.5862C1 36.2136 6.37259 41.5862 13 41.5862H115C121.627 41.5862 127 46.9588 127 53.5862L127 75'
           stroke='url(#gradient-2)'
           strokeWidth='1'
+          className='motion-reduce:hidden'
         />
 
         <defs>
@@ -325,7 +381,7 @@ export const SkeletonOne = () => {
         height='105'
         viewBox='0 0 62 105'
         fill='none'
-        className='absolute -bottom-2 left-1/2 translate-x-0 text-neutral-200 dark:text-neutral-800'
+        className='absolute -bottom-2 left-1/2 translate-x-0 text-xuba-green-200 dark:text-xuba-purple-700'
       >
         <path
           d='M1.00001 -69L1 57.5C1 64.1274 6.37258 69.5 13 69.5H49C55.6274 69.5 61 74.8726 61 81.5L61 105'
@@ -336,6 +392,7 @@ export const SkeletonOne = () => {
           d='M1.00001 -69L1 57.5C1 64.1274 6.37258 69.5 13 69.5H49C55.6274 69.5 61 74.8726 61 81.5L61 105'
           stroke='url(#gradient-1)'
           strokeWidth='1'
+          className='motion-reduce:hidden'
         />
         <defs>
           <motion.linearGradient
@@ -364,7 +421,7 @@ export const SkeletonOne = () => {
             repeat: Infinity,
             repeatDelay: 6,
           }}
-          className='flex-col items-start justify-center overflow-hidden px-2 font-mono text-neutral-800 dark:text-neutral-300'
+          className='flex-col items-start justify-center overflow-hidden px-2 font-mono text-xuba-green-800 dark:text-xuba-green-200 motion-reduce:animate-none'
         >
           <p className='bg-transparent text-[8px]'>git add .</p>
           <p className='bg-transparent text-[8px]'>
@@ -382,6 +439,7 @@ export const SkeletonOne = () => {
             repeat: Infinity,
             repeatDelay: 6,
           }}
+          className='motion-reduce:animate-none'
         >
           <GitHubLogo />
         </SkeletonContainer>
@@ -395,16 +453,21 @@ export const SkeletonOne = () => {
             repeat: Infinity,
             repeatDelay: 6,
           }}
-          className='flex flex-col items-center justify-center'
+          className='flex flex-col items-center justify-center motion-reduce:animate-none'
         >
           <AWSLogo />
-          <p className='bg-transparent text-[8px]'>your site is live ✨</p>
+          <p className='bg-transparent text-[8px] text-xuba-green-700 dark:text-xuba-green-200'>
+            your site is live ✨
+          </p>
         </SkeletonContainer>
       </div>
     </div>
   )
 }
 
+/**
+ * GitHub logo icon.
+ */
 const GitHubLogo = () => {
   return (
     <svg
@@ -413,7 +476,8 @@ const GitHubLogo = () => {
       viewBox='0 0 20 20'
       version='1.1'
       xmlns='http://www.w3.org/2000/svg'
-      className='h-8 w-8 object-contain text-black dark:text-white'
+      className='h-8 w-8 object-contain text-xuba-green-800 dark:text-white'
+      aria-hidden='true'
     >
       <g
         id='Page-1'
@@ -439,6 +503,9 @@ const GitHubLogo = () => {
   )
 }
 
+/**
+ * AWS logo icon.
+ */
 const AWSLogo = () => {
   return (
     <svg
@@ -446,7 +513,8 @@ const AWSLogo = () => {
       viewBox='0 0 48 48'
       width='48px'
       height='48px'
-      className='h-8 w-8 object-contain text-black dark:text-white'
+      className='h-8 w-8 object-contain text-xuba-green-800 dark:text-white'
+      aria-hidden='true'
     >
       <path
         fill='currentColor'
@@ -460,62 +528,23 @@ const AWSLogo = () => {
   )
 }
 
+/**
+ * SkeletonTwo - Globe visualization for global reach.
+ */
 export const SkeletonTwo = () => {
   return (
-    <div className='relative mt-10 flex h-60 flex-col items-center bg-transparent md:h-60 dark:bg-transparent'>
+    <div
+      className='relative mt-10 flex h-60 flex-col items-center bg-transparent md:h-60 dark:bg-transparent'
+      aria-hidden='true'
+    >
       <Globe className='absolute -bottom-80 right-0 md:-bottom-72 md:-right-10' />
     </div>
   )
 }
 
-export const Globe = ({ className }: { className?: string }) => {
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-
-  useEffect(() => {
-    let phi = 0
-
-    if (!canvasRef.current) return
-
-    const globe = createGlobe(canvasRef.current, {
-      devicePixelRatio: 2,
-      width: 600 * 2,
-      height: 600 * 2,
-      phi: 0,
-      theta: -0.15,
-      dark: 1,
-      diffuse: 1.2,
-      mapSamples: 16000,
-      mapBrightness: 6,
-      baseColor: [1.0, 0.2, 0.8],
-      markerColor: [0.722, 0.816, 0.184],
-      glowColor: [0.9, 0.95, 0.5],
-      markers: [
-        // longitude latitude
-        { location: [37.7595, -122.4367], size: 0.03 },
-        { location: [40.7128, -74.006], size: 0.1 },
-      ],
-      onRender: (state) => {
-        // Called on every animation frame.
-        // `state` will be an empty object, return updated params.
-        state.phi = phi
-        phi += 0.005
-      },
-    })
-
-    return () => {
-      globe.destroy()
-    }
-  }, [])
-
-  return (
-    <canvas
-      ref={canvasRef}
-      style={{ width: 600, height: 600, maxWidth: '100%', aspectRatio: 1 }}
-      className={className}
-    />
-  )
-}
-
+/**
+ * Card skeleton body container.
+ */
 const CardSkeletonBody = ({
   children,
   className,
@@ -530,6 +559,9 @@ const CardSkeletonBody = ({
   )
 }
 
+/**
+ * Card content container with padding.
+ */
 const CardContent = ({
   children,
   className,
@@ -540,6 +572,9 @@ const CardContent = ({
   return <div className={cn('p-6', className)}>{children}</div>
 }
 
+/**
+ * Card title with theme-aware colors.
+ */
 const CardTitle = ({
   children,
   className,
@@ -550,7 +585,7 @@ const CardTitle = ({
   return (
     <h3
       className={cn(
-        'text-lg font-medium tracking-tight text-neutral-700 dark:text-xuba-green-400',
+        'text-lg font-medium tracking-tight text-xuba-green-800 dark:text-xuba-green-400',
         className
       )}
     >
@@ -559,6 +594,9 @@ const CardTitle = ({
   )
 }
 
+/**
+ * Card description with theme-aware colors.
+ */
 const CardDescription = ({
   children,
   className,
@@ -569,7 +607,7 @@ const CardDescription = ({
   return (
     <p
       className={cn(
-        'mt-2 max-w-md font-sans text-base font-normal tracking-tight text-neutral-500 dark:text-neutral-50',
+        'mt-2 max-w-md font-sans text-base font-normal tracking-tight text-xuba-green-600 dark:text-xuba-green-100',
         className
       )}
     >
@@ -578,6 +616,9 @@ const CardDescription = ({
   )
 }
 
+/**
+ * Service card with hover effects and CTA link.
+ */
 const Card = ({
   children,
   className,
@@ -593,18 +634,32 @@ const Card = ({
     <motion.div
       whileHover='animate'
       className={cn(
-        'group isolate relative flex flex-col overflow-hidden rounded-2xl dark:bg-xuba-purple-800/80 border border-xuba-purple-500/25 shadow-2xl hover:shadow-xuba-green-500/10 hover:border-xuba-green-500/30 hover:border transition-all duration-300 ease-in-out',
+        'group isolate relative flex flex-col overflow-hidden rounded-xl',
+        // Light theme: subtle white with soft shadow
+        'bg-white/80 backdrop-blur-sm border border-xuba-green-100',
+        '[box-shadow:0_0_0_1px_rgba(0,0,0,.03),0_2px_4px_rgba(0,0,0,.05),0_12px_24px_rgba(0,0,0,.05)]',
+        // Dark theme: translucent with inset glow
+        'dark:bg-xuba-purple-800/60 dark:border-xuba-purple-500/20',
+        'dark:[box-shadow:0_-20px_80px_-20px_#b8d02f1f_inset]',
+        // Hover effects
+        'hover:border-xuba-green-300 dark:hover:border-xuba-green-500/30',
+        'hover:[box-shadow:0_0_0_1px_rgba(184,208,47,.1),0_4px_8px_rgba(184,208,47,.1),0_16px_32px_rgba(184,208,47,.08)]',
+        'dark:hover:[box-shadow:0_-20px_80px_-20px_#b8d02f3f_inset]',
+        'transition-all duration-300 ease-in-out',
         className
       )}
     >
       {children}
-      <div className='h-14 w-full border-t border-xuba-purple-500/45'>
+      <div className='h-14 w-full border-t border-xuba-green-100 dark:border-xuba-purple-500/30'>
         <Link
           href={href}
-          className='group w-full h-14 rounded-none flex flex-row items-center justify-center gap-2 text-gray-50 cursor-pointer font-semibold tracking-tight hover:bg-xuba-purple-500/20 transition-all duration-300 ease-in-out shadow-2xl shadow-xuba-green-500/30'
+          className='group w-full h-14 rounded-b-xl flex flex-row items-center justify-center gap-2 text-xuba-green-800 dark:text-xuba-green-50 cursor-pointer font-semibold tracking-tight hover:bg-xuba-green-50 dark:hover:bg-xuba-purple-500/20 transition-all duration-300 ease-in-out'
         >
-          {ctaLabel}
-          <ArrowRightIcon className='w-4 h-4 group-hover:translate-x-1 transition-all duration-300 ease-in-out text-xuba-green-400' />
+          <span>{ctaLabel}</span>
+          <ArrowRightIcon
+            className='w-4 h-4 group-hover:translate-x-1 transition-all duration-300 ease-in-out text-xuba-green-500 dark:text-xuba-green-400'
+            aria-hidden='true'
+          />
         </Link>
       </div>
     </motion.div>

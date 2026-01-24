@@ -1,0 +1,52 @@
+---
+description: Theming guidelines for Xuba website components
+globs: ["**/*.tsx", "**/*.jsx"]
+alwaysApply: true
+---
+
+# Xuba Theming Guidelines
+
+Before designing or modifying any component, **always reference the theme route** at `/theme` or check the file at `src/app/(frontend)/theme/page.tsx` to ensure consistent color usage.
+
+## Light Theme (Predominantly Green)
+
+- **Background**: `bg-white` only - DO NOT use colored backgrounds for light theme
+- **Primary Text**: `text-xuba-green-900` or `text-xuba-green-800`
+- **Secondary Text**: `text-xuba-green-600` or `text-xuba-green-700`
+- **Accent/Icons**: `text-xuba-green-500` or `text-xuba-green-600`
+- **Links**: `text-xuba-green-600 hover:text-xuba-green-700`
+- **Borders**: `border-xuba-green-200` or `border-xuba-green-300`
+
+## Dark Theme (Predominantly Purple)
+
+- **Background**: `bg-xuba-purple-950` or `bg-xuba-purple-900`
+- **Primary Text**: `text-xuba-green-50` or `text-white`
+- **Secondary Text**: `text-xuba-green-200` or `text-xuba-green-300`
+- **Accent/Icons**: `text-xuba-green-400` or `text-xuba-green-500`
+- **Links**: `text-xuba-green-400 hover:text-xuba-green-300`
+- **Borders**: `border-xuba-purple-700` or `border-white/10`
+
+## Button Patterns
+
+### Primary Button (Both Themes)
+```
+rounded-none border-4 hover:scale-105 transition-all duration-300
+Light: bg-gray-100 border-gray-600 text-gray-700 shadow-lg
+Dark: bg-transparent border-white text-white shadow-xl shadow-xuba-green-500/30
+```
+
+### Secondary Button
+```
+rounded-none border-4 hover:scale-105 transition-all duration-300
+Light: bg-transparent border-xuba-green-500 text-xuba-green-600
+Dark: bg-transparent border-xuba-green-500 text-xuba-green-400 shadow-xl shadow-xuba-purple-500/40
+```
+
+## Important Rules
+
+1. **Light theme background must be white** - use `bg-white dark:bg-xuba-purple-900` pattern
+2. **No borders unless explicitly requested** - avoid adding borders by default
+3. **No rounded corners** - use `rounded-none` for all elements
+4. Use `dark:` prefix for dark mode variants
+5. Always test both light and dark modes
+6. Use semantic color tokens from the theme page when available
