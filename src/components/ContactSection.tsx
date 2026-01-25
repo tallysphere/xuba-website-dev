@@ -60,7 +60,7 @@ const ContactSection = ({
   return (
     <section
       aria-labelledby='contact-heading'
-      className='w-full grid grid-cols-1 md:grid-cols-3 my-20 md:my-40 justify-start relative z-20 max-w-7xl mx-auto rounded-xl bg-linear-to-br from-xuba-green-50 to-white dark:from-xuba-purple-800 dark:to-xuba-purple-900'
+      className='w-full grid grid-cols-1 md:grid-cols-3 my-20 md:my-40 justify-start relative z-20 max-w-7xl mx-auto bg-linear-to-br from-xuba-green-50 to-white dark:from-xuba-purple-800 dark:to-xuba-purple-900'
     >
       <GridLineHorizontal className='top-0' offset='200px' />
       <GridLineHorizontal className='bottom-0 top-auto' offset='200px' />
@@ -82,7 +82,7 @@ const ContactSection = ({
         <div className='flex items-start sm:items-center flex-col sm:flex-row sm:gap-4 mt-10'>
           <Link
             href={ctaLink}
-            className='group relative md:w-56 w-full gap-1 rounded-xl border-2 bg-xuba-green-50 dark:bg-transparent border-xuba-green-500 dark:border-white text-center text-sm text-xuba-green-800 dark:text-white font-medium px-4 py-3 shadow-lg dark:shadow-xl dark:shadow-xuba-purple-500/40 hover:bg-xuba-green-100 dark:hover:bg-white/5 transition-all duration-300'
+            className='group relative md:w-56 w-full gap-1 rounded-none border-2 bg-xuba-green-50 dark:bg-transparent border-xuba-green-500 dark:border-white text-center text-sm text-xuba-green-800 dark:text-white font-medium px-4 py-3 shadow-lg dark:shadow-xl dark:shadow-xuba-purple-500/40 hover:bg-xuba-green-100 dark:hover:bg-white/5 transition-all duration-300'
           >
             <div className='text-xuba-green-800 dark:text-white font-semibold text-lg text-nowrap tracking-tight flex items-center justify-center'>
               {ctaLabel}
