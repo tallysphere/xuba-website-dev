@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
@@ -14,11 +14,33 @@ import { ThemeToggle } from './ThemeToggle'
  * Features:
  * - Theme-aware colors (light and dark mode)
  * - Full-screen menu overlay with staggered animations
+ * - Body scroll lock when menu is open
  * - Accessible with proper ARIA attributes
  * - Responsive design
  */
 export default function AnimatedHeader() {
   const [isOpen, setIsOpen] = useState(false)
+
+  // Lock body scroll when menu is open
+  useEffect(() => {
+    const html = document.documentElement
+    const body = document.body
+
+    if (isOpen) {
+      // Store original values
+      const originalHtmlOverflow = html.style.overflow
+      const originalBodyOverflow = body.style.overflow
+
+      // Lock scroll on both html and body
+      html.style.overflow = 'hidden'
+      body.style.overflow = 'hidden'
+
+      return () => {
+        html.style.overflow = originalHtmlOverflow
+        body.style.overflow = originalBodyOverflow
+      }
+    }
+  }, [isOpen])
 
   const toggleMenu = () => setIsOpen(!isOpen)
 
@@ -171,7 +193,8 @@ export default function AnimatedHeader() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className='fixed inset-0 w-screen h-screen z-40 bg-white dark:bg-xuba-purple-900 flex flex-col'
+            className='fixed inset-0 z-40 bg-white dark:bg-xuba-purple-900 flex flex-col overflow-hidden'
+            style={{ width: '100vw', height: '100dvh' }}
             initial='closed'
             animate='open'
             exit='closed'
@@ -185,7 +208,7 @@ export default function AnimatedHeader() {
 
             {/* Main Navigation */}
             <nav
-              className='flex-1 flex flex-col items-center justify-center z-10 px-6'
+              className='flex-1 flex flex-col items-center justify-center z-10 px-6 overflow-hidden'
               aria-label='Main navigation'
             >
               <div className='space-y-6 md:space-y-8'>
