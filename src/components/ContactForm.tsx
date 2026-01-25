@@ -23,6 +23,12 @@ type ContactFormValues = z.infer<typeof contactFormSchema>
 
 /**
  * Contact form component with validation and email submission.
+ *
+ * Features:
+ * - Theme-aware styling (light and dark mode)
+ * - Form validation with Zod
+ * - Accessible form fields with proper labels
+ * - Loading and success states
  */
 export function ContactForm() {
   const [isSubmitted, setIsSubmitted] = useState(false)
@@ -62,11 +68,11 @@ export function ContactForm() {
     return (
       <div className='px-6 pt-0 pb-24 sm:pb-32 lg:px-8 lg:py-48'>
         <div className='mx-auto max-w-xl lg:mr-0 lg:max-w-lg flex flex-col items-center justify-center text-center py-16'>
-          <div className='w-20 h-20 rounded-full bg-xuba-green-500/20 flex items-center justify-center mb-6'>
-            <CheckCircleIcon className='w-10 h-10 text-xuba-green-500' />
+          <div className='w-20 h-20 rounded-full bg-xuba-green-100 dark:bg-xuba-green-500/20 flex items-center justify-center mb-6'>
+            <CheckCircleIcon className='w-10 h-10 text-xuba-green-500' aria-hidden='true' />
           </div>
-          <h3 className='text-2xl font-semibold text-white mb-3'>Message Sent!</h3>
-          <p className='text-gray-400 mb-8'>
+          <h3 className='text-2xl font-semibold text-xuba-green-900 dark:text-white mb-3'>Message Sent!</h3>
+          <p className='text-xuba-green-600 dark:text-gray-400 mb-8'>
             Thank you for reaching out. We&apos;ll get back to you within 24 hours.
           </p>
           <Button
@@ -92,7 +98,7 @@ export function ContactForm() {
           <div className='group'>
             <label
               htmlFor='firstName'
-              className='block text-sm/6 font-medium text-gray-300 group-focus-within:text-xuba-green-400 transition-colors duration-200'
+              className='block text-sm/6 font-medium text-xuba-green-700 dark:text-gray-300 group-focus-within:text-xuba-green-500 dark:group-focus-within:text-xuba-green-400 transition-colors duration-200'
             >
               First name <span className='text-xuba-green-500'>*</span>
             </label>
@@ -103,12 +109,12 @@ export function ContactForm() {
                 placeholder='John'
                 autoComplete='given-name'
                 {...register('firstName')}
-                className={`block w-full h-12 rounded-none border bg-white/5 px-3.5 py-2 text-base text-white placeholder:text-gray-500 focus:border-xuba-green-500 focus:ring-1 focus:ring-xuba-green-500 transition-all duration-200 ${
-                  errors.firstName ? 'border-red-500' : 'border-xuba-purple-700'
+                className={`block w-full h-12 rounded-none border bg-xuba-green-50 dark:bg-white/5 px-3.5 py-2 text-base text-xuba-green-900 dark:text-white placeholder:text-xuba-green-400 dark:placeholder:text-gray-500 focus:border-xuba-green-500 focus:ring-1 focus:ring-xuba-green-500 transition-all duration-200 ${
+                  errors.firstName ? 'border-red-500' : 'border-xuba-green-200 dark:border-xuba-purple-700'
                 }`}
               />
               {errors.firstName && (
-                <p className='mt-1 text-sm text-red-400'>{errors.firstName.message}</p>
+                <p className='mt-1 text-sm text-red-500 dark:text-red-400'>{errors.firstName.message}</p>
               )}
             </div>
           </div>
@@ -117,7 +123,7 @@ export function ContactForm() {
           <div className='group'>
             <label
               htmlFor='lastName'
-              className='block text-sm/6 font-medium text-gray-300 group-focus-within:text-xuba-green-400 transition-colors duration-200'
+              className='block text-sm/6 font-medium text-xuba-green-700 dark:text-gray-300 group-focus-within:text-xuba-green-500 dark:group-focus-within:text-xuba-green-400 transition-colors duration-200'
             >
               Last name <span className='text-xuba-green-500'>*</span>
             </label>
@@ -128,12 +134,12 @@ export function ContactForm() {
                 placeholder='Doe'
                 autoComplete='family-name'
                 {...register('lastName')}
-                className={`block w-full h-12 rounded-none border bg-white/5 px-3.5 py-2 text-base text-white placeholder:text-gray-500 focus:border-xuba-green-500 focus:ring-1 focus:ring-xuba-green-500 transition-all duration-200 ${
-                  errors.lastName ? 'border-red-500' : 'border-xuba-purple-700'
+                className={`block w-full h-12 rounded-none border bg-xuba-green-50 dark:bg-white/5 px-3.5 py-2 text-base text-xuba-green-900 dark:text-white placeholder:text-xuba-green-400 dark:placeholder:text-gray-500 focus:border-xuba-green-500 focus:ring-1 focus:ring-xuba-green-500 transition-all duration-200 ${
+                  errors.lastName ? 'border-red-500' : 'border-xuba-green-200 dark:border-xuba-purple-700'
                 }`}
               />
               {errors.lastName && (
-                <p className='mt-1 text-sm text-red-400'>{errors.lastName.message}</p>
+                <p className='mt-1 text-sm text-red-500 dark:text-red-400'>{errors.lastName.message}</p>
               )}
             </div>
           </div>
@@ -142,7 +148,7 @@ export function ContactForm() {
           <div className='sm:col-span-2 group'>
             <label
               htmlFor='email'
-              className='block text-sm/6 font-medium text-gray-300 group-focus-within:text-xuba-green-400 transition-colors duration-200'
+              className='block text-sm/6 font-medium text-xuba-green-700 dark:text-gray-300 group-focus-within:text-xuba-green-500 dark:group-focus-within:text-xuba-green-400 transition-colors duration-200'
             >
               Email <span className='text-xuba-green-500'>*</span>
             </label>
@@ -153,12 +159,12 @@ export function ContactForm() {
                 placeholder='john@example.com'
                 autoComplete='email'
                 {...register('email')}
-                className={`block w-full h-12 rounded-none border bg-white/5 px-3.5 py-2 text-base text-white placeholder:text-gray-500 focus:border-xuba-green-500 focus:ring-1 focus:ring-xuba-green-500 transition-all duration-200 ${
-                  errors.email ? 'border-red-500' : 'border-xuba-purple-700'
+                className={`block w-full h-12 rounded-none border bg-xuba-green-50 dark:bg-white/5 px-3.5 py-2 text-base text-xuba-green-900 dark:text-white placeholder:text-xuba-green-400 dark:placeholder:text-gray-500 focus:border-xuba-green-500 focus:ring-1 focus:ring-xuba-green-500 transition-all duration-200 ${
+                  errors.email ? 'border-red-500' : 'border-xuba-green-200 dark:border-xuba-purple-700'
                 }`}
               />
               {errors.email && (
-                <p className='mt-1 text-sm text-red-400'>{errors.email.message}</p>
+                <p className='mt-1 text-sm text-red-500 dark:text-red-400'>{errors.email.message}</p>
               )}
             </div>
           </div>
@@ -167,7 +173,7 @@ export function ContactForm() {
           <div className='sm:col-span-2 group'>
             <label
               htmlFor='phone'
-              className='block text-sm/6 font-medium text-gray-300 group-focus-within:text-xuba-green-400 transition-colors duration-200'
+              className='block text-sm/6 font-medium text-xuba-green-700 dark:text-gray-300 group-focus-within:text-xuba-green-500 dark:group-focus-within:text-xuba-green-400 transition-colors duration-200'
             >
               Phone number
             </label>
@@ -178,7 +184,7 @@ export function ContactForm() {
                 placeholder='+64 21 123 4567'
                 autoComplete='tel'
                 {...register('phone')}
-                className='block w-full h-12 rounded-none border border-xuba-purple-700 bg-white/5 px-3.5 py-2 text-base text-white placeholder:text-gray-500 focus:border-xuba-green-500 focus:ring-1 focus:ring-xuba-green-500 transition-all duration-200'
+                className='block w-full h-12 rounded-none border border-xuba-green-200 dark:border-xuba-purple-700 bg-xuba-green-50 dark:bg-white/5 px-3.5 py-2 text-base text-xuba-green-900 dark:text-white placeholder:text-xuba-green-400 dark:placeholder:text-gray-500 focus:border-xuba-green-500 focus:ring-1 focus:ring-xuba-green-500 transition-all duration-200'
               />
             </div>
           </div>
@@ -187,7 +193,7 @@ export function ContactForm() {
           <div className='sm:col-span-2 group'>
             <label
               htmlFor='message'
-              className='block text-sm/6 font-medium text-gray-300 group-focus-within:text-xuba-green-400 transition-colors duration-200'
+              className='block text-sm/6 font-medium text-xuba-green-700 dark:text-gray-300 group-focus-within:text-xuba-green-500 dark:group-focus-within:text-xuba-green-400 transition-colors duration-200'
             >
               Message <span className='text-xuba-green-500'>*</span>
             </label>
@@ -197,12 +203,12 @@ export function ContactForm() {
                 rows={4}
                 placeholder='Tell us about your project...'
                 {...register('message')}
-                className={`block w-full h-32 rounded-none border bg-white/5 px-3.5 py-2 text-base text-white placeholder:text-gray-500 focus:border-xuba-green-500 focus:ring-1 focus:ring-xuba-green-500 transition-all duration-200 resize-none ${
-                  errors.message ? 'border-red-500' : 'border-xuba-purple-700'
+                className={`block w-full h-32 rounded-none border bg-xuba-green-50 dark:bg-white/5 px-3.5 py-2 text-base text-xuba-green-900 dark:text-white placeholder:text-xuba-green-400 dark:placeholder:text-gray-500 focus:border-xuba-green-500 focus:ring-1 focus:ring-xuba-green-500 transition-all duration-200 resize-none ${
+                  errors.message ? 'border-red-500' : 'border-xuba-green-200 dark:border-xuba-purple-700'
                 }`}
               />
               {errors.message && (
-                <p className='mt-1 text-sm text-red-400'>{errors.message.message}</p>
+                <p className='mt-1 text-sm text-red-500 dark:text-red-400'>{errors.message.message}</p>
               )}
             </div>
           </div>
@@ -210,8 +216,8 @@ export function ContactForm() {
 
         {/* Error Message */}
         {submitError && (
-          <div className='mt-6 p-4 bg-red-500/10 border border-red-500/30 rounded-lg'>
-            <p className='text-sm text-red-400'>{submitError}</p>
+          <div className='mt-6 p-4 bg-red-500/10 border border-red-500/30 rounded-lg' role='alert'>
+            <p className='text-sm text-red-500 dark:text-red-400'>{submitError}</p>
           </div>
         )}
 
@@ -225,12 +231,12 @@ export function ContactForm() {
             <div className='text-gray-700 dark:text-white font-semibold text-lg text-nowrap tracking-tight flex items-center justify-center gap-2'>
               {isSubmitting ? (
                 <>
-                  <Loader2Icon className='w-6 h-6 animate-spin' />
+                  <Loader2Icon className='w-6 h-6 animate-spin' aria-hidden='true' />
                   Sending...
                 </>
               ) : (
                 <>
-                  Send Message <ArrowRightIcon className='w-6 h-6' />
+                  Send Message <ArrowRightIcon className='w-6 h-6' aria-hidden='true' />
                 </>
               )}
             </div>
@@ -238,11 +244,11 @@ export function ContactForm() {
         </div>
 
         {/* Privacy Note */}
-        <p className='mt-4 text-xs text-gray-400 text-center'>
+        <p className='mt-4 text-xs text-xuba-green-600 dark:text-gray-400 text-center'>
           By submitting this form, you agree to our{' '}
           <a
             href='/privacy'
-            className='text-xuba-green-400 hover:text-xuba-green-300 underline underline-offset-2'
+            className='text-xuba-green-500 hover:text-xuba-green-400 dark:text-xuba-green-400 dark:hover:text-xuba-green-300 underline underline-offset-2'
           >
             Privacy Policy
           </a>

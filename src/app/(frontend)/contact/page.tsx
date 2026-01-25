@@ -11,6 +11,16 @@ import { ContactForm } from '@/components/ContactForm'
 import { urlFor } from '@/sanity/lib/image'
 
 /**
+ * Contact Page Component
+ *
+ * Features:
+ * - Theme-aware styling (light and dark mode)
+ * - Responsive layout with contact info and form
+ * - Accessible with proper ARIA attributes
+ * - CMS-driven content from Sanity
+ */
+
+/**
  * Generate metadata for the Contact page from Sanity CMS.
  */
 export async function generateMetadata(): Promise<Metadata> {
@@ -70,20 +80,26 @@ export default async function ContactPage() {
   const emailHref = `mailto:${email}`
 
   return (
-    <div className='relative isolate min-h-screen bg-xuba-purple-900 flex flex-col items-center justify-center md:py-0 py-32 overflow-hidden'>
+    <section
+      aria-labelledby='contact-page-heading'
+      className='relative isolate min-h-screen bg-white dark:bg-xuba-purple-900 flex flex-col items-center justify-center md:py-0 py-32 overflow-hidden'
+    >
       {/* Decorative background elements */}
-      <div className='absolute inset-0 overflow-hidden pointer-events-none'>
-        <div className='absolute -top-40 -right-40 w-80 h-80 bg-xuba-green-500/10 rounded-full blur-3xl' />
-        <div className='absolute -bottom-40 -left-40 w-96 h-96 bg-xuba-purple-500/20 rounded-full blur-3xl' />
-        <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-xuba-green-500/5 rounded-full blur-3xl' />
+      <div className='absolute inset-0 overflow-hidden pointer-events-none' aria-hidden='true'>
+        <div className='absolute -top-40 -right-40 w-80 h-80 bg-xuba-green-500/10 dark:bg-xuba-green-500/10 rounded-full blur-3xl' />
+        <div className='absolute -bottom-40 -left-40 w-96 h-96 bg-xuba-green-500/10 dark:bg-xuba-purple-500/20 rounded-full blur-3xl' />
+        <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-xuba-green-500/5 dark:bg-xuba-green-500/5 rounded-full blur-3xl' />
       </div>
 
       {/* Header Section */}
-      <div className='relative flex flex-col items-center justify-center'>
+      <header className='relative flex flex-col items-center justify-center'>
         <div className='text-xuba-green-500 text-sm font-medium tracking-[0.3em] mt-20 uppercase'>
           {eyebrow}
         </div>
-        <div className='text-white md:text-7xl text-5xl font-thin tracking-tight mt-4 text-center'>
+        <h1
+          id='contact-page-heading'
+          className='text-xuba-green-900 dark:text-white md:text-7xl text-5xl font-thin tracking-tight mt-4 text-center'
+        >
           {title.includes(' ') ? (
             <>
               {title.split(' ').slice(0, -1).join(' ')}{' '}
@@ -96,33 +112,33 @@ export default async function ContactPage() {
               {title}
             </span>
           )}
-        </div>
-      </div>
+        </h1>
+      </header>
 
       {/* Main Content Grid */}
       <div className='relative mx-auto grid max-w-7xl grid-cols-1 lg:grid-cols-2'>
         {/* Left Column - Contact Info */}
         <div className='relative px-6 pt-24 pb-20 sm:pt-32 lg:static lg:px-8 lg:py-48'>
           <div className='mx-auto max-w-xl lg:mx-0 lg:max-w-lg'>
-            <h2 className='text-lg md:text-3xl font-light tracking-tight text-pretty text-white sm:text-3xl text-center md:text-start'>
+            <h2 className='text-lg md:text-3xl font-light tracking-tight text-pretty text-xuba-green-900 dark:text-white sm:text-3xl text-center md:text-start'>
               {heading}
-              <span className='block w-16 h-1 bg-xuba-green-500 mt-4 mx-auto md:mx-0' />
+              <span className='block w-16 h-1 bg-xuba-green-500 mt-4 mx-auto md:mx-0' aria-hidden='true' />
             </h2>
-            <p className='mt-6 text-gray-300 text-base text-center md:text-start leading-relaxed'>
+            <p className='mt-6 text-xuba-green-700 dark:text-gray-300 text-base text-center md:text-start leading-relaxed'>
               {description}
             </p>
 
             {/* Contact Info Items */}
-            <dl className='mt-10 space-y-6 text-base/7 text-gray-300'>
+            <dl className='mt-10 space-y-6 text-base/7 text-xuba-green-700 dark:text-gray-300'>
               <a
                 href='https://maps.app.goo.gl/MdruTpLBcwko2yuV8'
                 target='_blank'
                 rel='noopener noreferrer'
-                className='flex gap-x-4 p-4 -mx-4 rounded-lg transition-all duration-300 hover:bg-white/5 group'
+                className='flex gap-x-4 p-4 -mx-4 rounded-lg transition-all duration-300 hover:bg-xuba-green-50 dark:hover:bg-white/5 group'
               >
                 <dt className='flex-none'>
                   <span className='sr-only'>Address</span>
-                  <div className='w-12 h-12 rounded-full bg-xuba-green-500/10 flex items-center justify-center group-hover:bg-xuba-green-500/20 transition-colors duration-300'>
+                  <div className='w-12 h-12 rounded-full bg-xuba-green-100 dark:bg-xuba-green-500/10 flex items-center justify-center group-hover:bg-xuba-green-200 dark:group-hover:bg-xuba-green-500/20 transition-colors duration-300'>
                     <Building2Icon
                       aria-hidden='true'
                       className='h-6 w-6 text-xuba-green-500'
@@ -130,10 +146,10 @@ export default async function ContactPage() {
                   </div>
                 </dt>
                 <dd className='flex flex-col justify-center'>
-                  <span className='text-xs text-gray-400 uppercase tracking-wide mb-1'>
+                  <span className='text-xs text-xuba-green-500 dark:text-gray-400 uppercase tracking-wide mb-1'>
                     {addressLabel}
                   </span>
-                  <span className='text-white group-hover:text-xuba-green-400 transition-colors duration-300'>
+                  <span className='text-xuba-green-900 dark:text-white group-hover:text-xuba-green-500 dark:group-hover:text-xuba-green-400 transition-colors duration-300'>
                     {address}
                   </span>
                 </dd>
@@ -141,11 +157,11 @@ export default async function ContactPage() {
 
               <a
                 href={phoneHref}
-                className='flex gap-x-4 p-4 -mx-4 rounded-lg transition-all duration-300 hover:bg-white/5 group'
+                className='flex gap-x-4 p-4 -mx-4 rounded-lg transition-all duration-300 hover:bg-xuba-green-50 dark:hover:bg-white/5 group'
               >
                 <dt className='flex-none'>
                   <span className='sr-only'>Telephone</span>
-                  <div className='w-12 h-12 rounded-full bg-xuba-green-500/10 flex items-center justify-center group-hover:bg-xuba-green-500/20 transition-colors duration-300'>
+                  <div className='w-12 h-12 rounded-full bg-xuba-green-100 dark:bg-xuba-green-500/10 flex items-center justify-center group-hover:bg-xuba-green-200 dark:group-hover:bg-xuba-green-500/20 transition-colors duration-300'>
                     <PhoneCallIcon
                       aria-hidden='true'
                       className='h-6 w-6 text-xuba-green-500'
@@ -153,10 +169,10 @@ export default async function ContactPage() {
                   </div>
                 </dt>
                 <dd className='flex flex-col justify-center'>
-                  <span className='text-xs text-gray-400 uppercase tracking-wide mb-1'>
+                  <span className='text-xs text-xuba-green-500 dark:text-gray-400 uppercase tracking-wide mb-1'>
                     {phoneLabel}
                   </span>
-                  <span className='text-white group-hover:text-xuba-green-400 transition-colors duration-300'>
+                  <span className='text-xuba-green-900 dark:text-white group-hover:text-xuba-green-500 dark:group-hover:text-xuba-green-400 transition-colors duration-300'>
                     {phone}
                   </span>
                 </dd>
@@ -164,11 +180,11 @@ export default async function ContactPage() {
 
               <a
                 href={emailHref}
-                className='flex gap-x-4 p-4 -mx-4 rounded-lg transition-all duration-300 hover:bg-white/5 group'
+                className='flex gap-x-4 p-4 -mx-4 rounded-lg transition-all duration-300 hover:bg-xuba-green-50 dark:hover:bg-white/5 group'
               >
                 <dt className='flex-none'>
                   <span className='sr-only'>Email</span>
-                  <div className='w-12 h-12 rounded-full bg-xuba-green-500/10 flex items-center justify-center group-hover:bg-xuba-green-500/20 transition-colors duration-300'>
+                  <div className='w-12 h-12 rounded-full bg-xuba-green-100 dark:bg-xuba-green-500/10 flex items-center justify-center group-hover:bg-xuba-green-200 dark:group-hover:bg-xuba-green-500/20 transition-colors duration-300'>
                     <MailIcon
                       aria-hidden='true'
                       className='h-6 w-6 text-xuba-green-500'
@@ -176,10 +192,10 @@ export default async function ContactPage() {
                   </div>
                 </dt>
                 <dd className='flex flex-col justify-center'>
-                  <span className='text-xs text-gray-400 uppercase tracking-wide mb-1'>
+                  <span className='text-xs text-xuba-green-500 dark:text-gray-400 uppercase tracking-wide mb-1'>
                     {emailLabel}
                   </span>
-                  <span className='text-white group-hover:text-xuba-green-400 transition-colors duration-300'>
+                  <span className='text-xuba-green-900 dark:text-white group-hover:text-xuba-green-500 dark:group-hover:text-xuba-green-400 transition-colors duration-300'>
                     {email}
                   </span>
                 </dd>
@@ -187,8 +203,8 @@ export default async function ContactPage() {
             </dl>
 
             {/* Response Time */}
-            <div className='mt-10 flex items-center gap-3 text-gray-400'>
-              <ClockIcon className='w-5 h-5 text-xuba-green-500' />
+            <div className='mt-10 flex items-center gap-3 text-xuba-green-600 dark:text-gray-400'>
+              <ClockIcon className='w-5 h-5 text-xuba-green-500' aria-hidden='true' />
               <span className='text-sm'>
                 {responseTimeText}
               </span>
@@ -199,6 +215,6 @@ export default async function ContactPage() {
         {/* Right Column - Contact Form (Client Component) */}
         <ContactForm />
       </div>
-    </div>
+    </section>
   )
 }

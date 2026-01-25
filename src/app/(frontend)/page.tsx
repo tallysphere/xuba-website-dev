@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import ContactSection from '@/components/ContactSection'
 import HomeHero from '../../../sections/Home/Hero'
 import { HomeServices } from '../../../sections/Home/HomeServices'
-import WhyXuba from '../../../sections/Home/WhyXuba'
+import WhyXubaAbout from '../../../sections/Home/WhyXubaAbout'
 import { sanityFetch } from '@/sanity/lib/live'
 import { HOMEPAGE_QUERY, CONTACT_SECTION_QUERY } from '@/sanity/lib/queries'
 import { urlFor } from '@/sanity/lib/image'
@@ -80,7 +80,7 @@ export default async function Home() {
       <div className='p-0 m-0 flex flex-col gap-0'>
         <HomeHero {...heroProps} />
         <HomeServices {...servicesProps} />
-        <WhyXuba />
+        <WhyXubaAbout />
         <ContactSection {...contactProps} />
       </div>
     </main>

@@ -141,10 +141,12 @@ export function HomeServices({
               <SkeletonOne />
             </CardSkeletonBody>
             <CardContent className='h-40'>
-              <CardTitle className='md:text-2xl text-xl'>
+              <CardTitle className='md:text-2xl text-xl text-xuba-green-500'>
                 {getCard(0).title}
               </CardTitle>
-              <CardDescription>{getCard(0).description}</CardDescription>
+              <CardDescription className='w-full text-xuba-green-950 dark:text-white'>
+                {getCard(0).description}
+              </CardDescription>
             </CardContent>
           </Card>
 
@@ -154,10 +156,10 @@ export function HomeServices({
             className='flex flex-col justify-between md:col-span-2'
           >
             <CardContent>
-              <CardTitle className='md:text-2xl text-xl'>
+              <CardTitle className='md:text-2xl text-xl text-xuba-green-500'>
                 {getCard(1).title}
               </CardTitle>
-              <CardDescription className='w-full'>
+              <CardDescription className='w-full text-xuba-green-950 dark:text-white'>
                 {getCard(1).description}
               </CardDescription>
             </CardContent>
@@ -183,10 +185,12 @@ export function HomeServices({
               <SkeletonTwo />
             </CardSkeletonBody>
             <CardContent className='h-40'>
-              <CardTitle className='md:text-2xl text-xl'>
+              <CardTitle className='md:text-2xl text-xl text-xuba-green-500'>
                 {getCard(2).title}
               </CardTitle>
-              <CardDescription>{getCard(2).description}</CardDescription>
+              <CardDescription className='w-full text-xuba-green-950 dark:text-white'>
+                {getCard(2).description}
+              </CardDescription>
             </CardContent>
           </Card>
           <Card
@@ -195,10 +199,12 @@ export function HomeServices({
             className='flex flex-col justify-between md:col-span-3'
           >
             <CardContent>
-              <CardTitle className='md:text-2xl text-xl'>
+              <CardTitle className='md:text-2xl text-xl text-xuba-green-500'>
                 {getCard(3).title}
               </CardTitle>
-              <CardDescription>{getCard(3).description}</CardDescription>
+              <CardDescription className='w-full text-xuba-green-950 dark:text-white'>
+                {getCard(3).description}
+              </CardDescription>
             </CardContent>
             <CardSkeletonBody>
               <div className='ml-6 mt-2 h-full w-full rounded-xl border border-gray-100 bg-gray-50/50 p-4 dark:border-xuba-purple-600 dark:bg-xuba-purple-800'>
@@ -224,10 +230,12 @@ export function HomeServices({
               <SkeletonOne />
             </CardSkeletonBody>
             <CardContent className='h-40'>
-              <CardTitle className='md:text-2xl text-xl'>
+              <CardTitle className='md:text-2xl text-xl text-xuba-green-500'>
                 {getCard(4).title}
               </CardTitle>
-              <CardDescription>{getCard(4).description}</CardDescription>
+              <CardDescription className='w-full text-xuba-green-950 dark:text-white'>
+                {getCard(4).description}
+              </CardDescription>
             </CardContent>
           </Card>
 
@@ -237,10 +245,10 @@ export function HomeServices({
             className='flex flex-col justify-between md:col-span-2'
           >
             <CardContent>
-              <CardTitle className='md:text-2xl text-xl'>
+              <CardTitle className='md:text-2xl text-xl text-xuba-green-500'>
                 {getCard(5).title}
               </CardTitle>
-              <CardDescription className='w-full'>
+              <CardDescription className='w-full text-xuba-green-950 dark:text-white'>
                 {getCard(5).description}
               </CardDescription>
             </CardContent>
