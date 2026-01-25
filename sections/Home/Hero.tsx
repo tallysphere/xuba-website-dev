@@ -99,7 +99,7 @@ const HomeHero = ({
 
             {/* Description */}
             {description && (
-              <p className='mx-auto max-w-2xl py-4 text-center text-base md:text-lg text-xuba-green-700 dark:text-xuba-green-200 font-medium'>
+              <p className='mx-auto max-w-2xl py-4 text-center text-base md:text-lg text-xuba-green-950 dark:text-white font-medium'>
                 {description}
               </p>
             )}

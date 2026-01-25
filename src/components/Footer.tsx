@@ -69,7 +69,7 @@ export function SimpleFooterWithFourGrids() {
   return (
     <footer
       aria-label='Site footer'
-      className='border-t border-xuba-green-100 dark:border-white/10 px-8 py-20 bg-white dark:bg-xuba-purple-950 w-full relative overflow-hidden'
+      className='border-t border-xuba-green-100 dark:border-xuba-purple-700/50 px-8 py-20 bg-white dark:bg-xuba-purple-900 w-full relative overflow-hidden'
     >
       <div className='max-w-7xl mx-auto text-sm text-xuba-green-600 dark:text-xuba-green-200 flex sm:flex-row flex-col justify-between items-start md:px-8'>
         {/* Logo & Copyright */}
@@ -153,7 +153,7 @@ export function SimpleFooterWithFourGrids() {
       {/* Decorative Brand Text */}
       <p
         aria-hidden='true'
-        className='text-center mt-20 text-5xl md:text-9xl lg:text-[12rem] xl:text-[13rem] font-bold bg-clip-text text-transparent bg-linear-to-b from-xuba-green-100 dark:from-xuba-purple-800/70 to-xuba-green-200 dark:to-xuba-purple-900 inset-x-0 select-none'
+        className='text-center mt-20 text-5xl md:text-9xl lg:text-[12rem] xl:text-[13rem] font-bold bg-clip-text text-transparent bg-linear-to-b from-xuba-green-100 dark:from-xuba-purple-700/50 to-xuba-green-200 dark:to-xuba-purple-800/30 inset-x-0 select-none'
       >
         XUBA
       </p>

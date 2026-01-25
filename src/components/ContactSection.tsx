@@ -60,25 +60,25 @@ const ContactSection = ({
   return (
     <section
       aria-labelledby='contact-heading'
-      className='w-full grid grid-cols-1 md:grid-cols-3 my-20 md:my-40 justify-start relative z-20 max-w-7xl mx-auto bg-linear-to-br from-xuba-green-50 to-white dark:from-xuba-purple-800 dark:to-xuba-purple-900'
+      className='relative w-full py-20 md:py-40 dark:bg-xuba-purple-900 overflow-hidden'
     >
-      <GridLineHorizontal className='top-0' offset='200px' />
-      <GridLineHorizontal className='bottom-0 top-auto' offset='200px' />
-      <GridLineVertical className='left-0' offset='80px' />
-      <GridLineVertical className='left-auto right-0' offset='80px' />
+      <div className='relative z-20 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3'>
+        <GridLineHorizontal className='top-0' offset='200px' />
+        <GridLineHorizontal className='bottom-0 top-auto' offset='200px' />
+        <GridLineVertical className='left-0' offset='80px' />
+        <GridLineVertical className='left-auto right-0' offset='80px' />
 
-      {/* Main Content */}
-      <div className='md:col-span-2 p-8 md:p-14 md:text-start text-center'>
+        {/* Main Content */}
+        <div className='md:col-span-2 p-8 md:p-14 md:text-start text-center'>
         <h2
           id='contact-heading'
-          className='text-xuba-green-700 dark:text-xuba-green-100 text-xl md:text-3xl tracking-tight font-medium'
+          className='text-xuba-green-500 text-xl md:text-3xl tracking-tight font-medium'
         >
           {heading}
         </h2>
-        <p className='text-xuba-green-600 dark:text-xuba-green-200 mt-4 max-w-lg text-2xl tracking-tight font-medium'>
+        <p className='text-xuba-green-950 dark:text-white mt-4 max-w-lg text-2xl tracking-tight font-medium'>
           {subheading}
         </p>
-
         <div className='flex items-start sm:items-center flex-col sm:flex-row sm:gap-4 mt-10'>
           <Link
             href={ctaLink}
@@ -102,7 +102,7 @@ const ContactSection = ({
             href='https://maps.app.goo.gl/MdruTpLBcwko2yuV8'
             target='_blank'
             rel='noopener noreferrer'
-            className='flex items-center gap-3 text-xuba-green-700 dark:text-xuba-green-200 hover:text-xuba-green-500 dark:hover:text-xuba-green-400 transition-colors justify-center md:justify-start'
+            className='flex items-center gap-3 text-xuba-green-950 dark:text-white hover:text-xuba-green-500 dark:hover:text-xuba-green-400 transition-colors justify-center md:justify-start'
           >
             <Building2Icon
               className='w-5 h-5 text-xuba-green-500 shrink-0'
@@ -112,7 +112,7 @@ const ContactSection = ({
           </a>
           <a
             href={phoneHref}
-            className='flex items-center gap-3 text-xuba-green-700 dark:text-xuba-green-200 hover:text-xuba-green-500 dark:hover:text-xuba-green-400 transition-colors justify-center md:justify-start'
+            className='flex items-center gap-3 text-xuba-green-950 dark:text-white hover:text-xuba-green-500 dark:hover:text-xuba-green-400 transition-colors justify-center md:justify-start'
           >
             <PhoneCallIcon
               className='w-5 h-5 text-xuba-green-500 shrink-0'
@@ -122,7 +122,7 @@ const ContactSection = ({
           </a>
           <a
             href={emailHref}
-            className='flex items-center gap-3 text-xuba-green-700 dark:text-xuba-green-200 hover:text-xuba-green-500 dark:hover:text-xuba-green-400 transition-colors justify-center md:justify-start'
+            className='flex items-center gap-3 text-xuba-green-950 dark:text-white hover:text-xuba-green-500 dark:hover:text-xuba-green-400 transition-colors justify-center md:justify-start'
           >
             <MailIcon
               className='w-5 h-5 text-xuba-green-500 shrink-0'
@@ -131,6 +131,7 @@ const ContactSection = ({
             <span className='text-sm'>{email}</span>
           </a>
         </div>
+      </div>
       </div>
     </section>
   )

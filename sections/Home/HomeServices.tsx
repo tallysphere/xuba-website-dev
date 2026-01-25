@@ -128,7 +128,7 @@ export function HomeServices({
             {title}
           </h2>
         </Header>
-        <p className='mx-auto mt-4 max-w-lg text-center text-sm text-xuba-green-600 dark:text-xuba-green-200'>
+        <p className='mx-auto mt-4 max-w-lg text-center text-sm text-xuba-green-950 dark:text-white'>
           {description}
         </p>
         <div className='cols-1 mt-20 grid gap-4 md:auto-rows-[25rem] md:grid-cols-5'>

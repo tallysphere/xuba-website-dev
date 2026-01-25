@@ -72,7 +72,7 @@ const GlassIcon = ({ icon: Icon }: GlassIconProps) => {
 
   const gradient = mounted
     ? resolvedTheme === 'dark'
-      ? brandGradients.dark
+      ? brandGradients.light
       : brandGradients.light
     : brandGradients.light
 
@@ -135,12 +135,12 @@ const FeatureCard = ({ icon, title, description, index }: FeatureCardProps) => (
       <GlassIcon icon={icon} />
 
       {/* Title */}
-      <h3 className='text-lg font-semibold text-xuba-green-900 dark:text-white mb-2 tracking-tight'>
+      <h3 className='text-lg font-semibold dark:text-xuba-green-400 mb-2 tracking-tight'>
         {title}
       </h3>
 
       {/* Description */}
-      <p className='text-sm text-xuba-green-950 dark:text-xuba-green-200/60 leading-relaxed'>
+      <p className='text-sm text-xuba-green-950 dark:text-white leading-relaxed'>
         {description}
       </p>
     </div>
@@ -182,7 +182,7 @@ export function WhyXubaAbout() {
                 className='text-3xl md:text-4xl lg:text-[2.75rem] font-bold leading-tight text-xuba-green-900 dark:text-white mb-6'
               >
                 <span className='font-bold text-xuba-green-600 dark:text-white'>Built for reliability, designed for growth</span>
-                <span className='font-normal text-xuba-green-950 dark:text-xuba-green-200/80'>
+                <span className='font-normal text-xuba-green-950 dark:text-white'>
                  {' '}  - Your IT partner for every challenge. No shortcuts, just dependable support and solutions that scale.
                 </span>
               </h2>
