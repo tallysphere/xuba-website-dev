@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
+import { TextHoverEffect } from './ui/text-hover-effect'
 
 /**
  * Navigation link item type.
@@ -151,12 +152,9 @@ export function SimpleFooterWithFourGrids() {
       </div>
 
       {/* Decorative Brand Text */}
-      <p
-        aria-hidden='true'
-        className='text-center mt-20 text-5xl md:text-9xl lg:text-[12rem] xl:text-[13rem] font-bold bg-clip-text text-transparent bg-linear-to-b from-xuba-green-100 dark:from-xuba-purple-700/50 to-xuba-green-200 dark:to-xuba-purple-800/30 inset-x-0 select-none'
-      >
-        XUBA
-      </p>
+      <div className="h-[24rem] flex items-center justify-center">
+      <TextHoverEffect text="XUBA" />
+    </div>
     </footer>
   )
 }
