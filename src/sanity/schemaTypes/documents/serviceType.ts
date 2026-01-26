@@ -17,6 +17,7 @@ export const serviceType = defineType({
     { name: 'content', title: 'Rich Text Content' },
     { name: 'benefits', title: 'Benefits' },
     { name: 'services', title: 'What We Handle' },
+    { name: 'faq', title: 'FAQ' },
     { name: 'cta', title: 'Call to Action' },
     { name: 'related', title: 'Related Services' },
     { name: 'seo', title: 'SEO' },
@@ -249,6 +250,60 @@ export const serviceType = defineType({
       group: 'services',
       of: [defineArrayMember({ type: 'string' })],
       description: 'List of specific services/tasks handled',
+    }),
+
+    // ===========================================
+    // FAQ SECTION
+    // ===========================================
+    defineField({
+      name: 'faqTitle',
+      title: 'FAQ Section Title',
+      type: 'string',
+      group: 'faq',
+      description: 'Title for the FAQ section',
+      initialValue: 'Frequently Asked Questions',
+    }),
+    defineField({
+      name: 'faqTitleHighlight',
+      title: 'FAQ Title Highlight',
+      type: 'string',
+      group: 'faq',
+      description: 'Word to highlight in the FAQ title (e.g., "Questions")',
+    }),
+    defineField({
+      name: 'faqs',
+      title: 'FAQ Items',
+      type: 'array',
+      group: 'faq',
+      of: [
+        defineArrayMember({
+          type: 'object',
+          name: 'faqItem',
+          title: 'FAQ Item',
+          fields: [
+            defineField({
+              name: 'question',
+              title: 'Question',
+              type: 'string',
+              validation: (rule) => rule.required(),
+            }),
+            defineField({
+              name: 'answer',
+              title: 'Answer',
+              type: 'text',
+              rows: 4,
+              validation: (rule) => rule.required(),
+            }),
+          ],
+          preview: {
+            select: {
+              title: 'question',
+              subtitle: 'answer',
+            },
+          },
+        }),
+      ],
+      validation: (rule) => rule.max(10),
     }),
 
     // ===========================================

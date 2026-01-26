@@ -10,13 +10,13 @@ import {
   ServiceHero,
   ServiceIntro,
   ServiceBody,
-  ServiceBenefits,
+  ServiceBenefitsBento,
   ServiceFeatures,
+  ServiceFAQ,
   ContactMiniCTA,
   ServiceCTA,
   RelatedServices,
 } from '@/components/services'
-import WhyXuba from '../../../../../sections/Home/WhyXuba'
 
 interface ServicePageProps {
   params: Promise<{ slug: string }>
@@ -111,37 +111,43 @@ export default async function ServicePage({ params }: ServicePageProps) {
         <ServiceBody content={service.bodyContent} />
       )}
 
-      {/* Benefits Section */}
-      {/* {service.benefits && service.benefits.length > 0 && (
-        <ServiceBenefits
+      {/* Benefits Section (Bento Grid) */}
+      {service.benefits && service.benefits.length > 0 && (
+        <ServiceBenefitsBento
           title={service.benefitsTitle}
           titleHighlight={service.benefitsHighlight}
           benefits={service.benefits}
         />
-      )} */}
-
-      {/* Contact Mini-CTA Section */}
-      {/* {service.contactCta?.enabled && (
-        <ContactMiniCTA
-          enabled={service.contactCta.enabled}
-          heading={service.contactCta.heading}
-          buttonText={service.contactCta.buttonText}
-          buttonLink={service.contactCta.buttonLink}
-        />
-      )} */}
+      )}
 
       {/* What We Handle Section */}
-      {/* {service.serviceItems && service.serviceItems.length > 0 && (
+      {service.serviceItems && service.serviceItems.length > 0 && (
         <ServiceFeatures
           title={service.servicesTitle}
           titleHighlight={service.servicesTitleHighlight}
           items={service.serviceItems}
           centerIcon={service.icon}
         />
-      )} */}
+      )}
 
-      {/* Why Xuba Section */}
-      {/* <WhyXuba /> */}
+      {/* FAQ Section */}
+      {service.faqs && service.faqs.length > 0 && (
+        <ServiceFAQ
+          title={service.faqTitle}
+          titleHighlight={service.faqTitleHighlight}
+          faqs={service.faqs}
+        />
+      )}
+
+      {/* Contact Mini-CTA Section */}
+      {service.contactCta?.enabled && (
+        <ContactMiniCTA
+          enabled={service.contactCta.enabled}
+          heading={service.contactCta.heading}
+          buttonText={service.contactCta.buttonText}
+          buttonLink={service.contactCta.buttonLink}
+        />
+      )}
 
       {/* CTA Section */}
       <ServiceCTA

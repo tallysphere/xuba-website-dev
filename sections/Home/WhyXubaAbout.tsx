@@ -179,7 +179,7 @@ export function WhyXubaAbout() {
             <BlurFade delay={0.1} inView>
               <h2
                 id='why-xuba-about-heading'
-                className='text-3xl md:text-4xl lg:text-[2.75rem] font-bold leading-tight text-xuba-green-900 dark:text-white mb-6'
+                className='text-3xl md:text-4xl lg:text-[1.75rem] font-bold leading-tight text-xuba-green-900 dark:text-white mb-6'
               >
                 <span className='font-bold text-xuba-green-600 dark:text-white'>Built for reliability, designed for growth</span>
                 <span className='font-normal text-xuba-green-950 dark:text-white'>

@@ -374,6 +374,15 @@ export const SERVICE_QUERY = defineQuery(`
     servicesTitleHighlight,
     serviceItems,
     
+    // FAQ Section
+    faqTitle,
+    faqTitleHighlight,
+    faqs[] {
+      _key,
+      question,
+      answer
+    },
+    
     // Contact Mini-CTA
     contactCta {
       enabled,
