@@ -1,0 +1,8 @@
+export { default as ServiceHero } from './ServiceHero'
+export { default as ServiceIntro } from './ServiceIntro'
+export { default as ServiceBody } from './ServiceBody'
+export { default as ServiceBenefits } from './ServiceBenefits'
+export { default as ServiceFeatures } from './ServiceFeatures'
+export { default as ContactMiniCTA } from './ContactMiniCTA'
+export { default as ServiceCTA } from './ServiceCTA'
+export { default as RelatedServices } from './RelatedServices'

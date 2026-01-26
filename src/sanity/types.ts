@@ -527,10 +527,49 @@ export type Service = {
     alt?: string;
     _type: "image";
   };
-  features?: Array<{
+  order?: number;
+  heroImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+  tagline: string;
+  taglineHighlight?: string;
+  subtitle?: string;
+  introText?: string;
+  introHighlights?: Array<string>;
+  bodyContent?: BlockContent;
+  benefitsTitle?: string;
+  benefitsHighlight?: string;
+  benefits?: Array<{
+    title: string;
+    description?: string;
+    icon?: string;
+    _type: "benefit";
     _key: string;
-  } & Feature>;
-  body?: BlockContent;
+  }>;
+  servicesTitle?: string;
+  servicesTitleHighlight?: string;
+  serviceItems?: Array<string>;
+  contactCta?: {
+    enabled?: boolean;
+    heading?: string;
+    buttonText?: string;
+    buttonLink?: string;
+  };
+  ctaHeadline?: string;
+  ctaHighlight?: string;
+  ctaSubtext?: string;
+  ctaButtonText?: string;
+  ctaButtonLink?: string;
   relatedServices?: Array<{
     _ref: string;
     _type: "reference";
@@ -538,7 +577,10 @@ export type Service = {
     _key: string;
     [internalGroqTypeReferenceTo]?: "service";
   }>;
-  order?: number;
+  features?: Array<{
+    _key: string;
+  } & Feature>;
+  body?: BlockContent;
   seo?: Seo;
 };
 
@@ -1109,7 +1151,7 @@ export type SERVICES_QUERYResult = Array<{
   } | null;
 }>;
 // Variable: SERVICE_QUERY
-// Query: *[_type == "service" && slug.current == $slug][0]{    _id,    _type,    title,    "slug": slug.current,    shortDescription,    icon,    featuredImage,    features[] {      _key,      title,      description,      icon    },    body,    relatedServices[]-> {      _id,      title,      "slug": slug.current,      shortDescription,      icon    },    "seo": {      "title": coalesce(seo.title, title),      "description": coalesce(seo.description, shortDescription),      "image": coalesce(seo.image, featuredImage),      "noIndex": seo.noIndex == true,      "canonicalUrl": seo.canonicalUrl    }  }
+// Query: *[_type == "service" && slug.current == $slug][0]{    _id,    _type,    title,    "slug": slug.current,    shortDescription,    icon,    featuredImage,        // Hero Section    heroImage {      asset,      alt,      hotspot,      crop    },    tagline,    taglineHighlight,    subtitle,        // Introduction Section    introText,    introHighlights,        // Rich Text Body Content    bodyContent,        // Benefits Section    benefitsTitle,    benefitsHighlight,    benefits[] {      _key,      title,      description,      icon    },        // What We Handle Section    servicesTitle,    servicesTitleHighlight,    serviceItems,        // Contact Mini-CTA    contactCta {      enabled,      heading,      buttonText,      buttonLink    },        // CTA Section    ctaHeadline,    ctaHighlight,    ctaSubtext,    ctaButtonText,    ctaButtonLink,        // Related Services (with thumbnails)    relatedServices[]-> {      _id,      title,      "slug": slug.current,      shortDescription,      tagline,      icon,      featuredImage {        asset,        alt,        hotspot,        crop      }    },        // Legacy fields (for backward compatibility)    features[] {      _key,      title,      description,      icon    },    body,        // SEO    "seo": {      "title": coalesce(seo.title, title),      "description": coalesce(seo.description, shortDescription),      "image": coalesce(seo.image, featuredImage),      "noIndex": seo.noIndex == true,      "canonicalUrl": seo.canonicalUrl    }  }
 export type SERVICE_QUERYResult = {
   _id: string;
   _type: "service";
@@ -1130,6 +1172,64 @@ export type SERVICE_QUERYResult = {
     alt?: string;
     _type: "image";
   } | null;
+  heroImage: {
+    asset: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    } | null;
+    alt: string | null;
+    hotspot: SanityImageHotspot | null;
+    crop: SanityImageCrop | null;
+  } | null;
+  tagline: string;
+  taglineHighlight: string | null;
+  subtitle: string | null;
+  introText: string | null;
+  introHighlights: Array<string> | null;
+  bodyContent: BlockContent | null;
+  benefitsTitle: string | null;
+  benefitsHighlight: string | null;
+  benefits: Array<{
+    _key: string;
+    title: string;
+    description: string | null;
+    icon: string | null;
+  }> | null;
+  servicesTitle: string | null;
+  servicesTitleHighlight: string | null;
+  serviceItems: Array<string> | null;
+  contactCta: {
+    enabled: boolean | null;
+    heading: string | null;
+    buttonText: string | null;
+    buttonLink: string | null;
+  } | null;
+  ctaHeadline: string | null;
+  ctaHighlight: string | null;
+  ctaSubtext: string | null;
+  ctaButtonText: string | null;
+  ctaButtonLink: string | null;
+  relatedServices: Array<{
+    _id: string;
+    title: string;
+    slug: string;
+    shortDescription: string;
+    tagline: string;
+    icon: string | null;
+    featuredImage: {
+      asset: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      } | null;
+      alt: string | null;
+      hotspot: SanityImageHotspot | null;
+      crop: SanityImageCrop | null;
+    } | null;
+  }> | null;
   features: Array<{
     _key: string;
     title: string;
@@ -1137,13 +1237,6 @@ export type SERVICE_QUERYResult = {
     icon: string | null;
   }> | null;
   body: BlockContent | null;
-  relatedServices: Array<{
-    _id: string;
-    title: string;
-    slug: string;
-    shortDescription: string;
-    icon: string | null;
-  }> | null;
   seo: {
     title: string;
     description: string;
@@ -1346,7 +1439,7 @@ declare module "@sanity/client" {
     "\n  *[_type == \"page\" && slug.current == $slug][0]{\n    _id,\n    _type,\n    title,\n    \"slug\": slug.current,\n    \"seo\": {\n      \"title\": coalesce(seo.title, title),\n      \"description\": coalesce(seo.description, \"\"),\n      \"image\": seo.image,\n      \"noIndex\": seo.noIndex == true,\n      \"canonicalUrl\": seo.canonicalUrl\n    },\n    pageBuilder[] {\n      _key,\n      _type,\n      ...,\n      _type == \"servicesGrid\" => {\n        ...,\n        services[]-> {\n          _id,\n          title,\n          \"slug\": slug.current,\n          shortDescription,\n          icon,\n          featuredImage\n        }\n      },\n      _type == \"teamGrid\" => {\n        ...,\n        teamMembers[]-> {\n          _id,\n          name,\n          \"slug\": slug.current,\n          role,\n          image,\n          location,\n          socialLinks\n        }\n      },\n      _type == \"faqSection\" => {\n        ...,\n        faqs[]-> {\n          _id,\n          question,\n          answer,\n          category\n        }\n      }\n    }\n  }\n": PAGE_QUERYResult;
     "\n  *[_type == \"page\" && defined(slug.current)]{\n    \"slug\": slug.current\n  }\n": PAGE_SLUGS_QUERYResult;
     "\n  *[_type == \"service\"] | order(order asc, title asc) {\n    _id,\n    title,\n    \"slug\": slug.current,\n    shortDescription,\n    icon,\n    featuredImage\n  }\n": SERVICES_QUERYResult;
-    "\n  *[_type == \"service\" && slug.current == $slug][0]{\n    _id,\n    _type,\n    title,\n    \"slug\": slug.current,\n    shortDescription,\n    icon,\n    featuredImage,\n    features[] {\n      _key,\n      title,\n      description,\n      icon\n    },\n    body,\n    relatedServices[]-> {\n      _id,\n      title,\n      \"slug\": slug.current,\n      shortDescription,\n      icon\n    },\n    \"seo\": {\n      \"title\": coalesce(seo.title, title),\n      \"description\": coalesce(seo.description, shortDescription),\n      \"image\": coalesce(seo.image, featuredImage),\n      \"noIndex\": seo.noIndex == true,\n      \"canonicalUrl\": seo.canonicalUrl\n    }\n  }\n": SERVICE_QUERYResult;
+    "\n  *[_type == \"service\" && slug.current == $slug][0]{\n    _id,\n    _type,\n    title,\n    \"slug\": slug.current,\n    shortDescription,\n    icon,\n    featuredImage,\n    \n    // Hero Section\n    heroImage {\n      asset,\n      alt,\n      hotspot,\n      crop\n    },\n    tagline,\n    taglineHighlight,\n    subtitle,\n    \n    // Introduction Section\n    introText,\n    introHighlights,\n    \n    // Rich Text Body Content\n    bodyContent,\n    \n    // Benefits Section\n    benefitsTitle,\n    benefitsHighlight,\n    benefits[] {\n      _key,\n      title,\n      description,\n      icon\n    },\n    \n    // What We Handle Section\n    servicesTitle,\n    servicesTitleHighlight,\n    serviceItems,\n    \n    // Contact Mini-CTA\n    contactCta {\n      enabled,\n      heading,\n      buttonText,\n      buttonLink\n    },\n    \n    // CTA Section\n    ctaHeadline,\n    ctaHighlight,\n    ctaSubtext,\n    ctaButtonText,\n    ctaButtonLink,\n    \n    // Related Services (with thumbnails)\n    relatedServices[]-> {\n      _id,\n      title,\n      \"slug\": slug.current,\n      shortDescription,\n      tagline,\n      icon,\n      featuredImage {\n        asset,\n        alt,\n        hotspot,\n        crop\n      }\n    },\n    \n    // Legacy fields (for backward compatibility)\n    features[] {\n      _key,\n      title,\n      description,\n      icon\n    },\n    body,\n    \n    // SEO\n    \"seo\": {\n      \"title\": coalesce(seo.title, title),\n      \"description\": coalesce(seo.description, shortDescription),\n      \"image\": coalesce(seo.image, featuredImage),\n      \"noIndex\": seo.noIndex == true,\n      \"canonicalUrl\": seo.canonicalUrl\n    }\n  }\n": SERVICE_QUERYResult;
     "\n  *[_type == \"service\" && defined(slug.current)]{\n    \"slug\": slug.current\n  }\n": SERVICE_SLUGS_QUERYResult;
     "\n  *[_type == \"teamMember\" && isActive == true] | order(order asc, name asc) {\n    _id,\n    name,\n    \"slug\": slug.current,\n    role,\n    image,\n    bio,\n    location,\n    email,\n    socialLinks[] {\n      _key,\n      platform,\n      url\n    }\n  }\n": TEAM_MEMBERS_QUERYResult;
     "\n  *[_type == \"teamMember\" && slug.current == $slug][0]{\n    _id,\n    name,\n    \"slug\": slug.current,\n    role,\n    image,\n    bio,\n    location,\n    email,\n    socialLinks[] {\n      _key,\n      platform,\n      url\n    }\n  }\n": TEAM_MEMBER_QUERYResult;

@@ -1,0 +1,2492 @@
+[
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "max",
+                "constraint": 60
+              }
+            ],
+            "level": "warning",
+            "message": "SEO titles should be under 60 characters"
+          }
+        ],
+        "description": "Overrides the page title for search engines (50-60 characters recommended)",
+        "name": "title",
+        "type": "string",
+        "title": "SEO Title"
+      },
+      {
+        "rows": 4,
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "max",
+                "constraint": 500
+              }
+            ],
+            "level": "warning",
+            "message": "Meta descriptions should be under 300 characters"
+          }
+        ],
+        "description": "Description for search results (up to 300 characters)",
+        "name": "description",
+        "type": "text",
+        "title": "Meta Description"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "description": "Image for social media sharing (1200x630 recommended)",
+        "name": "image",
+        "type": "image",
+        "title": "Social Share Image"
+      },
+      {
+        "initialValue": false,
+        "description": "If enabled, search engines will not index this page",
+        "name": "noIndex",
+        "type": "boolean",
+        "title": "Hide from Search Engines"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Optional: Specify the canonical URL if this content exists elsewhere",
+        "name": "canonicalUrl",
+        "type": "url",
+        "title": "Canonical URL"
+      }
+    ],
+    "name": "seo",
+    "type": "object",
+    "title": "SEO"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Display text for the link",
+        "name": "label",
+        "type": "string"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Internal Page",
+              "value": "internal"
+            },
+            {
+              "title": "External URL",
+              "value": "external"
+            }
+          ],
+          "layout": "radio"
+        },
+        "initialValue": "internal",
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "valid",
+                "constraint": [
+                  "internal",
+                  "external"
+                ]
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "linkType",
+        "type": "string"
+      },
+      {
+        "to": [
+          {
+            "type": "page"
+          },
+          {
+            "type": "service"
+          }
+        ],
+        "hidden": "conditional",
+        "name": "internalLink",
+        "type": "reference",
+        "title": "Internal Page"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/",
+                      "/^mailto$/",
+                      "/^tel$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "hidden": "conditional",
+        "name": "externalUrl",
+        "type": "url",
+        "title": "External URL"
+      },
+      {
+        "initialValue": false,
+        "description": "Opens link in a new browser tab",
+        "name": "openInNewTab",
+        "type": "boolean",
+        "title": "Open in New Tab"
+      }
+    ],
+    "name": "link",
+    "type": "object"
+  },
+  {
+    "fields": [
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Facebook",
+              "value": "facebook"
+            },
+            {
+              "title": "LinkedIn",
+              "value": "linkedin"
+            },
+            {
+              "title": "Twitter / X",
+              "value": "twitter"
+            },
+            {
+              "title": "Instagram",
+              "value": "instagram"
+            },
+            {
+              "title": "YouTube",
+              "value": "youtube"
+            },
+            {
+              "title": "GitHub",
+              "value": "github"
+            }
+          ],
+          "layout": "dropdown"
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "valid",
+                "constraint": [
+                  "facebook",
+                  "linkedin",
+                  "twitter",
+                  "instagram",
+                  "youtube",
+                  "github"
+                ]
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "platform",
+        "type": "string"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "url",
+        "type": "url",
+        "title": "URL"
+      }
+    ],
+    "name": "socialLink",
+    "type": "object"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "The numeric value (e.g., \"100\", \"10\")",
+        "name": "value",
+        "type": "string"
+      },
+      {
+        "description": "Optional suffix (e.g., \"+\", \"%\", \"K\")",
+        "name": "suffix",
+        "type": "string"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Description of the stat (e.g., \"Years in Business\")",
+        "name": "label",
+        "type": "string"
+      }
+    ],
+    "name": "stat",
+    "type": "object",
+    "title": "Statistic"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "rows": 3,
+        "name": "description",
+        "type": "text"
+      },
+      {
+        "description": "Icon identifier (e.g., \"cloud\", \"shield\", \"server\")",
+        "name": "icon",
+        "type": "string",
+        "title": "Icon Name"
+      }
+    ],
+    "name": "feature",
+    "type": "object"
+  },
+  {
+    "of": [
+      {
+        "marks": {
+          "annotations": [
+            {
+              "fields": [
+                {
+                  "validation": [
+                    {
+                      "rules": [
+                        {
+                          "flag": "uri",
+                          "constraint": {
+                            "options": {
+                              "scheme": [
+                                "/^http$/",
+                                "/^https$/",
+                                "/^mailto$/",
+                                "/^tel$/"
+                              ],
+                              "allowRelative": false,
+                              "relativeOnly": false,
+                              "allowCredentials": false
+                            }
+                          }
+                        }
+                      ],
+                      "level": "error"
+                    }
+                  ],
+                  "name": "href",
+                  "type": "url",
+                  "title": "URL"
+                },
+                {
+                  "initialValue": false,
+                  "name": "blank",
+                  "type": "boolean",
+                  "title": "Open in new tab"
+                }
+              ],
+              "name": "link",
+              "type": "object",
+              "title": "URL"
+            }
+          ],
+          "decorators": [
+            {
+              "value": "strong",
+              "title": "Strong"
+            },
+            {
+              "value": "em",
+              "title": "Emphasis"
+            },
+            {
+              "value": "underline",
+              "title": "Underline"
+            }
+          ]
+        },
+        "lists": [
+          {
+            "value": "bullet",
+            "title": "Bullet"
+          },
+          {
+            "value": "number",
+            "title": "Numbered"
+          }
+        ],
+        "styles": [
+          {
+            "value": "normal",
+            "title": "Normal"
+          },
+          {
+            "value": "h2",
+            "title": "H2"
+          },
+          {
+            "value": "h3",
+            "title": "H3"
+          },
+          {
+            "value": "h4",
+            "title": "H4"
+          },
+          {
+            "value": "blockquote",
+            "title": "Quote"
+          }
+        ],
+        "of": [],
+        "type": "block"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "fields": [
+          {
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "presence",
+                    "constraint": "required"
+                  }
+                ],
+                "level": "warning",
+                "message": "Alt text is important for accessibility"
+              }
+            ],
+            "name": "alt",
+            "type": "string",
+            "title": "Alternative Text"
+          },
+          {
+            "name": "caption",
+            "type": "string"
+          }
+        ],
+        "type": "image"
+      }
+    ],
+    "name": "blockContent",
+    "type": "array"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "label",
+        "type": "string"
+      },
+      {
+        "name": "link",
+        "type": "link"
+      },
+      {
+        "description": "Optional dropdown menu items",
+        "of": [
+          {
+            "fields": [
+              {
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "name": "label",
+                "type": "string"
+              },
+              {
+                "name": "link",
+                "type": "link"
+              }
+            ],
+            "type": "object",
+            "name": "childNavItem"
+          }
+        ],
+        "name": "children",
+        "type": "array",
+        "title": "Dropdown Items"
+      }
+    ],
+    "name": "navItem",
+    "type": "object",
+    "title": "Navigation Item"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string",
+        "title": "Column Title"
+      },
+      {
+        "of": [
+          {
+            "type": "link"
+          }
+        ],
+        "name": "links",
+        "type": "array"
+      }
+    ],
+    "name": "footerColumn",
+    "type": "object"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "rows": 3,
+        "name": "subtitle",
+        "type": "text"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "fields": [
+          {
+            "name": "alt",
+            "type": "string",
+            "title": "Alternative Text"
+          }
+        ],
+        "name": "backgroundImage",
+        "type": "image"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "max",
+                "constraint": 2
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "of": [
+          {
+            "fields": [
+              {
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "name": "label",
+                "type": "string"
+              },
+              {
+                "name": "link",
+                "type": "link"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Primary",
+                      "value": "primary"
+                    },
+                    {
+                      "title": "Secondary",
+                      "value": "secondary"
+                    },
+                    {
+                      "title": "Outline",
+                      "value": "outline"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "primary",
+                "name": "variant",
+                "type": "string",
+                "title": "Style"
+              }
+            ],
+            "type": "object",
+            "name": "ctaButton"
+          }
+        ],
+        "name": "cta",
+        "type": "array",
+        "title": "Call to Action Buttons"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Left",
+              "value": "left"
+            },
+            {
+              "title": "Center",
+              "value": "center"
+            },
+            {
+              "title": "Right",
+              "value": "right"
+            }
+          ],
+          "layout": "radio"
+        },
+        "initialValue": "center",
+        "name": "alignment",
+        "type": "string",
+        "title": "Text Alignment"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Small",
+              "value": "sm"
+            },
+            {
+              "title": "Medium",
+              "value": "md"
+            },
+            {
+              "title": "Large",
+              "value": "lg"
+            },
+            {
+              "title": "Full Screen",
+              "value": "full"
+            }
+          ],
+          "layout": "radio"
+        },
+        "initialValue": "lg",
+        "name": "size",
+        "type": "string",
+        "title": "Hero Size"
+      }
+    ],
+    "name": "hero",
+    "type": "object",
+    "title": "Hero Section"
+  },
+  {
+    "fields": [
+      {
+        "name": "title",
+        "type": "string",
+        "title": "Section Title"
+      },
+      {
+        "rows": 2,
+        "name": "subtitle",
+        "type": "text",
+        "title": "Section Subtitle"
+      },
+      {
+        "description": "Select services to display (leave empty to show all)",
+        "of": [
+          {
+            "to": [
+              {
+                "type": "service"
+              }
+            ],
+            "type": "reference",
+            "title": "Reference to service"
+          }
+        ],
+        "name": "services",
+        "type": "array"
+      },
+      {
+        "initialValue": true,
+        "name": "showAllLink",
+        "type": "boolean",
+        "title": "Show \"View All Services\" Link"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "2 Columns",
+              "value": 2
+            },
+            {
+              "title": "3 Columns",
+              "value": 3
+            },
+            {
+              "title": "4 Columns",
+              "value": 4
+            }
+          ]
+        },
+        "initialValue": 3,
+        "name": "columns",
+        "type": "number"
+      }
+    ],
+    "name": "servicesGrid",
+    "type": "object"
+  },
+  {
+    "fields": [
+      {
+        "name": "title",
+        "type": "string",
+        "title": "Section Title"
+      },
+      {
+        "rows": 2,
+        "name": "subtitle",
+        "type": "text",
+        "title": "Section Subtitle"
+      },
+      {
+        "description": "Select team members to display (leave empty to show all active members)",
+        "of": [
+          {
+            "to": [
+              {
+                "type": "teamMember"
+              }
+            ],
+            "type": "reference",
+            "title": "Reference to team member"
+          }
+        ],
+        "name": "teamMembers",
+        "type": "array"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "min",
+                "constraint": 1
+              },
+              {
+                "flag": "max",
+                "constraint": 20
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Maximum number of team members to display (when showing all)",
+        "name": "limit",
+        "type": "number"
+      },
+      {
+        "initialValue": false,
+        "description": "Display team member biographies",
+        "name": "showBio",
+        "type": "boolean",
+        "title": "Show Biography"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "2 Columns",
+              "value": 2
+            },
+            {
+              "title": "3 Columns",
+              "value": 3
+            },
+            {
+              "title": "4 Columns",
+              "value": 4
+            }
+          ]
+        },
+        "initialValue": 4,
+        "name": "columns",
+        "type": "number"
+      }
+    ],
+    "name": "teamGrid",
+    "type": "object"
+  },
+  {
+    "fields": [
+      {
+        "name": "title",
+        "type": "string",
+        "title": "Section Title"
+      },
+      {
+        "rows": 2,
+        "name": "subtitle",
+        "type": "text",
+        "title": "Section Subtitle"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "min",
+                "constraint": 1
+              },
+              {
+                "flag": "max",
+                "constraint": 6
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "of": [
+          {
+            "type": "stat",
+            "title": "Statistic"
+          }
+        ],
+        "name": "stats",
+        "type": "array",
+        "title": "Statistics"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Default",
+              "value": "default"
+            },
+            {
+              "title": "Accent",
+              "value": "accent"
+            },
+            {
+              "title": "Dark",
+              "value": "dark"
+            }
+          ],
+          "layout": "radio"
+        },
+        "initialValue": "default",
+        "name": "backgroundColor",
+        "type": "string",
+        "title": "Background Style"
+      }
+    ],
+    "name": "statsSection",
+    "type": "object"
+  },
+  {
+    "fields": [
+      {
+        "name": "title",
+        "type": "string",
+        "title": "Section Title"
+      },
+      {
+        "rows": 2,
+        "name": "subtitle",
+        "type": "text",
+        "title": "Section Subtitle"
+      },
+      {
+        "description": "Select FAQs to display (leave empty to show all)",
+        "of": [
+          {
+            "to": [
+              {
+                "type": "faq"
+              }
+            ],
+            "type": "reference",
+            "title": "Reference to faq"
+          }
+        ],
+        "name": "faqs",
+        "type": "array",
+        "title": "FAQs"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "All Categories"
+            },
+            {
+              "title": "General",
+              "value": "general"
+            },
+            {
+              "title": "Services",
+              "value": "services"
+            },
+            {
+              "title": "Support",
+              "value": "support"
+            },
+            {
+              "title": "Billing",
+              "value": "billing"
+            }
+          ],
+          "layout": "dropdown"
+        },
+        "description": "Show only FAQs from a specific category (when showing all)",
+        "name": "filterByCategory",
+        "type": "string",
+        "title": "Filter by Category"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "min",
+                "constraint": 1
+              },
+              {
+                "flag": "max",
+                "constraint": 20
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Maximum number of FAQs to display (when showing all)",
+        "name": "limit",
+        "type": "number"
+      },
+      {
+        "initialValue": true,
+        "description": "Display \"Still have questions?\" CTA below FAQs",
+        "name": "showContactCta",
+        "type": "boolean",
+        "title": "Show Contact CTA"
+      }
+    ],
+    "name": "faqSection",
+    "type": "object",
+    "title": "FAQ Section"
+  },
+  {
+    "fields": [
+      {
+        "name": "title",
+        "type": "string",
+        "title": "Section Title"
+      },
+      {
+        "rows": 2,
+        "name": "subtitle",
+        "type": "text",
+        "title": "Section Subtitle"
+      },
+      {
+        "initialValue": true,
+        "description": "Display the contact form",
+        "name": "showContactForm",
+        "type": "boolean"
+      },
+      {
+        "initialValue": true,
+        "description": "Display phone, email, and address from Site Settings",
+        "name": "showContactInfo",
+        "type": "boolean",
+        "title": "Show Contact Information"
+      },
+      {
+        "initialValue": false,
+        "description": "Display a map (requires address in Site Settings)",
+        "name": "showMap",
+        "type": "boolean"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Default",
+              "value": "default"
+            },
+            {
+              "title": "Accent",
+              "value": "accent"
+            },
+            {
+              "title": "Dark",
+              "value": "dark"
+            }
+          ],
+          "layout": "radio"
+        },
+        "initialValue": "default",
+        "name": "backgroundColor",
+        "type": "string",
+        "title": "Background Style"
+      }
+    ],
+    "name": "contactSection",
+    "type": "object"
+  },
+  {
+    "fields": [
+      {
+        "description": "Optional title above the content",
+        "name": "title",
+        "type": "string",
+        "title": "Section Title"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "body",
+        "type": "blockContent",
+        "title": "Content"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Narrow (prose)",
+              "value": "prose"
+            },
+            {
+              "title": "Medium",
+              "value": "md"
+            },
+            {
+              "title": "Wide",
+              "value": "lg"
+            },
+            {
+              "title": "Full Width",
+              "value": "full"
+            }
+          ],
+          "layout": "radio"
+        },
+        "initialValue": "prose",
+        "name": "maxWidth",
+        "type": "string",
+        "title": "Content Width"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Left",
+              "value": "left"
+            },
+            {
+              "title": "Center",
+              "value": "center"
+            }
+          ],
+          "layout": "radio"
+        },
+        "initialValue": "left",
+        "name": "alignment",
+        "type": "string",
+        "title": "Text Alignment"
+      }
+    ],
+    "name": "richText",
+    "type": "object"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "The name of the website",
+        "name": "siteName",
+        "type": "string"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "description": "Site logo (SVG or PNG recommended)",
+        "name": "logo",
+        "type": "image"
+      },
+      {
+        "description": "Site favicon (32x32 or 16x16 PNG)",
+        "name": "favicon",
+        "type": "image"
+      },
+      {
+        "description": "Default SEO settings used when pages do not specify their own",
+        "name": "defaultSeo",
+        "type": "seo",
+        "title": "Default SEO"
+      },
+      {
+        "fields": [
+          {
+            "description": "Main contact phone number",
+            "name": "phone",
+            "type": "string",
+            "title": "Phone Number"
+          },
+          {
+            "name": "email",
+            "type": "string",
+            "title": "Email Address"
+          },
+          {
+            "rows": 3,
+            "name": "address",
+            "type": "text"
+          },
+          {
+            "description": "e.g., \"Mon-Fri 9am-5pm\"",
+            "name": "businessHours",
+            "type": "string"
+          }
+        ],
+        "name": "contact",
+        "type": "object",
+        "title": "Contact Information"
+      },
+      {
+        "of": [
+          {
+            "type": "socialLink"
+          }
+        ],
+        "name": "socialLinks",
+        "type": "array"
+      },
+      {
+        "description": "Third-party analytics configuration",
+        "fields": [
+          {
+            "description": "e.g., G-XXXXXXXXXX",
+            "name": "googleAnalyticsId",
+            "type": "string",
+            "title": "Google Analytics ID"
+          },
+          {
+            "description": "e.g., GTM-XXXXXXX",
+            "name": "googleTagManagerId",
+            "type": "string",
+            "title": "Google Tag Manager ID"
+          }
+        ],
+        "name": "analytics",
+        "type": "object"
+      },
+      {
+        "description": "Content for the reusable Contact Section component",
+        "fields": [
+          {
+            "initialValue": "We are here to help you with your IT needs",
+            "description": "Main heading text",
+            "name": "heading",
+            "type": "string"
+          },
+          {
+            "initialValue": "Get in touch with us Today.",
+            "description": "Text below the heading",
+            "name": "subheading",
+            "type": "string"
+          },
+          {
+            "initialValue": "Get in touch",
+            "name": "ctaLabel",
+            "type": "string",
+            "title": "CTA Button Label"
+          },
+          {
+            "initialValue": "/contact",
+            "name": "ctaLink",
+            "type": "string",
+            "title": "CTA Button Link"
+          }
+        ],
+        "name": "contactSection",
+        "type": "object"
+      }
+    ],
+    "name": "siteSettings",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "description": "Primary navigation items in the header",
+        "of": [
+          {
+            "type": "navItem",
+            "title": "Navigation Item"
+          }
+        ],
+        "name": "mainNav",
+        "type": "array",
+        "title": "Main Navigation"
+      },
+      {
+        "description": "Optional call-to-action button in the header",
+        "fields": [
+          {
+            "name": "label",
+            "type": "string"
+          },
+          {
+            "name": "link",
+            "type": "link"
+          }
+        ],
+        "name": "ctaButton",
+        "type": "object",
+        "title": "CTA Button"
+      },
+      {
+        "description": "Link columns in the footer",
+        "of": [
+          {
+            "type": "footerColumn"
+          }
+        ],
+        "name": "footerColumns",
+        "type": "array"
+      },
+      {
+        "description": "Privacy Policy, Terms of Service, etc.",
+        "of": [
+          {
+            "type": "link"
+          }
+        ],
+        "name": "legalLinks",
+        "type": "array"
+      }
+    ],
+    "name": "navigation",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Main headline for the about page (e.g., \"Clever IT & Clever People\")",
+        "name": "heroTitle",
+        "type": "string"
+      },
+      {
+        "rows": 4,
+        "description": "Supporting text below the title",
+        "name": "heroSubtitle",
+        "type": "text"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "max",
+                "constraint": 5
+              }
+            ],
+            "level": "warning",
+            "message": "Maximum 5 images recommended for the hero grid"
+          }
+        ],
+        "description": "Gallery images for the hero section (5 images recommended)",
+        "of": [
+          {
+            "options": {
+              "hotspot": true
+            },
+            "fields": [
+              {
+                "description": "Alternative text for accessibility",
+                "name": "alt",
+                "type": "string",
+                "title": "Alt Text"
+              }
+            ],
+            "type": "image"
+          }
+        ],
+        "name": "heroImages",
+        "type": "array"
+      },
+      {
+        "description": "Title for the mission section (e.g., \"Our mission\")",
+        "name": "missionTitle",
+        "type": "string"
+      },
+      {
+        "rows": 4,
+        "description": "Lead paragraph for the mission section",
+        "name": "missionIntro",
+        "type": "text",
+        "title": "Mission Introduction"
+      },
+      {
+        "rows": 6,
+        "description": "Additional mission content",
+        "name": "missionBody",
+        "type": "text"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "max",
+                "constraint": 4
+              }
+            ],
+            "level": "warning",
+            "message": "Maximum 4 stats recommended"
+          }
+        ],
+        "description": "Key statistics to display (e.g., years in business, clients, projects)",
+        "of": [
+          {
+            "fields": [
+              {
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "description": "e.g., \"Years in Business\"",
+                "name": "label",
+                "type": "string"
+              },
+              {
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "description": "The number value (e.g., \"10\", \"100\", \"1000\")",
+                "name": "value",
+                "type": "string"
+              },
+              {
+                "description": "Optional suffix (e.g., \"+\", \"%\", \"K\")",
+                "name": "postfix",
+                "type": "string"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "stats",
+        "type": "array",
+        "title": "Statistics"
+      },
+      {
+        "description": "Title for the team section (e.g., \"Our team\")",
+        "name": "teamTitle",
+        "type": "string",
+        "title": "Team Section Title"
+      },
+      {
+        "rows": 3,
+        "description": "Brief description above the team grid",
+        "name": "teamDescription",
+        "type": "text",
+        "title": "Team Section Description"
+      },
+      {
+        "description": "SEO settings for the About page",
+        "name": "seo",
+        "type": "seo",
+        "title": "SEO"
+      }
+    ],
+    "name": "aboutPage",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "initialValue": "Get in Touch",
+        "description": "Small text above the title (e.g., \"Get in Touch\")",
+        "name": "eyebrow",
+        "type": "string",
+        "title": "Eyebrow Text"
+      },
+      {
+        "initialValue": "Contact Us",
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Main page title (e.g., \"Contact Us\")",
+        "name": "title",
+        "type": "string",
+        "title": "Page Title"
+      },
+      {
+        "initialValue": "WE'D LOVE TO HEAR FROM YOU",
+        "description": "Heading for the contact info section",
+        "name": "heading",
+        "type": "string",
+        "title": "Section Heading"
+      },
+      {
+        "rows": 4,
+        "description": "Main paragraph describing your contact philosophy",
+        "name": "description",
+        "type": "text"
+      },
+      {
+        "initialValue": "We typically respond within 24 hours",
+        "description": "Text about typical response time (e.g., \"We typically respond within 24 hours\")",
+        "name": "responseTimeText",
+        "type": "string"
+      },
+      {
+        "description": "Customize the labels shown above contact information",
+        "fields": [
+          {
+            "initialValue": "Visit Us",
+            "name": "addressLabel",
+            "type": "string"
+          },
+          {
+            "initialValue": "Call Us",
+            "name": "phoneLabel",
+            "type": "string"
+          },
+          {
+            "initialValue": "Email Us",
+            "name": "emailLabel",
+            "type": "string"
+          }
+        ],
+        "name": "contactLabels",
+        "type": "object"
+      },
+      {
+        "description": "SEO settings for the Contact page",
+        "name": "seo",
+        "type": "seo",
+        "title": "SEO"
+      }
+    ],
+    "name": "contactPage",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "initialValue": "Looking for a",
+        "description": "First part of the headline (e.g., \"Looking for a\")",
+        "name": "heroHeadlinePart1",
+        "type": "string",
+        "title": "Headline Part 1"
+      },
+      {
+        "initialValue": "dedicated",
+        "description": "The word that gets highlighted (e.g., \"dedicated\")",
+        "name": "heroHighlightWord",
+        "type": "string",
+        "title": "Highlight Word"
+      },
+      {
+        "initialValue": "IT Support?",
+        "description": "Second part of the headline (e.g., \"IT Support?\")",
+        "name": "heroHeadlinePart2",
+        "type": "string",
+        "title": "Headline Part 2"
+      },
+      {
+        "rows": 3,
+        "description": "Supporting text below the headline",
+        "name": "heroDescription",
+        "type": "text"
+      },
+      {
+        "fields": [
+          {
+            "initialValue": "Explore our Services",
+            "name": "label",
+            "type": "string"
+          },
+          {
+            "initialValue": "/services",
+            "name": "href",
+            "type": "string",
+            "title": "Link"
+          }
+        ],
+        "name": "heroPrimaryCta",
+        "type": "object",
+        "title": "Primary CTA Button"
+      },
+      {
+        "fields": [
+          {
+            "initialValue": "Get in Touch",
+            "name": "label",
+            "type": "string"
+          },
+          {
+            "initialValue": "/contact",
+            "name": "href",
+            "type": "string",
+            "title": "Link"
+          }
+        ],
+        "name": "heroSecondaryCta",
+        "type": "object",
+        "title": "Secondary CTA Button"
+      },
+      {
+        "initialValue": "One-Stop IT Solutions",
+        "description": "Title for the services section",
+        "name": "servicesTitle",
+        "type": "string",
+        "title": "Section Title"
+      },
+      {
+        "rows": 2,
+        "description": "Brief description below the title",
+        "name": "servicesDescription",
+        "type": "text",
+        "title": "Section Description"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "max",
+                "constraint": 6
+              }
+            ],
+            "level": "warning",
+            "message": "Maximum 6 service cards recommended"
+          }
+        ],
+        "of": [
+          {
+            "fields": [
+              {
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "name": "title",
+                "type": "string"
+              },
+              {
+                "rows": 2,
+                "name": "description",
+                "type": "text"
+              },
+              {
+                "description": "URL path (e.g., \"/services/cloud-technology\")",
+                "name": "href",
+                "type": "string",
+                "title": "Link"
+              },
+              {
+                "description": "Button text (e.g., \"Explore Cloud Technology\")",
+                "name": "ctaLabel",
+                "type": "string",
+                "title": "CTA Label"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "serviceCards",
+        "type": "array"
+      },
+      {
+        "description": "SEO settings for the Homepage",
+        "name": "seo",
+        "type": "seo",
+        "title": "SEO"
+      }
+    ],
+    "name": "homepage",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "options": {
+          "source": "title",
+          "maxLength": 96
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "custom"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      },
+      {
+        "description": "Build your page with flexible content blocks",
+        "of": [
+          {
+            "type": "hero",
+            "title": "Hero Section"
+          },
+          {
+            "type": "servicesGrid"
+          },
+          {
+            "type": "teamGrid"
+          },
+          {
+            "type": "statsSection"
+          },
+          {
+            "type": "faqSection",
+            "title": "FAQ Section"
+          },
+          {
+            "type": "contactSection"
+          },
+          {
+            "type": "richText"
+          }
+        ],
+        "name": "pageBuilder",
+        "type": "array"
+      },
+      {
+        "name": "seo",
+        "type": "seo",
+        "title": "SEO"
+      }
+    ],
+    "name": "page",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "options": {
+          "source": "title",
+          "maxLength": 96
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "custom"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      },
+      {
+        "rows": 3,
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "max",
+                "constraint": 200
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Brief description for service cards (150 characters recommended)",
+        "name": "shortDescription",
+        "type": "text"
+      },
+      {
+        "description": "Icon identifier from lucide-react (e.g., \"Cloud\", \"Shield\", \"Server\", \"Headphones\")",
+        "name": "icon",
+        "type": "string",
+        "title": "Icon Name"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "fields": [
+          {
+            "name": "alt",
+            "type": "string",
+            "title": "Alternative Text"
+          }
+        ],
+        "name": "featuredImage",
+        "type": "image"
+      },
+      {
+        "initialValue": 0,
+        "description": "Order in which this service appears in listings",
+        "name": "order",
+        "type": "number",
+        "title": "Display Order"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "description": "Optional large featured image displayed in the hero section",
+        "fields": [
+          {
+            "name": "alt",
+            "type": "string",
+            "title": "Alt Text"
+          }
+        ],
+        "name": "heroImage",
+        "type": "image",
+        "title": "Hero Featured Image"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Main headline tagline (e.g., \"Simple. Flexible. Secure.\")",
+        "name": "tagline",
+        "type": "string"
+      },
+      {
+        "description": "The word in the tagline to highlight in green (e.g., \"Secure\")",
+        "name": "taglineHighlight",
+        "type": "string",
+        "title": "Tagline Highlight Word"
+      },
+      {
+        "description": "Smaller text below the headline (e.g., \"Your data, accessible anywhere—without the headaches.\")",
+        "name": "subtitle",
+        "type": "string"
+      },
+      {
+        "rows": 5,
+        "description": "The main paragraph for the introduction section",
+        "name": "introText",
+        "type": "text",
+        "title": "Introduction Text"
+      },
+      {
+        "description": "Words to highlight in green within the intro text",
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "introHighlights",
+        "type": "array",
+        "title": "Highlighted Words"
+      },
+      {
+        "description": "Detailed service description with headings, paragraphs, lists, and images. This is the main content area for in-depth information.",
+        "name": "bodyContent",
+        "type": "blockContent",
+        "title": "Rich Text Content"
+      },
+      {
+        "initialValue": "Benefits",
+        "description": "Title for the benefits section (e.g., \"Why Go Cloud?\")",
+        "name": "benefitsTitle",
+        "type": "string",
+        "title": "Benefits Section Title"
+      },
+      {
+        "description": "Word to highlight in the benefits title",
+        "name": "benefitsHighlight",
+        "type": "string",
+        "title": "Benefits Title Highlight"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "max",
+                "constraint": 6
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "of": [
+          {
+            "fields": [
+              {
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "name": "title",
+                "type": "string"
+              },
+              {
+                "rows": 2,
+                "name": "description",
+                "type": "text"
+              },
+              {
+                "description": "Lucide icon name (e.g., \"ShieldCheck\", \"TrendingUp\", \"Database\")",
+                "name": "icon",
+                "type": "string",
+                "title": "Icon Name"
+              }
+            ],
+            "type": "object",
+            "name": "benefit"
+          }
+        ],
+        "name": "benefits",
+        "type": "array"
+      },
+      {
+        "initialValue": "What We Handle For You",
+        "description": "Title for the \"What We Handle\" section",
+        "name": "servicesTitle",
+        "type": "string",
+        "title": "Services Section Title"
+      },
+      {
+        "description": "Word to highlight in the services title (e.g., \"Handle\")",
+        "name": "servicesTitleHighlight",
+        "type": "string"
+      },
+      {
+        "description": "List of specific services/tasks handled",
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "serviceItems",
+        "type": "array"
+      },
+      {
+        "description": "Optional mini contact CTA section displayed between content sections",
+        "fields": [
+          {
+            "initialValue": true,
+            "name": "enabled",
+            "type": "boolean",
+            "title": "Enable Mini-CTA"
+          },
+          {
+            "initialValue": "Get a free consultation call!",
+            "name": "heading",
+            "type": "string"
+          },
+          {
+            "initialValue": "Get In Touch",
+            "name": "buttonText",
+            "type": "string"
+          },
+          {
+            "initialValue": "/contact",
+            "name": "buttonLink",
+            "type": "string"
+          }
+        ],
+        "name": "contactCta",
+        "type": "object",
+        "title": "Contact Mini-CTA"
+      },
+      {
+        "description": "Main CTA headline (e.g., \"Ready to Move to the Cloud?\")",
+        "name": "ctaHeadline",
+        "type": "string",
+        "title": "CTA Headline"
+      },
+      {
+        "description": "Word to highlight in the CTA headline",
+        "name": "ctaHighlight",
+        "type": "string",
+        "title": "CTA Highlight Word"
+      },
+      {
+        "rows": 2,
+        "description": "Supporting text below the CTA headline",
+        "name": "ctaSubtext",
+        "type": "text",
+        "title": "CTA Subtext"
+      },
+      {
+        "initialValue": "Let's Talk",
+        "name": "ctaButtonText",
+        "type": "string",
+        "title": "CTA Button Text"
+      },
+      {
+        "initialValue": "/contact",
+        "name": "ctaButtonLink",
+        "type": "string",
+        "title": "CTA Button Link"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "max",
+                "constraint": 3
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "of": [
+          {
+            "to": [
+              {
+                "type": "service"
+              }
+            ],
+            "type": "reference",
+            "title": "Reference to service"
+          }
+        ],
+        "name": "relatedServices",
+        "type": "array"
+      },
+      {
+        "description": "Legacy features field - use Benefits instead",
+        "of": [
+          {
+            "type": "feature"
+          }
+        ],
+        "hidden": true,
+        "name": "features",
+        "type": "array",
+        "title": "Features (Legacy)"
+      },
+      {
+        "description": "Legacy body content - not used in new template",
+        "hidden": true,
+        "name": "body",
+        "type": "blockContent",
+        "title": "Body Content (Legacy)"
+      },
+      {
+        "name": "seo",
+        "type": "seo",
+        "title": "SEO"
+      }
+    ],
+    "name": "service",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "options": {
+          "source": "name",
+          "maxLength": 96
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "role",
+        "type": "string",
+        "title": "Role / Position"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "fields": [
+          {
+            "name": "alt",
+            "type": "string",
+            "title": "Alternative Text"
+          }
+        ],
+        "name": "image",
+        "type": "image",
+        "title": "Photo"
+      },
+      {
+        "name": "bio",
+        "type": "blockContent",
+        "title": "Biography"
+      },
+      {
+        "description": "e.g., \"Toronto, Canada\"",
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "name": "email",
+        "type": "string"
+      },
+      {
+        "of": [
+          {
+            "type": "socialLink"
+          }
+        ],
+        "name": "socialLinks",
+        "type": "array"
+      },
+      {
+        "initialValue": 0,
+        "description": "Order in which this team member appears",
+        "name": "order",
+        "type": "number",
+        "title": "Display Order"
+      },
+      {
+        "initialValue": true,
+        "description": "Uncheck to hide this team member from the website",
+        "name": "isActive",
+        "type": "boolean",
+        "title": "Active"
+      }
+    ],
+    "name": "teamMember",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "question",
+        "type": "string"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "answer",
+        "type": "blockContent"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "General",
+              "value": "general"
+            },
+            {
+              "title": "Services",
+              "value": "services"
+            },
+            {
+              "title": "Support",
+              "value": "support"
+            },
+            {
+              "title": "Billing",
+              "value": "billing"
+            }
+          ],
+          "layout": "dropdown"
+        },
+        "initialValue": "general",
+        "name": "category",
+        "type": "string"
+      },
+      {
+        "initialValue": 0,
+        "description": "Order in which this FAQ appears",
+        "name": "order",
+        "type": "number",
+        "title": "Display Order"
+      }
+    ],
+    "name": "faq",
+    "type": "document",
+    "title": "FAQ"
+  },
+  {
+    "fields": [
+      {
+        "rows": 4,
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "quote",
+        "type": "text"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "author",
+        "type": "string",
+        "title": "Author Name"
+      },
+      {
+        "description": "e.g., \"CEO\", \"IT Manager\"",
+        "name": "role",
+        "type": "string",
+        "title": "Author Role"
+      },
+      {
+        "name": "company",
+        "type": "string"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "image",
+        "type": "image",
+        "title": "Author Photo"
+      },
+      {
+        "name": "companyLogo",
+        "type": "image"
+      },
+      {
+        "initialValue": false,
+        "description": "Show this testimonial prominently",
+        "name": "featured",
+        "type": "boolean"
+      },
+      {
+        "initialValue": 0,
+        "name": "order",
+        "type": "number",
+        "title": "Display Order"
+      }
+    ],
+    "name": "testimonial",
+    "type": "document"
+  },
+  {
+    "validation": [
+      {
+        "rules": [
+          {
+            "flag": "custom"
+          }
+        ],
+        "level": "error"
+      }
+    ],
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "custom"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "The old URL path (e.g., /old-page)",
+        "name": "source",
+        "type": "string",
+        "title": "Source Path"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "The new URL path or full URL",
+        "name": "destination",
+        "type": "string"
+      },
+      {
+        "initialValue": true,
+        "description": "301 (permanent) or 302 (temporary) redirect",
+        "name": "permanent",
+        "type": "boolean",
+        "title": "Permanent Redirect (301)"
+      },
+      {
+        "initialValue": true,
+        "description": "Toggle to enable/disable this redirect",
+        "name": "isEnabled",
+        "type": "boolean",
+        "title": "Enabled"
+      }
+    ],
+    "name": "redirect",
+    "type": "document"
+  }
+]

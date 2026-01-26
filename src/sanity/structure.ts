@@ -1,6 +1,6 @@
 import type { StructureResolver } from 'sanity/structure'
-import { CogIcon, UsersIcon, InfoOutlineIcon, EnvelopeIcon, HomeIcon } from '@sanity/icons'
-// import { MenuIcon, DocumentsIcon, RocketIcon, CommentIcon, HelpCircleIcon, LinkIcon } from '@sanity/icons'
+import { CogIcon, UsersIcon, InfoOutlineIcon, EnvelopeIcon, HomeIcon, RocketIcon } from '@sanity/icons'
+// import { MenuIcon, DocumentsIcon, CommentIcon, HelpCircleIcon, LinkIcon } from '@sanity/icons'
 
 // Singleton document IDs
 const SINGLETON_IDS = ['siteSettings', 'navigation', 'aboutPage', 'contactPage', 'homepage']
@@ -66,6 +66,16 @@ export const structure: StructureResolver = (S) =>
             .title('Contact Page')
         ),
 
+      S.divider(),
+
+      // ===========================================
+      // SERVICES
+      // ===========================================
+      S.listItem()
+        .title('Services')
+        .icon(RocketIcon)
+        .child(S.documentTypeList('service').title('Services')),
+
       // ===========================================
       // COMMENTED OUT - UNCOMMENT WHEN NEEDED
       // ===========================================
@@ -74,11 +84,6 @@ export const structure: StructureResolver = (S) =>
       //   .title('Pages')
       //   .icon(DocumentsIcon)
       //   .child(S.documentTypeList('page').title('Pages')),
-
-      // S.listItem()
-      //   .title('Services')
-      //   .icon(RocketIcon)
-      //   .child(S.documentTypeList('service').title('Services')),
 
       // S.listItem()
       //   .title('Testimonials')

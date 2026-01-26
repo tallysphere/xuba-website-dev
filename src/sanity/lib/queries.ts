@@ -329,6 +329,7 @@ export const SERVICES_QUERY = defineQuery(`
 
 /**
  * Fetches a single service by slug with full details.
+ * Includes all sections: hero, intro, body content, benefits, services list, CTA, and related.
  */
 export const SERVICE_QUERY = defineQuery(`
   *[_type == "service" && slug.current == $slug][0]{
@@ -339,6 +340,72 @@ export const SERVICE_QUERY = defineQuery(`
     shortDescription,
     icon,
     featuredImage,
+    
+    // Hero Section
+    heroImage {
+      asset,
+      alt,
+      hotspot,
+      crop
+    },
+    tagline,
+    taglineHighlight,
+    subtitle,
+    
+    // Introduction Section
+    introText,
+    introHighlights,
+    
+    // Rich Text Body Content
+    bodyContent,
+    
+    // Benefits Section
+    benefitsTitle,
+    benefitsHighlight,
+    benefits[] {
+      _key,
+      title,
+      description,
+      icon
+    },
+    
+    // What We Handle Section
+    servicesTitle,
+    servicesTitleHighlight,
+    serviceItems,
+    
+    // Contact Mini-CTA
+    contactCta {
+      enabled,
+      heading,
+      buttonText,
+      buttonLink
+    },
+    
+    // CTA Section
+    ctaHeadline,
+    ctaHighlight,
+    ctaSubtext,
+    ctaButtonText,
+    ctaButtonLink,
+    
+    // Related Services (with thumbnails)
+    relatedServices[]-> {
+      _id,
+      title,
+      "slug": slug.current,
+      shortDescription,
+      tagline,
+      icon,
+      featuredImage {
+        asset,
+        alt,
+        hotspot,
+        crop
+      }
+    },
+    
+    // Legacy fields (for backward compatibility)
     features[] {
       _key,
       title,
@@ -346,13 +413,8 @@ export const SERVICE_QUERY = defineQuery(`
       icon
     },
     body,
-    relatedServices[]-> {
-      _id,
-      title,
-      "slug": slug.current,
-      shortDescription,
-      icon
-    },
+    
+    // SEO
     "seo": {
       "title": coalesce(seo.title, title),
       "description": coalesce(seo.description, shortDescription),
