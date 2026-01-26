@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import ContactSection from '@/components/ContactSection'
 import { Spotlight } from '@/components/Spotlight'
 import TiltedCard from '@/components/TiltedCard/TiltedCard'
@@ -5,6 +6,24 @@ import Link from 'next/link'
 import { sanityFetch } from '@/sanity/lib/live'
 import { TEAM_MEMBERS_QUERY, CONTACT_SECTION_QUERY } from '@/sanity/lib/queries'
 import { urlFor } from '@/sanity/lib/image'
+
+/**
+ * Our Team Page Component
+ *
+ * Features:
+ * - Theme-aware styling (light and dark mode)
+ * - Sanity CMS integration for team members
+ * - Tilted card hover effects for team photos
+ * - Social links integration
+ * - Accessible with proper ARIA attributes
+ * - SEO optimized with metadata
+ */
+
+export const metadata: Metadata = {
+  title: 'Our Team | Xuba IT Solutions',
+  description:
+    'Meet our dedicated team of IT professionals. With 15 years in the industry, we are committed to delivering exceptional IT support and solutions.',
+}
 
 export default async function OurTeamPage() {
   // Fetch team members and contact section data in parallel
@@ -25,28 +44,51 @@ export default async function OurTeamPage() {
   }
 
   return (
-    <div className='bg-xuba-purple-900 py-20 sm:py-32 lg:py-56 overflow-x-hidden'>
-      <Spotlight />
-      <div className='mx-auto flex flex-col md:mt-0 mt-20 items-center justify-center max-w-7xl gap-12 sm:gap-20 px-4 sm:px-6 lg:px-8'>
-        <div className='max-w-4xl flex flex-col items-center justify-center pb-8 sm:pb-20'>
+    <section
+      aria-labelledby='our-team-heading'
+      className='relative bg-white dark:bg-xuba-purple-900 py-20 sm:py-32 lg:py-56 overflow-x-hidden'
+    >
+      {/* Spotlight effect - only visible in dark mode */}
+      <div className='hidden dark:block'>
+        <Spotlight />
+      </div>
+
+      {/* Decorative background for light mode */}
+      <div
+        className='absolute inset-0 overflow-hidden pointer-events-none dark:hidden'
+        aria-hidden='true'
+      >
+        <div className='absolute -top-40 -right-40 w-80 h-80 bg-xuba-green-500/10 rounded-full blur-3xl' />
+        <div className='absolute -bottom-40 -left-40 w-96 h-96 bg-xuba-green-500/10 rounded-full blur-3xl' />
+        <div className='absolute top-1/2 left-1/4 w-64 h-64 bg-xuba-green-500/5 rounded-full blur-3xl' />
+      </div>
+
+      <div className='relative mx-auto flex flex-col md:mt-0 mt-20 items-center justify-center max-w-7xl gap-12 sm:gap-20 px-4 sm:px-6 lg:px-8'>
+        {/* Page Header */}
+        <header className='max-w-4xl flex flex-col items-center justify-center pb-8 sm:pb-20'>
           <div className='flex flex-col items-center justify-center'>
-            <div className='text-white text-xs sm:text-sm md:text-lg font-light tracking-widest text-center'>
-              ABOUT THE TEAM
-            </div>
-            <div className='text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-thin tracking-tight mt-4 text-center'>
+            <span className='text-xuba-green-500 text-xs sm:text-sm md:text-lg font-light tracking-widest text-center uppercase'>
+              About The Team
+            </span>
+            <h1
+              id='our-team-heading'
+              className='text-xuba-green-900 dark:text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-thin tracking-tight mt-4 text-center'
+            >
               Meet{' '}
               <span className='text-xuba-green-500 drop-shadow-xl drop-shadow-xuba-green-500/10'>
                 Our Team
               </span>
-            </div>
+            </h1>
           </div>
-          <p className='mt-4 sm:mt-6 text-base sm:text-lg leading-7 sm:leading-8 text-gray-300 text-center max-w-3xl px-4'>
+          <p className='mt-4 sm:mt-6 text-base sm:text-lg leading-7 sm:leading-8 text-xuba-green-700 dark:text-gray-300 text-center max-w-3xl px-4'>
             With 15 years in the industry and IT in the blood, they are match
             fit and rearing to go. In order to create lasting bonds, we learn
             our client&apos;s business and where they are headed and how we can
             meet them there.
           </p>
-        </div>
+        </header>
+
+        {/* Team Members List */}
         <ul role='list' className='w-full'>
           {teamMembers.map((member) => {
             const linkedInUrl = member.socialLinks?.find(
@@ -65,6 +107,7 @@ export default async function OurTeamPage() {
                 id={member.slug ?? undefined}
                 className='flex flex-col items-center gap-6 sm:gap-10 py-8 sm:py-12 first:pt-0 last:pb-0 sm:flex-row sm:items-start'
               >
+                {/* Team Member Photo */}
                 <div className='shrink-0 w-full max-w-xs sm:max-w-none sm:w-auto'>
                   <TiltedCard
                     imageSrc={imageUrl}
@@ -81,21 +124,27 @@ export default async function OurTeamPage() {
                     displayOverlayContent={true}
                   />
                 </div>
+
+                {/* Team Member Info */}
                 <div className='max-w-xl flex-auto text-center sm:text-left px-4 sm:px-0'>
                   <h3 className='text-2xl sm:text-3xl font-light uppercase tracking-wider text-xuba-green-500'>
                     {member.name}
                   </h3>
-                  <p className='text-sm sm:text-base leading-7 text-gray-300 font-semibold mt-1'>
+                  <p className='text-sm sm:text-base leading-7 text-xuba-green-600 dark:text-gray-300 font-semibold mt-1'>
                     {member.role}
                   </p>
                   {member.bio && Array.isArray(member.bio) && (
-                    <p className='mt-4 sm:mt-6 text-sm sm:text-base leading-6 sm:leading-7 text-gray-300'>
+                    <p className='mt-4 sm:mt-6 text-sm sm:text-base leading-6 sm:leading-7 text-xuba-green-900 dark:text-gray-300'>
                       {/* Bio is blockContent - extract plain text from first block */}
-                      {member.bio[0] && 'children' in member.bio[0] && Array.isArray(member.bio[0].children)
+                      {member.bio[0] &&
+                      'children' in member.bio[0] &&
+                      Array.isArray(member.bio[0].children)
                         ? member.bio[0].children[0]?.text
                         : null}
                     </p>
                   )}
+
+                  {/* Social Links */}
                   <ul
                     role='list'
                     className='mt-4 sm:mt-6 flex gap-x-6 justify-center sm:justify-start'
@@ -106,9 +155,9 @@ export default async function OurTeamPage() {
                           href={twitterUrl}
                           target='_blank'
                           rel='noopener noreferrer'
-                          className='text-gray-400 hover:text-gray-500 transition-colors'
+                          className='text-xuba-green-400 dark:text-gray-400 hover:text-xuba-green-500 dark:hover:text-xuba-green-400 transition-colors'
                         >
-                          <span className='sr-only'>X</span>
+                          <span className='sr-only'>X (Twitter)</span>
                           <svg
                             fill='currentColor'
                             viewBox='0 0 20 20'
@@ -126,7 +175,7 @@ export default async function OurTeamPage() {
                           href={linkedInUrl}
                           target='_blank'
                           rel='noopener noreferrer'
-                          className='text-gray-400 hover:text-gray-500 transition-colors'
+                          className='text-xuba-green-400 dark:text-gray-400 hover:text-xuba-green-500 dark:hover:text-xuba-green-400 transition-colors'
                         >
                           <span className='sr-only'>LinkedIn</span>
                           <svg
@@ -151,9 +200,11 @@ export default async function OurTeamPage() {
           })}
         </ul>
       </div>
+
+      {/* Contact Section */}
       <div className='px-4 sm:px-6 lg:px-8'>
         <ContactSection {...contactProps} />
       </div>
-    </div>
+    </section>
   )
 }
