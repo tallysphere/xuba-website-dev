@@ -62,7 +62,7 @@ export function Footer() {
       aria-label='Site footer'
       className='w-full overflow-hidden border-t mb-0 border-xuba-green-200 bg-white pt-16 sm:pt-20 dark:border-white/10 dark:bg-xuba-purple-900'
     >
-      <div className='mx-auto max-w-7xl text-sm text-xuba-green-600 dark:text-gray-400 md:px-8'>
+      <div className='mx-auto max-w-7xl z-20 text-sm text-xuba-green-600 dark:text-gray-400 md:px-8'>
         {/* Main Footer Content */}
         <div className='flex flex-col items-center md:flex-row md:items-start md:justify-between'>
           {/* Left Section - Logo & Copyright */}
@@ -140,7 +140,7 @@ export function Footer() {
 
        
       </div>
-      <p className="w-screen mt-20 mb-0 pb-0 bg-linear-to-b from-xuba-green-100 to-xuba-green-300 bg-clip-text text-center text-[25vw] font-bold leading-[0.7] text-transparent dark:from-xuba-purple-800 dark:to-xuba-purple-950">
+      <p className="w-screen mt-40 z-0 mb-0 pb-0 bg-linear-to-b from-xuba-green-100 to-xuba-green-300 bg-clip-text text-center text-[25vw] font-bold leading-[0.7] text-transparent dark:from-xuba-purple-800 dark:to-xuba-purple-950">
         XUBA
       </p>
     </footer>
