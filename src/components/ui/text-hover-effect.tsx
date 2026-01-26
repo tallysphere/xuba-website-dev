@@ -43,8 +43,10 @@ export const TextHoverEffect = ({
     }
   }, [cursor]);
 
-  // Theme-based colors
+  // Theme-based colors and stroke settings
   const gradientColor = isDark ? "#8a288f" : "#b8d02f";
+  const strokeWidth = isDark ? "0.3" : "0.15";
+  const strokeColor = isDark ? "#262626" : "#e5e5e5";
 
   return (
     <svg
@@ -111,8 +113,9 @@ export const TextHoverEffect = ({
         y="50%"
         textAnchor="middle"
         dominantBaseline="middle"
-        strokeWidth="0.3"
-        className="fill-transparent stroke-neutral-200 font-[helvetica] text-7xl font-bold dark:stroke-neutral-800"
+        strokeWidth={strokeWidth}
+        stroke={strokeColor}
+        className="fill-transparent font-[helvetica] text-7xl font-bold"
         style={{ opacity: hovered ? 0.7 : 0 }}
       >
         {text}
@@ -122,8 +125,9 @@ export const TextHoverEffect = ({
         y="50%"
         textAnchor="middle"
         dominantBaseline="middle"
-        strokeWidth="0.3"
-        className="fill-transparent stroke-neutral-200 font-[helvetica] text-7xl font-bold dark:stroke-neutral-800"
+        strokeWidth={strokeWidth}
+        stroke={strokeColor}
+        className="fill-transparent font-[helvetica] text-7xl font-bold"
         initial={{ strokeDashoffset: 1000, strokeDasharray: 1000 }}
         animate={{
           strokeDashoffset: 0,
@@ -142,7 +146,7 @@ export const TextHoverEffect = ({
         textAnchor="middle"
         dominantBaseline="middle"
         stroke="url(#textGradient)"
-        strokeWidth="0.3"
+        strokeWidth={strokeWidth}
         mask="url(#textMask)"
         className="fill-transparent font-[helvetica] text-7xl font-bold"
       >

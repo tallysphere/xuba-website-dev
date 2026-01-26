@@ -1,7 +1,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
-import { TextHoverEffect } from './ui/text-hover-effect'
+import { cn } from '@/lib/utils'
+import { IconBrandFacebook, IconBrandLinkedin } from '@tabler/icons-react'
 
 /**
  * Navigation link item type.
@@ -11,151 +12,137 @@ interface FooterLink {
   title: string
   /** URL destination */
   href: string
+  /** Whether to open in new tab */
+  external?: boolean
 }
 
 /**
- * SimpleFooterWithFourGrids - Site footer with navigation links and branding.
+ * CenteredFooter - Site footer with centered logo and navigation.
  *
  * Features:
  * - Theme-aware colors (light and dark mode)
- * - Four-column grid layout on large screens
- * - Responsive design with mobile-first approach
- * - Accessible with proper semantic HTML
+ * - Centered layout with horizontal navigation
+ * - Decorative grid line separator
+ * - Social links and copyright at bottom
+ * - TextHoverEffect branding
  *
  * @example
- * <SimpleFooterWithFourGrids />
+ * <CenteredFooter />
  */
-export function SimpleFooterWithFourGrids() {
+export function CenteredFooter() {
   const pages: FooterLink[] = [
-    {
-      title: 'Our Services',
-      href: '/services',
-    },
-    {
-      title: 'About Us',
-      href: '/about',
-    },
-    {
-      title: 'Support',
-      href: '/support',
-    },
-    {
-      title: 'Contact Us',
-      href: '/contact',
-    },
+    { title: 'Our Services', href: '/services' },
+    { title: 'About Us', href: '/about' },
+    { title: 'Support', href: '/support' },
+    { title: 'Contact Us', href: '/contact' },
+    { title: 'Privacy', href: '/privacy' },
+    { title: 'Terms', href: '/terms-of-service' },
   ]
 
-  const socials: FooterLink[] = [
-    {
-      title: 'Facebook',
-      href: 'https://www.facebook.com/XubaIT',
-    },
-    {
-      title: 'LinkedIn',
-      href: 'https://www.linkedin.com/company/xuba/?originalSubdomain=nz',
-    },
-  ]
-
-  const legals: FooterLink[] = [
-    {
-      title: 'Privacy Policy',
-      href: '/privacy',
-    },
-    {
-      title: 'Terms of Service',
-      href: '/terms-of-service',
-    },
+  const socials = [
+    { title: 'Facebook', href: 'https://www.facebook.com/XubaIT', icon: IconBrandFacebook },
+    { title: 'LinkedIn', href: 'https://www.linkedin.com/company/xuba/?originalSubdomain=nz', icon: IconBrandLinkedin },
   ]
 
   return (
     <footer
       aria-label='Site footer'
-      className='border-t border-xuba-green-100 dark:border-xuba-purple-700/50 px-8 py-20 bg-white dark:bg-xuba-purple-900 w-full relative overflow-hidden'
+      className='relative w-full overflow-hidden border-t border-gray-200 bg-white px-8 py-20 dark:border-white/10 dark:bg-xuba-purple-950'
     >
-      <div className='max-w-7xl mx-auto text-sm text-xuba-green-600 dark:text-xuba-green-200 flex sm:flex-row flex-col justify-between items-start md:px-8'>
-        {/* Logo & Copyright */}
-        <div>
-          <div className='mr-0 md:mr-4 md:flex mb-4'>
+      <div className='mx-auto max-w-7xl text-sm text-gray-500 md:px-8'>
+        {/* Centered Content */}
+        <div className='relative flex w-full flex-col items-center justify-center'>
+          {/* Logo */}
+          <div className='mb-6'>
             <Logo />
           </div>
 
-          <div className='mt-2 ml-2 text-xuba-green-600 dark:text-xuba-green-100'>
-            &copy; copyright Xuba {new Date().getFullYear()}. All rights
-            reserved.
-          </div>
+          {/* Navigation Links */}
+          <ul className='flex list-none flex-col gap-4 text-gray-600 transition-colors sm:flex-row sm:gap-8 dark:text-gray-300'>
+            {pages.map((page, idx) => (
+              <li key={'pages' + idx} className='list-none text-center'>
+                <Link
+                  className='hover:text-gray-900 dark:hover:text-white transition-colors'
+                  href={page.href}
+                >
+                  {page.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+
+          {/* Decorative Line */}
+          <GridLineHorizontal className='mx-auto mt-8 max-w-7xl' />
         </div>
 
-        {/* Navigation Grid */}
-        <nav
-          aria-label='Footer navigation'
-          className='grid grid-cols-2 lg:grid-cols-4 gap-10 items-start mt-10 sm:mt-0 md:mt-0'
-        >
-          {/* Pages */}
-          <div className='flex justify-center space-y-4 flex-col w-full'>
-            <p className='text-xuba-green-800 dark:text-xuba-green-300 font-bold'>
-              Pages
-            </p>
-            <ul className='list-none space-y-4'>
-              {pages.map((page, idx) => (
-                <li key={'pages' + idx} className='list-none'>
-                  <Link
-                    className='text-xuba-green-600 dark:text-xuba-green-200 hover:text-xuba-green-500 dark:hover:text-xuba-green-400 transition-colors'
-                    href={page.href}
-                  >
-                    {page.title}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+        {/* Bottom Section */}
+        <div className='mt-8 flex w-full flex-col items-center justify-between gap-4 sm:flex-row'>
+          {/* Copyright */}
+          <p className='text-gray-500 dark:text-gray-400'>
+            &copy; copyright Xuba {new Date().getFullYear()}. All rights reserved.
+          </p>
 
-          {/* Socials */}
-          <div className='flex justify-center space-y-4 flex-col'>
-            <p className='text-xuba-green-800 dark:text-xuba-green-300 font-bold'>
-              Socials
-            </p>
-            <ul className='list-none space-y-4'>
-              {socials.map((social, idx) => (
-                <li key={'social' + idx} className='list-none'>
-                  <Link
-                    className='text-xuba-green-600 dark:text-xuba-green-200 hover:text-xuba-green-500 dark:hover:text-xuba-green-400 transition-colors'
-                    href={social.href}
-                    target='_blank'
-                    rel='noopener noreferrer'
-                  >
-                    {social.title}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+          {/* Social Links */}
+          <div className='flex gap-4'>
+            {socials.map((social, idx) => (
+              <Link
+                key={'social' + idx}
+                href={social.href}
+                target='_blank'
+                rel='noopener noreferrer'
+                aria-label={social.title}
+                className='text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors'
+              >
+                <social.icon className='h-6 w-6' />
+              </Link>
+            ))}
           </div>
-
-          {/* Legal */}
-          <div className='flex justify-center space-y-4 flex-col'>
-            <p className='text-xuba-green-800 dark:text-xuba-green-300 font-bold'>
-              Legal
-            </p>
-            <ul className='list-none space-y-4'>
-              {legals.map((legal, idx) => (
-                <li key={'legal' + idx} className='list-none'>
-                  <Link
-                    className='text-xuba-green-600 dark:text-xuba-green-200 hover:text-xuba-green-500 dark:hover:text-xuba-green-400 transition-colors'
-                    href={legal.href}
-                  >
-                    {legal.title}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </nav>
+        </div>
       </div>
 
       {/* Decorative Brand Text */}
-      <div className="h-[24rem] flex items-center justify-center">
-      <TextHoverEffect text="XUBA" />
-    </div>
+      {/* <div className='h-96 flex items-center justify-center'>
+        <TextHoverEffect text='XUBA' />
+      </div> */}
     </footer>
+  )
+}
+
+/**
+ * GridLineHorizontal - Decorative horizontal dashed line.
+ */
+const GridLineHorizontal = ({
+  className,
+  offset,
+}: {
+  className?: string
+  offset?: string
+}) => {
+  return (
+    <div
+      style={
+        {
+          '--background': '#ffffff',
+          '--color': 'rgba(0, 0, 0, 0.1)',
+          '--height': '1px',
+          '--width': '5px',
+          '--fade-stop': '90%',
+          '--offset': offset || '200px',
+          '--color-dark': 'rgba(255, 255, 255, 0.1)',
+          maskComposite: 'exclude',
+        } as React.CSSProperties
+      }
+      className={cn(
+        'h-(--height) w-[calc(100%+var(--offset))]',
+        'bg-[linear-gradient(to_right,var(--color),var(--color)_50%,transparent_0,transparent)]',
+        'bg-size-[var(--width)_var(--height)]',
+        '[mask:linear-gradient(to_left,var(--background)_var(--fade-stop),transparent),linear-gradient(to_right,var(--background)_var(--fade-stop),transparent),linear-gradient(black,black)]',
+        'mask-exclude',
+        'z-30',
+        'dark:bg-[linear-gradient(to_right,var(--color-dark),var(--color-dark)_50%,transparent_0,transparent)]',
+        className
+      )}
+    />
   )
 }
 
@@ -166,10 +153,16 @@ const Logo = () => {
   return (
     <Link
       href='/'
-      className='font-normal flex space-x-2 items-center text-sm mr-4 px-2 py-1 relative z-20'
+      className='relative z-20 flex items-center'
       aria-label='Xuba home'
     >
       <Image src='/images/logo.png' alt='Xuba logo' width={120} height={50} />
     </Link>
   )
 }
+
+// Alias for backwards compatibility
+export { CenteredFooter as SimpleFooterWithFourGrids }
+
+// Default export for compatibility
+export default CenteredFooter

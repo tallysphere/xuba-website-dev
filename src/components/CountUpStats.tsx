@@ -13,8 +13,12 @@ interface CountUpStatsProps {
 }
 
 /**
- * Client component for animated counter stats.
- * Extracted to keep the parent page as a Server Component.
+ * CountUpStats - Animated statistics counter component.
+ *
+ * Features:
+ * - Theme-aware colors (light and dark mode)
+ * - Animated count-up effect
+ * - Responsive layout
  */
 export default function CountUpStats({ stats }: CountUpStatsProps) {
   return (
@@ -24,7 +28,7 @@ export default function CountUpStats({ stats }: CountUpStatsProps) {
           key={stat.label}
           className='flex flex-col-reverse gap-y-3 sm:gap-y-4 text-center lg:text-left'
         >
-          <dt className='text-base leading-7 text-gray-400'>
+          <dt className='text-base leading-7 text-xuba-green-600 dark:text-gray-400'>
             {stat.label}
           </dt>
           <dd className='text-4xl sm:text-5xl font-semibold tracking-tight text-xuba-green-500 drop-shadow-2xl drop-shadow-xuba-green-500/50'>

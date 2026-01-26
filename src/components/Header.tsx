@@ -5,7 +5,8 @@ import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import Image from 'next/image'
-import { Facebook, Linkedin, Mail, Phone } from 'lucide-react'
+import { Mail, Phone } from 'lucide-react'
+import { IconBrandFacebook, IconBrandLinkedin } from '@tabler/icons-react'
 import { ThemeToggle } from './ThemeToggle'
 
 /**
@@ -98,12 +99,12 @@ export default function AnimatedHeader() {
     {
       name: 'Facebook',
       href: 'https://www.facebook.com/XubaIT',
-      icon: Facebook,
+      icon: IconBrandFacebook,
     },
     {
       name: 'LinkedIn',
       href: 'https://www.linkedin.com/company/xuba/?originalSubdomain=nz',
-      icon: Linkedin,
+      icon: IconBrandLinkedin,
     },
   ]
 
@@ -247,14 +248,14 @@ export default function AnimatedHeader() {
                     href='tel:0800332211'
                     className='flex items-center gap-2 text-xuba-green-700 dark:text-white/90 hover:text-xuba-green-500 dark:hover:text-xuba-green-400 transition-colors text-sm'
                   >
-                    <Phone className='w-4 h-4' aria-hidden='true' />
+                    <Phone className='w-4 h-4 text-xuba-green-500 dark:text-xuba-green-500' aria-hidden='true' />
                     <span>0800 33 22 11</span>
                   </a>
                   <a
                     href='mailto:hello@xuba.co.nz'
                     className='flex items-center gap-2 text-xuba-green-700 dark:text-white/90 hover:text-xuba-green-500 dark:hover:text-xuba-green-400 transition-colors text-sm'
                   >
-                    <Mail className='w-4 h-4' aria-hidden='true' />
+                    <Mail className='w-4 h-4 text-xuba-green-500 dark:text-xuba-green-500' aria-hidden='true' />
                     <span>hello@xuba.co.nz</span>
                   </a>
                 </div>
@@ -267,10 +268,10 @@ export default function AnimatedHeader() {
                       href={social.href}
                       target='_blank'
                       rel='noopener noreferrer'
-                      className='w-10 h-10 border border-xuba-green-200 dark:border-white/20 flex items-center justify-center text-xuba-green-600 dark:text-white/60 hover:text-xuba-green-500 dark:hover:text-xuba-green-400 hover:border-xuba-green-500 dark:hover:border-xuba-green-400 transition-all duration-300'
+                      className='w-10 h-10 flex items-center justify-center text-xuba-green-600 dark:text-white/60 hover:text-xuba-green-500 dark:hover:text-xuba-green-400 hover:border-xuba-green-500 dark:hover:border-xuba-green-400 transition-all duration-300'
                       aria-label={social.name}
                     >
-                      <social.icon className='w-4 h-4 text-xuba-green-500' aria-hidden='true' />
+                      <social.icon className='w-6 h-6 text-xuba-green-500' aria-hidden='true' />
                     </a>
                   ))}
                 </div>
