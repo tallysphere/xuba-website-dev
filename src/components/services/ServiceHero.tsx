@@ -6,6 +6,7 @@ import { ArrowRight } from 'lucide-react'
 import { BlurFade } from '@/components/ui/blur-fade'
 import { urlFor } from '@/sanity/lib/image'
 import type { SanityImageHotspot, SanityImageCrop } from '@/sanity/types'
+import { ThemedHeroBackground } from '../ThemedHeroBackground'
 
 interface HeroImage {
   asset: {
@@ -63,7 +64,7 @@ export default function ServiceHero({
         <div className="absolute -bottom-40 -left-40 w-[500px] h-[500px] bg-xuba-green-200/30 dark:bg-xuba-purple-500/20 rounded-full blur-3xl" />
         <div className="absolute top-1/3 left-1/4 w-72 h-72 bg-xuba-green-100/50 dark:bg-xuba-green-500/5 rounded-full blur-3xl" />
       </div> */}
-
+ <ThemedHeroBackground />
       <div className="relative z-10 max-w-6xl mx-auto w-full">
         {hasHeroImage ? (
           // Layout with hero image (two-column on desktop)
