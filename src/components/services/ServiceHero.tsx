@@ -90,12 +90,12 @@ export default function ServiceHero({
 
               <BlurFade delay={0.4}>
                 <div className="flex flex-col sm:flex-row items-center lg:items-start justify-center lg:justify-start gap-4">
-                  {/* Primary Button - Matching HeroCTA styling */}
+                  {/* Primary Button - Following theming guidelines */}
                   <Link
                     href="/contact"
                     className="group w-64 rounded-none border-2 px-3 py-4 text-center font-medium transition-all duration-300
                       hover:scale-105 active:scale-[0.98]
-                      bg-xuba-green-50 border-xuba-green-500 text-xuba-green-800 shadow-lg
+                      bg-gray-100 border-gray-600 text-gray-700 shadow-lg
                       dark:bg-transparent dark:border-white dark:text-white dark:shadow-xl dark:shadow-xuba-purple-500/40"
                   >
                     <span className="flex items-center justify-center gap-2">
@@ -105,14 +105,14 @@ export default function ServiceHero({
                       </span>
                     </span>
                   </Link>
-                  {/* Secondary Button - Matching HeroCTA styling with smooth scroll */}
+                  {/* Secondary Button - Following theming guidelines with smooth scroll */}
                   <button
                     onClick={() => {
                       document.getElementById('learn-more')?.scrollIntoView({ behavior: 'smooth' })
                     }}
                     className="group w-64 md:w-56 rounded-none border-2 px-3 py-4 text-center font-medium transition-all duration-300
                       hover:scale-105 active:scale-[0.98]
-                      bg-xuba-green-50 border-xuba-green-500 text-xuba-green-800 shadow-lg
+                      bg-gray-100 border-gray-600 text-gray-700 shadow-lg
                       dark:bg-transparent dark:border-white dark:text-white dark:shadow-xl dark:shadow-xuba-green-500/30"
                   >
                     <span className="flex items-center justify-center gap-2">
@@ -173,12 +173,12 @@ export default function ServiceHero({
 
             <BlurFade delay={0.4}>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                {/* Primary Button - Matching HeroCTA styling */}
+                {/* Primary Button - Following theming guidelines */}
                 <Link
                   href="/contact"
                   className="group w-64 rounded-none border-2 px-3 py-4 text-center font-medium transition-all duration-300
                     hover:scale-105 active:scale-[0.98]
-                    bg-xuba-green-50 border-xuba-green-500 text-xuba-green-800 shadow-lg
+                    bg-gray-100 border-gray-600 text-gray-700 shadow-lg
                     dark:bg-transparent dark:border-white dark:text-white dark:shadow-xl dark:shadow-xuba-purple-500/40"
                 >
                   <span className="flex items-center justify-center gap-2">
@@ -188,14 +188,14 @@ export default function ServiceHero({
                     </span>
                   </span>
                 </Link>
-                {/* Secondary Button - Matching HeroCTA styling with smooth scroll */}
+                {/* Secondary Button - Following theming guidelines with smooth scroll */}
                 <button
                   onClick={() => {
                     document.getElementById('learn-more')?.scrollIntoView({ behavior: 'smooth' })
                   }}
                   className="group w-64 md:w-56 rounded-none border-2 px-3 py-4 text-center font-medium transition-all duration-300
                     hover:scale-105 active:scale-[0.98]
-                    bg-xuba-green-50 border-xuba-green-500 text-xuba-green-800 shadow-lg
+                    bg-gray-100 border-gray-600 text-gray-700 shadow-lg
                     dark:bg-transparent dark:border-white dark:text-white dark:shadow-xl dark:shadow-xuba-green-500/30"
                 >
                   <span className="flex items-center justify-center gap-2">

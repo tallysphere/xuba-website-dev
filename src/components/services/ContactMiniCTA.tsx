@@ -50,12 +50,12 @@ export default function ContactMiniCTA({
             </div>
           </div>
 
-          {/* Right side - CTA Button matching HeroCTA styling */}
+          {/* Right side - CTA Button following theming guidelines */}
           <Link
             href={buttonLink || '/contact'}
             className="group w-64 rounded-none border-2 px-3 py-4 text-center font-medium transition-all duration-300
               hover:scale-105 active:scale-[0.98]
-              bg-xuba-green-50 border-xuba-green-500 text-xuba-green-800 shadow-lg
+              bg-gray-100 border-gray-600 text-gray-700 shadow-lg
               dark:bg-transparent dark:border-white dark:text-white dark:shadow-xl dark:shadow-xuba-purple-500/40"
           >
             <span className="flex items-center justify-center gap-2">

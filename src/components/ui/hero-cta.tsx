@@ -46,8 +46,8 @@ export function HeroCTA({
         'active:scale-[0.98]',
         // Width based on variant
         variant === 'primary' ? 'w-64' : 'w-64 md:w-56',
-        // Light theme styles
-        'bg-xuba-green-50 border-xuba-green-500 text-xuba-green-800 shadow-lg',
+        // Light theme styles (following theming guidelines)
+        'bg-gray-100 border-gray-600 text-gray-700 shadow-lg',
         // Dark theme styles
         'dark:bg-transparent dark:border-white dark:text-white dark:shadow-xl',
         variant === 'primary'

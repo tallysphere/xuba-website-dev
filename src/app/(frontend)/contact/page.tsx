@@ -84,12 +84,6 @@ export default async function ContactPage() {
       aria-labelledby='contact-page-heading'
       className='relative isolate min-h-screen bg-white dark:bg-xuba-purple-900 flex flex-col items-center justify-center md:py-0 py-32 overflow-hidden'
     >
-      {/* Decorative background elements */}
-      <div className='absolute inset-0 overflow-hidden pointer-events-none' aria-hidden='true'>
-        <div className='absolute -top-40 -right-40 w-80 h-80 bg-xuba-green-500/10 dark:bg-xuba-green-500/10 rounded-full blur-3xl' />
-        <div className='absolute -bottom-40 -left-40 w-96 h-96 bg-xuba-green-500/10 dark:bg-xuba-purple-500/20 rounded-full blur-3xl' />
-        <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-xuba-green-500/5 dark:bg-xuba-green-500/5 rounded-full blur-3xl' />
-      </div>
 
       {/* Header Section */}
       <header className='relative flex flex-col items-center justify-center'>
@@ -124,7 +118,7 @@ export default async function ContactPage() {
               {heading}
               <span className='block w-16 h-1 bg-xuba-green-500 mt-4 mx-auto md:mx-0' aria-hidden='true' />
             </h2>
-            <p className='mt-6 text-xuba-green-700 dark:text-gray-300 text-base text-center md:text-start leading-relaxed'>
+            <p className='mt-6 text-xuba-green-900 dark:text-gray-300 text-base text-center md:text-start leading-relaxed'>
               {description}
             </p>
 

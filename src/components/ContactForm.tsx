@@ -68,17 +68,18 @@ export function ContactForm() {
     return (
       <div className='px-6 pt-0 pb-24 sm:pb-32 lg:px-8 lg:py-48'>
         <div className='mx-auto max-w-xl lg:mr-0 lg:max-w-lg flex flex-col items-center justify-center text-center py-16'>
-          <div className='w-20 h-20 rounded-full bg-xuba-green-100 dark:bg-xuba-green-500/20 flex items-center justify-center mb-6'>
-            <CheckCircleIcon className='w-10 h-10 text-xuba-green-500' aria-hidden='true' />
+          <div className='w-20 h-20 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center mb-6'>
+            <CheckCircleIcon className='w-10 h-10 text-gray-700 dark:text-white' aria-hidden='true' />
           </div>
-          <h3 className='text-2xl font-semibold text-xuba-green-900 dark:text-white mb-3'>Message Sent!</h3>
-          <p className='text-xuba-green-600 dark:text-gray-400 mb-8'>
+          <h3 className='text-2xl font-semibold text-gray-900 dark:text-white mb-3'>Message Sent!</h3>
+          <p className='text-gray-600 dark:text-gray-400 mb-8'>
             Thank you for reaching out. We&apos;ll get back to you within 24 hours.
           </p>
           <Button
             type='button'
             onClick={() => setIsSubmitted(false)}
-            className='rounded-none border-2 border-xuba-green-500 bg-transparent text-xuba-green-500 hover:bg-xuba-green-500 hover:text-white transition-all duration-300 px-8 py-3'
+            className='rounded-none border-2 border-gray-600 bg-gray-100 text-gray-700 hover:bg-gray-200 hover:scale-105 transition-all duration-300 px-8 py-3
+              dark:bg-transparent dark:border-white dark:text-white dark:hover:bg-white/10'
           >
             Send Another Message
           </Button>
@@ -98,9 +99,9 @@ export function ContactForm() {
           <div className='group'>
             <label
               htmlFor='firstName'
-              className='block text-sm/6 font-medium text-xuba-green-700 dark:text-gray-300 group-focus-within:text-xuba-green-500 dark:group-focus-within:text-xuba-green-400 transition-colors duration-200'
+              className='block text-base font-medium text-gray-700 dark:text-gray-300 group-focus-within:text-gray-900 dark:group-focus-within:text-white transition-colors duration-200'
             >
-              First name <span className='text-xuba-green-500'>*</span>
+              First name <span className='text-red-500'>*</span>
             </label>
             <div className='mt-2.5'>
               <Input
@@ -109,8 +110,8 @@ export function ContactForm() {
                 placeholder='John'
                 autoComplete='given-name'
                 {...register('firstName')}
-                className={`block w-full h-12 rounded-none border bg-xuba-green-50 dark:bg-white/5 px-3.5 py-2 text-base text-xuba-green-900 dark:text-white placeholder:text-xuba-green-400 dark:placeholder:text-gray-500 focus:border-xuba-green-500 focus:ring-1 focus:ring-xuba-green-500 transition-all duration-200 ${
-                  errors.firstName ? 'border-red-500' : 'border-xuba-green-200 dark:border-xuba-purple-700'
+                className={`block w-full h-12 rounded-none border dark:bg-white/5 px-3.5 py-2 text-base text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:border-gray-900 focus:ring-1 focus:ring-gray-900 dark:focus:border-white dark:focus:ring-white transition-all duration-200 ${
+                  errors.firstName ? 'border-red-500' : 'border-gray-600 dark:border-white'
                 }`}
               />
               {errors.firstName && (
@@ -123,9 +124,9 @@ export function ContactForm() {
           <div className='group'>
             <label
               htmlFor='lastName'
-              className='block text-sm/6 font-medium text-xuba-green-700 dark:text-gray-300 group-focus-within:text-xuba-green-500 dark:group-focus-within:text-xuba-green-400 transition-colors duration-200'
+              className='block text-base font-medium text-gray-700 dark:text-gray-300 group-focus-within:text-gray-900 dark:group-focus-within:text-white transition-colors duration-200'
             >
-              Last name <span className='text-xuba-green-500'>*</span>
+              Last name <span className='text-red-500'>*</span>
             </label>
             <div className='mt-2.5'>
               <Input
@@ -134,8 +135,8 @@ export function ContactForm() {
                 placeholder='Doe'
                 autoComplete='family-name'
                 {...register('lastName')}
-                className={`block w-full h-12 rounded-none border bg-xuba-green-50 dark:bg-white/5 px-3.5 py-2 text-base text-xuba-green-900 dark:text-white placeholder:text-xuba-green-400 dark:placeholder:text-gray-500 focus:border-xuba-green-500 focus:ring-1 focus:ring-xuba-green-500 transition-all duration-200 ${
-                  errors.lastName ? 'border-red-500' : 'border-xuba-green-200 dark:border-xuba-purple-700'
+                className={`block w-full h-12 rounded-none border dark:bg-white/5 px-3.5 py-2 text-base text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:border-gray-900 focus:ring-1 focus:ring-gray-900 dark:focus:border-white dark:focus:ring-white transition-all duration-200 ${
+                  errors.lastName ? 'border-red-500' : 'border-gray-600 dark:border-white'
                 }`}
               />
               {errors.lastName && (
@@ -148,9 +149,9 @@ export function ContactForm() {
           <div className='sm:col-span-2 group'>
             <label
               htmlFor='email'
-              className='block text-sm/6 font-medium text-xuba-green-700 dark:text-gray-300 group-focus-within:text-xuba-green-500 dark:group-focus-within:text-xuba-green-400 transition-colors duration-200'
+              className='block text-base font-medium text-gray-700 dark:text-gray-300 group-focus-within:text-gray-900 dark:group-focus-within:text-white transition-colors duration-200'
             >
-              Email <span className='text-xuba-green-500'>*</span>
+              Email <span className='text-red-500'>*</span>
             </label>
             <div className='mt-2.5'>
               <Input
@@ -159,8 +160,8 @@ export function ContactForm() {
                 placeholder='john@example.com'
                 autoComplete='email'
                 {...register('email')}
-                className={`block w-full h-12 rounded-none border bg-xuba-green-50 dark:bg-white/5 px-3.5 py-2 text-base text-xuba-green-900 dark:text-white placeholder:text-xuba-green-400 dark:placeholder:text-gray-500 focus:border-xuba-green-500 focus:ring-1 focus:ring-xuba-green-500 transition-all duration-200 ${
-                  errors.email ? 'border-red-500' : 'border-xuba-green-200 dark:border-xuba-purple-700'
+                className={`block w-full h-12 rounded-none border dark:bg-white/5 px-3.5 py-2 text-base text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:border-gray-900 focus:ring-1 focus:ring-gray-900 dark:focus:border-white dark:focus:ring-white transition-all duration-200 ${
+                  errors.email ? 'border-red-500' : 'border-gray-600 dark:border-white'
                 }`}
               />
               {errors.email && (
@@ -173,7 +174,7 @@ export function ContactForm() {
           <div className='sm:col-span-2 group'>
             <label
               htmlFor='phone'
-              className='block text-sm/6 font-medium text-xuba-green-700 dark:text-gray-300 group-focus-within:text-xuba-green-500 dark:group-focus-within:text-xuba-green-400 transition-colors duration-200'
+              className='block text-base font-medium text-gray-700 dark:text-gray-300 group-focus-within:text-gray-900 dark:group-focus-within:text-white transition-colors duration-200'
             >
               Phone number
             </label>
@@ -184,7 +185,7 @@ export function ContactForm() {
                 placeholder='+64 21 123 4567'
                 autoComplete='tel'
                 {...register('phone')}
-                className='block w-full h-12 rounded-none border border-xuba-green-200 dark:border-xuba-purple-700 bg-xuba-green-50 dark:bg-white/5 px-3.5 py-2 text-base text-xuba-green-900 dark:text-white placeholder:text-xuba-green-400 dark:placeholder:text-gray-500 focus:border-xuba-green-500 focus:ring-1 focus:ring-xuba-green-500 transition-all duration-200'
+                className='block w-full h-12 rounded-none border border-gray-600 dark:border-white dark:bg-white/5 px-3.5 py-2 text-base text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:border-gray-900 focus:ring-1 focus:ring-gray-900 dark:focus:border-white dark:focus:ring-white transition-all duration-200'
               />
             </div>
           </div>
@@ -193,9 +194,9 @@ export function ContactForm() {
           <div className='sm:col-span-2 group'>
             <label
               htmlFor='message'
-              className='block text-sm/6 font-medium text-xuba-green-700 dark:text-gray-300 group-focus-within:text-xuba-green-500 dark:group-focus-within:text-xuba-green-400 transition-colors duration-200'
+              className='block text-base font-medium text-gray-700 dark:text-gray-300 group-focus-within:text-gray-900 dark:group-focus-within:text-white transition-colors duration-200'
             >
-              Message <span className='text-xuba-green-500'>*</span>
+              Message <span className='text-red-500'>*</span>
             </label>
             <div className='mt-2.5'>
               <Textarea
@@ -203,8 +204,8 @@ export function ContactForm() {
                 rows={4}
                 placeholder='Tell us about your project...'
                 {...register('message')}
-                className={`block w-full h-32 rounded-none border bg-xuba-green-50 dark:bg-white/5 px-3.5 py-2 text-base text-xuba-green-900 dark:text-white placeholder:text-xuba-green-400 dark:placeholder:text-gray-500 focus:border-xuba-green-500 focus:ring-1 focus:ring-xuba-green-500 transition-all duration-200 resize-none ${
-                  errors.message ? 'border-red-500' : 'border-xuba-green-200 dark:border-xuba-purple-700'
+                className={`block w-full h-32 rounded-none border dark:bg-white/5 px-3.5 py-2 text-base text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:border-gray-900 focus:ring-1 focus:ring-gray-900 dark:focus:border-white dark:focus:ring-white transition-all duration-200 resize-none ${
+                  errors.message ? 'border-red-500' : 'border-gray-600 dark:border-white'
                 }`}
               />
               {errors.message && (
@@ -226,29 +227,36 @@ export function ContactForm() {
           <Button
             type='submit'
             disabled={isSubmitting}
-            className='relative cursor-pointer w-full rounded-none border-4 hover:scale-105 transition-all duration-300 bg-gray-100 dark:bg-transparent border-gray-600 dark:border-white text-center text-sm text-gray-800 dark:text-white font-medium px-3 py-7 shadow-lg dark:shadow-xl dark:shadow-xuba-green-500/30 disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100'
+            className='group relative cursor-pointer w-full rounded-none border-2 px-3 py-6 text-center font-medium transition-all duration-300
+              hover:scale-105 active:scale-[0.98]
+              bg-gray-100 border-gray-600 text-gray-700 shadow-lg
+              dark:bg-transparent dark:border-white dark:text-white dark:shadow-xl dark:shadow-xuba-purple-500/40
+              disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100'
           >
-            <div className='text-gray-700 dark:text-white font-semibold text-lg text-nowrap tracking-tight flex items-center justify-center gap-2'>
+            <span className='flex items-center justify-center gap-2'>
               {isSubmitting ? (
                 <>
-                  <Loader2Icon className='w-6 h-6 animate-spin' aria-hidden='true' />
-                  Sending...
+                  <Loader2Icon className='w-5 h-5 animate-spin' aria-hidden='true' />
+                  <span className='text-lg font-medium tracking-tight'>Sending...</span>
                 </>
               ) : (
                 <>
-                  Send Message <ArrowRightIcon className='w-6 h-6' aria-hidden='true' />
+                  <span className='text-lg font-medium tracking-tight'>Send Message</span>
+                  <span className='w-0 overflow-hidden transition-all duration-300 group-hover:w-5 group-disabled:group-hover:w-0'>
+                    <ArrowRightIcon className='h-5 w-5 text-gray-700 dark:text-white' aria-hidden='true' />
+                  </span>
                 </>
               )}
-            </div>
+            </span>
           </Button>
         </div>
 
         {/* Privacy Note */}
-        <p className='mt-4 text-xs text-xuba-green-600 dark:text-gray-400 text-center'>
+        <p className='mt-4 text-sm text-gray-500 dark:text-gray-400 text-center'>
           By submitting this form, you agree to our{' '}
           <a
             href='/privacy'
-            className='text-xuba-green-500 hover:text-xuba-green-400 dark:text-xuba-green-400 dark:hover:text-xuba-green-300 underline underline-offset-2'
+            className='text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white underline underline-offset-2'
           >
             Privacy Policy
           </a>
