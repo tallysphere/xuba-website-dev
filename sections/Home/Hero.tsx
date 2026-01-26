@@ -64,7 +64,7 @@ const HomeHero = ({
     <section
       id='main-content'
       aria-labelledby='hero-heading'
-      className='relative h-[80dvh] w-full overflow-hidden bg-white dark:bg-xuba-purple-900'
+      className='relative h-[90dvh] md:h-[80dvh] w-full overflow-hidden bg-white dark:bg-xuba-purple-900'
     >
       {/* Theme-aware background: DotPattern for light, Aurora for dark */}
       <ThemedHeroBackground />
@@ -82,7 +82,7 @@ const HomeHero = ({
               id='hero-heading'
               className='font-bold text-3xl tracking-tight sm:text-4xl md:text-5xl lg:text-6xl text-xuba-green-900 dark:text-xuba-green-50'
             >
-              <span className='mt-4 block text-center text-2xl tracking-tight sm:text-4xl md:text-5xl lg:text-6xl'>
+              <span className='mt-4 block text-center text-3xl tracking-tight sm:text-4xl md:text-5xl lg:text-6xl'>
                 {headlinePart1}{' '}
                 <PointerHighlight
                   rectangleClassName='bg-xuba-green-100 dark:bg-xuba-green-900 border-xuba-green-300 dark:border-xuba-green-700 leading-loose'
@@ -92,7 +92,7 @@ const HomeHero = ({
                   <span className='relative z-10'>{highlightWord} </span>
                 </PointerHighlight>
               </span>
-              <span className='block text-center font-bold text-2xl tracking-tight sm:text-4xl md:text-5xl lg:text-6xl mt-2 md:mt-4'>
+              <span className='block text-center font-bold text-3xl tracking-tight sm:text-4xl md:text-5xl lg:text-6xl mt-2 md:mt-4'>
                 {headlinePart2}
               </span>
             </h1>

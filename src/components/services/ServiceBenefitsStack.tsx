@@ -20,7 +20,7 @@ import {
   Clock,
   type LucideIcon,
 } from 'lucide-react'
-import ScrollStack, { ScrollStackItem } from '@/components/ui/scroll-stack'
+import ScrollStack, { ScrollStackItem } from '../ui/scroll-stack'
 
 // Icon mapping for dynamic icon rendering
 const iconMap: Record<string, LucideIcon> = {
@@ -111,12 +111,8 @@ export default function ServiceBenefitsStack({
       </div>
 
       {/* ScrollStack Cards */}
-      <div className="max-w-3xl mx-auto px-6 pb-32">
-        <ScrollStack
-          stackOffset={25}
-          scaleStep={0.025}
-          baseScale={0.92}
-        >
+      <div className="max-w-3xl mx-auto px-6">
+        <ScrollStack stickyTop={120}>
           {benefits.slice(0, 6).map((benefit, index) => {
             const Icon = getIcon(benefit.icon)
             return (
