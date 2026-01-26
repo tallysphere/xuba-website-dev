@@ -14,6 +14,22 @@ export const TextHoverEffect = ({
   const [cursor, setCursor] = useState({ x: 0, y: 0 });
   const [hovered, setHovered] = useState(false);
   const [maskPosition, setMaskPosition] = useState({ cx: "50%", cy: "50%" });
+  const [isDark, setIsDark] = useState(false);
+
+  // Detect dark mode
+  useEffect(() => {
+    const checkDarkMode = () => {
+      setIsDark(document.documentElement.classList.contains('dark'));
+    };
+    
+    checkDarkMode();
+    
+    // Watch for theme changes
+    const observer = new MutationObserver(checkDarkMode);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     if (svgRef.current && cursor.x !== null && cursor.y !== null) {
@@ -26,6 +42,9 @@ export const TextHoverEffect = ({
       });
     }
   }, [cursor]);
+
+  // Theme-based colors
+  const gradientColor = isDark ? "#8a288f" : "#b8d02f";
 
   return (
     <svg
@@ -49,11 +68,11 @@ export const TextHoverEffect = ({
         >
           {hovered && (
             <>
-              <stop offset="0%" stopColor="#eab308" />
-              <stop offset="25%" stopColor="#ef4444" />
-              <stop offset="50%" stopColor="#3b82f6" />
-              <stop offset="75%" stopColor="#06b6d4" />
-              <stop offset="100%" stopColor="#8b5cf6" />
+              <stop offset="0%" stopColor={gradientColor} />
+              <stop offset="25%" stopColor={gradientColor} />
+              <stop offset="50%" stopColor={gradientColor} />
+              <stop offset="75%" stopColor={gradientColor} />
+              <stop offset="100%" stopColor={gradientColor} />
             </>
           )}
         </linearGradient>
