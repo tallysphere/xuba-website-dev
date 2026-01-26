@@ -47,7 +47,7 @@ export function CenteredFooter() {
   return (
     <footer
       aria-label='Site footer'
-      className='relative w-full overflow-hidden border-t border-gray-200 bg-white px-8 py-20 dark:border-white/10 dark:bg-xuba-purple-950'
+      className='relative w-full overflow-hidden border-t border-gray-200 bg-white px-8 py-20 dark:border-white/10 dark:bg-xuba-purple-900'
     >
       <div className='mx-auto max-w-7xl text-sm text-gray-500 md:px-8'>
         {/* Centered Content */}
