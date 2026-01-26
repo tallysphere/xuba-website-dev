@@ -99,8 +99,14 @@ export default async function AboutPage() {
       aria-labelledby='about-page-heading'
       className='relative w-full min-h-screen flex flex-col items-center justify-center bg-white dark:bg-xuba-purple-900 py-12 sm:py-20 overflow-x-hidden'
     >
-      {/* Theme-aware background: DotPattern for light, Aurora for dark */}
-      <ThemedHeroBackground />
+      {/* Theme-aware background: DotPattern for light, Aurora for dark - constrained to top third */}
+      <div
+        className='absolute top-0 left-0 right-0 h-[50vh] overflow-hidden'
+        style={{ mask: 'linear-gradient(to bottom, black 50%, transparent 100%)' }}
+        aria-hidden='true'
+      >
+        <ThemedHeroBackground />
+      </div>
 
       {/* Page Header */}
       <header className='relative z-10 flex flex-col items-center justify-center px-4 sm:px-6 md:mt-0 mt-20'>

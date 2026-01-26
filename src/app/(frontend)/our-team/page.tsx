@@ -48,8 +48,14 @@ export default async function OurTeamPage() {
       aria-labelledby='our-team-heading'
       className='relative bg-white dark:bg-xuba-purple-900 py-20 sm:py-32 lg:py-56 overflow-x-hidden'
     >
-      {/* Theme-aware background: DotPattern for light, Aurora for dark */}
-      <ThemedHeroBackground />
+      {/* Theme-aware background: DotPattern for light, Aurora for dark - constrained to top third */}
+      <div
+        className='absolute top-0 left-0 right-0 h-[50vh] overflow-hidden'
+        style={{ mask: 'linear-gradient(to bottom, black 50%, transparent 100%)' }}
+        aria-hidden='true'
+      >
+        <ThemedHeroBackground />
+      </div>
 
       <div className='relative z-10 mx-auto flex flex-col md:mt-0 mt-20 items-center justify-center max-w-7xl gap-12 sm:gap-20 px-4 sm:px-6 lg:px-8'>
         {/* Page Header */}
