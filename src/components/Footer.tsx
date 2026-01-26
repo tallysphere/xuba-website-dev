@@ -140,7 +140,7 @@ export function Footer() {
 
        
       </div>
-      <p className="w-screen mt-40 z-0 mb-0 pb-0 bg-linear-to-b from-xuba-green-100 to-xuba-green-300 bg-clip-text text-center text-[25vw] font-bold leading-[0.7] text-transparent dark:from-xuba-purple-800 dark:to-xuba-purple-950">
+      <p className="w-screen mt-40 z-0 mb-0 pb-0 bg-linear-to-b from-xuba-green-50/50 to-xuba-green-100 bg-clip-text text-center text-[25vw] font-bold leading-[0.7] text-transparent dark:from-xuba-purple-800 dark:to-xuba-purple-950">
         XUBA
       </p>
     </footer>
