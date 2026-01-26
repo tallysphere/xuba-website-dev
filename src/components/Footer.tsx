@@ -64,19 +64,19 @@ export function Footer() {
     >
       <div className='mx-auto max-w-7xl text-sm text-xuba-green-600 dark:text-gray-400 md:px-8'>
         {/* Main Footer Content */}
-        <div className='flex flex-col items-center sm:flex-row sm:items-start sm:justify-between'>
+        <div className='flex flex-col items-center md:flex-row md:items-start md:justify-between'>
           {/* Left Section - Logo & Copyright */}
-          <div className='mb-10 flex flex-col items-center sm:mb-0 sm:items-start'>
+          <div className='mb-10 flex flex-col items-center md:mb-0 md:items-start'>
             <div className='mb-4'>
               <Logo />
             </div>
-            <p className='text-center sm:text-left'>
+            <p className='text-center md:text-left'>
               &copy; Xuba {new Date().getFullYear()}. All rights reserved.
             </p>
           </div>
 
           {/* Right Section - Navigation Grids */}
-          <div className='grid w-full max-w-2xl grid-cols-1 gap-10 text-center sm:grid-cols-3 sm:gap-8 sm:text-left'>
+          <div className='grid w-full max-w-2xl grid-cols-1 gap-10 text-center md:grid-cols-3 md:gap-8 md:text-left'>
             {/* Pages Column */}
             <div className='flex flex-col space-y-4'>
               <p className='font-light uppercase text-xuba-green-500 text-base'>
