@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Raleway } from 'next/font/google'
+import { Poppins, Raleway } from 'next/font/google'
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 
@@ -10,10 +10,10 @@ export const metadata: Metadata = {
     'Looking for a dedicated, hard-working, clever IT support partner?  You&apos;ve come to the right place.  Located in Hamilton, Waikato, New Zealand, Xuba offers a robust range of IT support products and services including Cloud technology, Helpdesk remote support, System deployment, Server support and security, Network configuration, Proactive IT Support, Incident Support, & SMB IT Guidance. ',
 }
 
-const raleway = Raleway({
+const raleway = Poppins({
   subsets: ['latin'],
   display: 'swap',
-  weight: ['400', '500', '600', '700'],
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
 })
 
 export default function RootLayout({
