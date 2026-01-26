@@ -87,7 +87,7 @@ export function Footer() {
                   <li key={'page-' + idx}>
                     <Link
                       href={page.href}
-                      className='transition-colors text-xuba-green-900 dark:text-white hover:text-xuba-green-500 dark:hover:text-white font-medium tracking tracking-wide'
+                      className='transition-colors text-xuba-green-900 dark:text-white hover:text-xuba-green-500 dark:hover:text-white font-medium tracking tracking-tight'
                     >
                       {page.title}
                     </Link>
@@ -106,7 +106,7 @@ export function Footer() {
                   <li key={'legal-' + idx}>
                     <Link
                       href={legal.href}
-                      className='transition-colors text-xuba-green-900 dark:text-white hover:text-xuba-green-500 dark:hover:text-white font-medium tracking tracking-wide'
+                      className='transition-colors text-xuba-green-900 dark:text-white hover:text-xuba-green-500 dark:hover:text-white font-medium tracking tracking-tight'
                     >
                       {legal.title}
                     </Link>
@@ -125,7 +125,7 @@ export function Footer() {
                   <li key={'social-' + idx}>
                     <Link
                       href={social.href}
-                      className='transition-colors text-xuba-green-900 dark:text-white hover:text-xuba-green-500 dark:hover:text-white'
+                      className='transition-colors text-xuba-green-900 dark:text-white hover:text-xuba-green-500 dark:hover:text-white font-medium tracking tracking-tight'
                     >
                       {social.title}
                     </Link>
