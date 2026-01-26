@@ -14,7 +14,8 @@ interface ServiceCTAProps {
 }
 
 /**
- * Call-to-action section with gradient background.
+ * Call-to-action section with gradient background and theme-compliant button.
+ * Supports light and dark modes following Xuba theming guidelines.
  */
 export default function ServiceCTA({
   headline,
@@ -40,7 +41,7 @@ export default function ServiceCTA({
     return (
       <>
         {parts[0]}
-        <span className="text-xuba-green-500">{highlight}</span>
+        <span className="text-xuba-green-500 dark:text-xuba-green-500">{highlight}</span>
         {parts[1]}
       </>
     )
@@ -48,7 +49,8 @@ export default function ServiceCTA({
 
   return (
     <section className="relative py-24 md:py-32 px-6 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-xuba-purple-950 via-xuba-purple-900 to-xuba-purple-950" />
+      {/* Light mode background */}
+      <div className="absolute inset-0 bg-linear-to-br from-xuba-green-50 via-white to-xuba-green-50 dark:from-xuba-purple-950 dark:via-xuba-purple-900 dark:to-xuba-purple-950" />
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-xuba-green-500/5 rounded-full blur-3xl" />
       </div>
@@ -60,20 +62,28 @@ export default function ServiceCTA({
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-3xl md:text-5xl font-extralight tracking-tight text-white mb-6">
+          <h2 className="text-3xl md:text-5xl font-extralight tracking-tight text-xuba-green-900 dark:text-white mb-6">
             {renderHeadline()}
           </h2>
           {subtext && (
-            <p className="text-lg md:text-xl text-white/60 font-light mb-10 max-w-xl mx-auto">
+            <p className="text-lg md:text-xl text-xuba-green-900 dark:text-white/60 font-light mb-10 max-w-xl mx-auto">
               {subtext}
             </p>
           )}
+          {/* CTA Button - Matching HeroCTA styling */}
           <Link
             href={buttonLink || '/contact'}
-            className="inline-flex items-center gap-2 px-10 py-5 bg-xuba-green-500 text-xuba-purple-900 font-semibold hover:bg-xuba-green-400 transition-colors duration-300"
+            className="group inline-flex w-64 justify-center rounded-none border-2 px-3 py-4 text-center font-medium transition-all duration-300
+              hover:scale-105 active:scale-[0.98]
+              bg-xuba-green-50 border-xuba-green-500 text-xuba-green-800 shadow-lg
+              dark:bg-transparent dark:border-white dark:text-white dark:shadow-xl dark:shadow-xuba-purple-500/40"
           >
-            {buttonText || "Let's Talk"}
-            <ArrowRight className="w-5 h-5" />
+            <span className="flex items-center gap-2">
+              <span className="text-lg font-medium tracking-tight whitespace-nowrap">{buttonText || "Let's Talk"}</span>
+              <span className="w-0 overflow-hidden transition-all duration-300 group-hover:w-5">
+                <ArrowRight className="h-5 w-5 text-xuba-green-500 dark:text-xuba-green-500" />
+              </span>
+            </span>
           </Link>
         </motion.div>
       </div>

@@ -4,51 +4,39 @@ import { PortableText, PortableTextComponents } from 'next-sanity'
 import Image from 'next/image'
 import { urlFor } from '@/sanity/lib/image'
 import { motion } from 'motion/react'
+import type { BlockContent } from '@/sanity/types'
 
 interface ServiceBodyProps {
-  content: PortableTextBlock[]
-}
-
-type PortableTextBlock = {
-  _type: string
-  _key: string
-  children?: { _type: string; _key: string; text?: string; marks?: string[] }[]
-  style?: string
-  listItem?: string
-  level?: number
-  markDefs?: { _type: string; _key: string; href?: string; blank?: boolean }[]
-  asset?: { _ref: string; _type: string }
-  alt?: string
-  caption?: string
+  content: BlockContent
 }
 
 /**
- * Custom Portable Text components styled for the dark service page theme.
+ * Custom Portable Text components styled for light/dark mode following Xuba theming guidelines.
  */
 const components: PortableTextComponents = {
   block: {
     normal: ({ children }) => (
-      <p className="text-lg md:text-xl text-white/70 font-light leading-relaxed mb-6">
+      <p className="text-lg md:text-xl text-xuba-green-900 dark:text-white/70 font-light leading-relaxed mb-6">
         {children}
       </p>
     ),
     h2: ({ children }) => (
-      <h2 className="text-3xl md:text-4xl font-extralight tracking-tight text-white mt-12 mb-6">
+      <h2 className="text-3xl md:text-4xl font-extralight tracking-tight text-xuba-green-900 dark:text-white mt-12 mb-6">
         {children}
       </h2>
     ),
     h3: ({ children }) => (
-      <h3 className="text-2xl md:text-3xl font-light text-white mt-10 mb-4">
+      <h3 className="text-2xl md:text-3xl font-light text-xuba-green-900 dark:text-white mt-10 mb-4">
         {children}
       </h3>
     ),
     h4: ({ children }) => (
-      <h4 className="text-xl md:text-2xl font-light text-white mt-8 mb-3">
+      <h4 className="text-xl md:text-2xl font-light text-xuba-green-800 dark:text-white mt-8 mb-3">
         {children}
       </h4>
     ),
     blockquote: ({ children }) => (
-      <blockquote className="border-l-4 border-xuba-green-500 pl-6 my-8 text-white/60 italic text-lg">
+      <blockquote className="border-l-4 border-xuba-green-500 pl-6 my-8 text-xuba-green-600 dark:text-white/60 italic text-lg">
         {children}
       </blockquote>
     ),
@@ -63,21 +51,21 @@ const components: PortableTextComponents = {
   },
   listItem: {
     bullet: ({ children }) => (
-      <li className="flex items-start gap-3 text-white/70">
+      <li className="flex items-start gap-3 text-xuba-green-900 dark:text-white/70">
         <span className="text-xuba-green-500 mt-1.5 shrink-0">•</span>
         <span className="font-light">{children}</span>
       </li>
     ),
     number: ({ children }) => (
-      <li className="text-white/70 font-light">{children}</li>
+      <li className="text-xuba-green-900 dark:text-white/70 font-light">{children}</li>
     ),
   },
   marks: {
     strong: ({ children }) => (
-      <strong className="font-semibold text-white">{children}</strong>
+      <strong className="font-semibold text-xuba-green-900 dark:text-white">{children}</strong>
     ),
     em: ({ children }) => (
-      <em className="italic text-white/80">{children}</em>
+      <em className="italic text-xuba-green-800 dark:text-white/80">{children}</em>
     ),
     underline: ({ children }) => (
       <span className="underline decoration-xuba-green-500/50">{children}</span>
@@ -89,7 +77,7 @@ const components: PortableTextComponents = {
           href={value?.href}
           target={isExternal ? '_blank' : undefined}
           rel={isExternal ? 'noopener noreferrer' : undefined}
-          className="text-xuba-green-400 hover:text-xuba-green-300 underline underline-offset-4 transition-colors"
+          className="text-xuba-green-600 dark:text-xuba-green-400 hover:text-xuba-green-700 dark:hover:text-xuba-green-300 underline underline-offset-4 transition-colors"
         >
           {children}
         </a>
@@ -111,7 +99,7 @@ const components: PortableTextComponents = {
             />
           </div>
           {value.caption && (
-            <figcaption className="text-sm text-white/40 mt-3 text-center">
+            <figcaption className="text-sm text-xuba-green-600 dark:text-white/40 mt-3 text-center">
               {value.caption}
             </figcaption>
           )}
@@ -123,13 +111,14 @@ const components: PortableTextComponents = {
 
 /**
  * Rich text body content section using Sanity Portable Text.
+ * Supports light and dark modes following Xuba theming guidelines.
  */
 export default function ServiceBody({ content }: ServiceBodyProps) {
   if (!content || content.length === 0) return null
 
   return (
-    <section className="relative py-16 md:py-24 px-6">
-      <div className="absolute inset-0 bg-linear-to-b from-transparent via-xuba-purple-950/20 to-transparent pointer-events-none" />
+    <section className="relative py-16 md:py-24 px-6 bg-white dark:bg-xuba-purple-950">
+      <div className="absolute inset-0 bg-linear-to-b from-transparent via-xuba-green-50/30 dark:via-xuba-purple-950/20 to-transparent pointer-events-none" />
 
       <motion.div
         initial={{ opacity: 0, y: 30 }}

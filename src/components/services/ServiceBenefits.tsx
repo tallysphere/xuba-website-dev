@@ -20,7 +20,7 @@ import {
   Clock,
   type LucideIcon,
 } from 'lucide-react'
-import { BentoGrid, BentoCard } from '@/components/ui/bento-grid'
+import { MagicCard } from '@/components/ui/magic-card'
 
 // Icon mapping for dynamic icon rendering
 const iconMap: Record<string, LucideIcon> = {
@@ -56,7 +56,8 @@ interface ServiceBenefitsProps {
 }
 
 /**
- * Benefits section using Bento Grid layout.
+ * Benefits section with clean MagicCard grid for subtle spotlight hover effect.
+ * Supports light and dark modes following Xuba theming guidelines.
  */
 export default function ServiceBenefits({
   title = 'Benefits',
@@ -76,7 +77,7 @@ export default function ServiceBenefits({
     return (
       <>
         {parts[0]}
-        <span className='text-xuba-green-500'>{titleHighlight}</span>
+        <span className='text-xuba-green-600 dark:text-xuba-green-500'>{titleHighlight}</span>
         {parts[1]}
       </>
     )
@@ -89,8 +90,8 @@ export default function ServiceBenefits({
   }
 
   return (
-    <section className='relative py-24 md:py-32 px-6'>
-      <div className='absolute inset-0 bg-gradient-to-b from-transparent via-xuba-purple-950/30 to-transparent pointer-events-none' />
+    <section className='relative py-24 md:py-32 px-6 bg-white dark:bg-xuba-purple-950'>
+      <div className='absolute inset-0 bg-linear-to-b from-transparent via-xuba-green-50/30 dark:via-xuba-purple-950/30 to-transparent pointer-events-none' />
 
       <div className='relative max-w-6xl mx-auto'>
         <motion.div
@@ -100,32 +101,51 @@ export default function ServiceBenefits({
           viewport={{ once: true }}
           className='text-center mb-16'
         >
-          <span className='text-xuba-green-500 text-sm font-medium tracking-[0.3em] uppercase mb-4 block'>
+          <span className='text-xuba-green-600 dark:text-xuba-green-500 text-sm font-medium tracking-[0.3em] uppercase mb-4 block'>
             Benefits
           </span>
-          <h2 className='text-3xl md:text-5xl font-extralight tracking-tight text-white'>
+          <h2 className='text-3xl md:text-5xl font-extralight tracking-tight text-xuba-green-900 dark:text-white'>
             {renderTitle()}
           </h2>
         </motion.div>
 
-        <BentoGrid className='grid-cols-1 md:grid-cols-2 lg:grid-cols-4 auto-rows-[14rem]'>
-          {benefits.map((benefit, index) => (
-            <motion.div
-              key={benefit._key ?? index}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              viewport={{ once: true }}
-            >
-              <BentoCard
-                name={benefit.title}
-                description={benefit.description ?? ''}
-                Icon={getIcon(benefit.icon)}
-                className='col-span-1 h-full'
-              />
-            </motion.div>
-          ))}
-        </BentoGrid>
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6'>
+          {benefits.map((benefit, index) => {
+            const Icon = getIcon(benefit.icon)
+            return (
+              <motion.div
+                key={benefit._key ?? index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+              >
+                <MagicCard
+                  className='h-full border border-xuba-green-200 dark:border-white/10 bg-xuba-green-50/50 dark:bg-xuba-purple-900/50'
+                  gradientFrom='#c8e600'
+                  gradientTo='#a5c900'
+                  gradientOpacity={0.1}
+                  gradientSize={150}
+                  gradientColor='rgba(200, 230, 0, 0.15)'
+                >
+                  <div className='p-6 h-full flex flex-col'>
+                    <div className='w-10 h-10 rounded-full bg-xuba-green-500/10 flex items-center justify-center mb-4'>
+                      <Icon className='w-5 h-5 text-xuba-green-600 dark:text-xuba-green-500' />
+                    </div>
+                    <h3 className='text-lg font-light text-xuba-green-900 dark:text-white mb-2'>
+                      {benefit.title}
+                    </h3>
+                    {benefit.description && (
+                      <p className='text-sm text-xuba-green-600 dark:text-white/60 font-light leading-relaxed'>
+                        {benefit.description}
+                      </p>
+                    )}
+                  </div>
+                </MagicCard>
+              </motion.div>
+            )
+          })}
+        </div>
       </div>
     </section>
   )

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { sanityFetch } from '@/sanity/lib/live'
+import { client } from '@/sanity/lib/client'
 import { SERVICE_QUERY, SERVICE_SLUGS_QUERY } from '@/sanity/lib/queries'
 import { urlFor } from '@/sanity/lib/image'
 
@@ -23,15 +24,13 @@ interface ServicePageProps {
 
 /**
  * Generate static params for all services at build time.
+ * Uses client.fetch directly since generateStaticParams runs outside request scope.
  */
 export async function generateStaticParams() {
-  const { data: services } = await sanityFetch({
-    query: SERVICE_SLUGS_QUERY,
-    stega: false,
-  })
+  const services = await client.fetch(SERVICE_SLUGS_QUERY)
 
   return (
-    services?.map((service) => ({
+    services?.map((service: { slug: string }) => ({
       slug: service.slug,
     })) ?? []
   )
@@ -113,36 +112,36 @@ export default async function ServicePage({ params }: ServicePageProps) {
       )}
 
       {/* Benefits Section */}
-      {service.benefits && service.benefits.length > 0 && (
+      {/* {service.benefits && service.benefits.length > 0 && (
         <ServiceBenefits
           title={service.benefitsTitle}
           titleHighlight={service.benefitsHighlight}
           benefits={service.benefits}
         />
-      )}
+      )} */}
 
       {/* Contact Mini-CTA Section */}
-      {service.contactCta?.enabled && (
+      {/* {service.contactCta?.enabled && (
         <ContactMiniCTA
           enabled={service.contactCta.enabled}
           heading={service.contactCta.heading}
           buttonText={service.contactCta.buttonText}
           buttonLink={service.contactCta.buttonLink}
         />
-      )}
+      )} */}
 
       {/* What We Handle Section */}
-      {service.serviceItems && service.serviceItems.length > 0 && (
+      {/* {service.serviceItems && service.serviceItems.length > 0 && (
         <ServiceFeatures
           title={service.servicesTitle}
           titleHighlight={service.servicesTitleHighlight}
           items={service.serviceItems}
           centerIcon={service.icon}
         />
-      )}
+      )} */}
 
       {/* Why Xuba Section */}
-      <WhyXuba />
+      {/* <WhyXuba /> */}
 
       {/* CTA Section */}
       <ServiceCTA
