@@ -9,6 +9,7 @@ import { sanityFetch } from '@/sanity/lib/live'
 import { CONTACT_PAGE_QUERY } from '@/sanity/lib/queries'
 import { ContactForm } from '@/components/ContactForm'
 import { urlFor } from '@/sanity/lib/image'
+import { ThemedHeroBackground } from '@/components/ThemedHeroBackground'
 
 /**
  * Contact Page Component
@@ -84,9 +85,11 @@ export default async function ContactPage() {
       aria-labelledby='contact-page-heading'
       className='relative isolate min-h-screen bg-white dark:bg-xuba-purple-900 flex flex-col items-center justify-center md:py-0 py-32 overflow-hidden'
     >
+      {/* Theme-aware background: DotPattern for light, Aurora for dark */}
+      <ThemedHeroBackground />
 
       {/* Header Section */}
-      <header className='relative flex flex-col items-center justify-center'>
+      <header className='relative z-10 flex flex-col items-center justify-center'>
         <div className='text-xuba-green-500 text-sm font-medium tracking-[0.3em] mt-20 uppercase'>
           {eyebrow}
         </div>
@@ -110,7 +113,7 @@ export default async function ContactPage() {
       </header>
 
       {/* Main Content Grid */}
-      <div className='relative mx-auto grid max-w-7xl grid-cols-1 lg:grid-cols-2'>
+      <div className='relative z-10 mx-auto grid max-w-7xl grid-cols-1 lg:grid-cols-2'>
         {/* Left Column - Contact Info */}
         <div className='relative px-6 pt-24 pb-20 sm:pt-32 lg:static lg:px-8 lg:py-48'>
           <div className='mx-auto max-w-xl lg:mx-0 lg:max-w-lg'>

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
-import { Spotlight } from '@/components/Spotlight'
+import { ThemedHeroBackground } from '@/components/ThemedHeroBackground'
 import ContactSection from '@/components/ContactSection'
 import CountUpStats from '@/components/CountUpStats'
 import { sanityFetch } from '@/sanity/lib/live'
@@ -99,23 +99,11 @@ export default async function AboutPage() {
       aria-labelledby='about-page-heading'
       className='relative w-full min-h-screen flex flex-col items-center justify-center bg-white dark:bg-xuba-purple-900 py-12 sm:py-20 overflow-x-hidden'
     >
-      {/* Spotlight effect - only visible in dark mode */}
-      <div className='hidden dark:block'>
-        <Spotlight />
-      </div>
-
-      {/* Decorative background for light mode */}
-      <div
-        className='absolute inset-0 overflow-hidden pointer-events-none dark:hidden'
-        aria-hidden='true'
-      >
-        <div className='absolute -top-40 -right-40 w-80 h-80 bg-xuba-green-500/10 rounded-full blur-3xl' />
-        <div className='absolute -bottom-40 -left-40 w-96 h-96 bg-xuba-green-500/10 rounded-full blur-3xl' />
-        <div className='absolute top-1/3 left-1/4 w-64 h-64 bg-xuba-green-500/5 rounded-full blur-3xl' />
-      </div>
+      {/* Theme-aware background: DotPattern for light, Aurora for dark */}
+      <ThemedHeroBackground />
 
       {/* Page Header */}
-      <header className='relative flex flex-col items-center justify-center px-4 sm:px-6 md:mt-0 mt-20'>
+      <header className='relative z-10 flex flex-col items-center justify-center px-4 sm:px-6 md:mt-0 mt-20'>
         <span className='text-xuba-green-500 text-sm sm:text-lg font-light tracking-widest mt-12 sm:mt-20 text-center uppercase'>
           Who Are We?
         </span>
@@ -130,7 +118,7 @@ export default async function AboutPage() {
         </h1>
       </header>
 
-      <main className='relative isolate w-full'>
+      <main className='relative isolate z-10 w-full'>
         {/* Hero section */}
         <div className='relative isolate -z-10'>
           {/* Decorative gradient blob */}

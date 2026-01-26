@@ -3,7 +3,7 @@ import ContactSection from '@/components/ContactSection'
 import { HomeServices } from '../../../../sections/Home/HomeServices'
 import { sanityFetch } from '@/sanity/lib/live'
 import { HOMEPAGE_QUERY, CONTACT_SECTION_QUERY } from '@/sanity/lib/queries'
-import { Spotlight } from '@/components/Spotlight'
+import { ThemedHeroBackground } from '@/components/ThemedHeroBackground'
 
 /**
  * Services Page Component
@@ -56,15 +56,10 @@ export default async function ServicesPage() {
         aria-labelledby='services-page-heading'
         className='relative bg-white dark:bg-xuba-purple-900 py-20 sm:py-32 overflow-hidden'
       >
-        {/* Spotlight effect - only visible in dark mode */}
-        <div className='hidden dark:block'>
-          {/* <Spotlight /> */}
-        </div>
+        {/* Theme-aware background: DotPattern for light, Aurora for dark */}
+        <ThemedHeroBackground />
 
-        {/* Decorative background for light mode */}
-       
-
-        <div className='relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
+        <div className='relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
           <div className='flex flex-col items-center justify-center text-center'>
             <span className='text-xuba-green-500 text-sm sm:text-lg font-light tracking-widest uppercase'>
               What We Do

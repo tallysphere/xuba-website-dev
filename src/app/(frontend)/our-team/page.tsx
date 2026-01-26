@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import ContactSection from '@/components/ContactSection'
-import { Spotlight } from '@/components/Spotlight'
+import { ThemedHeroBackground } from '@/components/ThemedHeroBackground'
 import TiltedCard from '@/components/TiltedCard/TiltedCard'
 import Link from 'next/link'
 import { sanityFetch } from '@/sanity/lib/live'
@@ -48,22 +48,10 @@ export default async function OurTeamPage() {
       aria-labelledby='our-team-heading'
       className='relative bg-white dark:bg-xuba-purple-900 py-20 sm:py-32 lg:py-56 overflow-x-hidden'
     >
-      {/* Spotlight effect - only visible in dark mode */}
-      <div className='hidden dark:block'>
-        <Spotlight />
-      </div>
+      {/* Theme-aware background: DotPattern for light, Aurora for dark */}
+      <ThemedHeroBackground />
 
-      {/* Decorative background for light mode */}
-      <div
-        className='absolute inset-0 overflow-hidden pointer-events-none dark:hidden'
-        aria-hidden='true'
-      >
-        <div className='absolute -top-40 -right-40 w-80 h-80 bg-xuba-green-500/10 rounded-full blur-3xl' />
-        <div className='absolute -bottom-40 -left-40 w-96 h-96 bg-xuba-green-500/10 rounded-full blur-3xl' />
-        <div className='absolute top-1/2 left-1/4 w-64 h-64 bg-xuba-green-500/5 rounded-full blur-3xl' />
-      </div>
-
-      <div className='relative mx-auto flex flex-col md:mt-0 mt-20 items-center justify-center max-w-7xl gap-12 sm:gap-20 px-4 sm:px-6 lg:px-8'>
+      <div className='relative z-10 mx-auto flex flex-col md:mt-0 mt-20 items-center justify-center max-w-7xl gap-12 sm:gap-20 px-4 sm:px-6 lg:px-8'>
         {/* Page Header */}
         <header className='max-w-4xl flex flex-col items-center justify-center pb-8 sm:pb-20'>
           <div className='flex flex-col items-center justify-center'>
