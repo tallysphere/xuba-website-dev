@@ -10,8 +10,7 @@ import {
   ServiceHero,
   ServiceIntro,
   ServiceBody,
-  ServiceBenefitsBento,
-  ServiceFeatures,
+  ServiceBenefitsStack,
   ServiceFAQ,
   ContactMiniCTA,
   ServiceCTA,
@@ -111,22 +110,12 @@ export default async function ServicePage({ params }: ServicePageProps) {
         <ServiceBody content={service.bodyContent} />
       )}
 
-      {/* Benefits Section (Bento Grid) */}
+      {/* Benefits Section (Scroll Stack) */}
       {service.benefits && service.benefits.length > 0 && (
-        <ServiceBenefitsBento
+        <ServiceBenefitsStack
           title={service.benefitsTitle}
           titleHighlight={service.benefitsHighlight}
           benefits={service.benefits}
-        />
-      )}
-
-      {/* What We Handle Section */}
-      {service.serviceItems && service.serviceItems.length > 0 && (
-        <ServiceFeatures
-          title={service.servicesTitle}
-          titleHighlight={service.servicesTitleHighlight}
-          items={service.serviceItems}
-          centerIcon={service.icon}
         />
       )}
 

@@ -9,7 +9,6 @@ interface BentoGridProps extends ComponentPropsWithoutRef<'div'> {
 interface BentoCardProps extends ComponentPropsWithoutRef<'div'> {
   name: string
   className?: string
-  background?: ReactNode
   Icon: React.ElementType
   description: string
 }
@@ -31,14 +30,13 @@ const BentoGrid = ({ children, className, ...props }: BentoGridProps) => {
 const BentoCard = ({
   name,
   className,
-  background,
   Icon,
   description,
   ...props
 }: BentoCardProps) => (
   <div
     className={cn(
-      'group relative col-span-3 flex flex-col overflow-hidden rounded-none',
+      'group relative col-span-3 flex flex-col overflow-hidden rounded-xl',
       'border border-xuba-green-200 dark:border-white/5',
       'bg-xuba-green-50/30 dark:bg-white/2',
       'hover:border-xuba-green-400 dark:hover:border-xuba-green-500/30',
@@ -48,13 +46,10 @@ const BentoCard = ({
     )}
     {...props}
   >
-    {/* Background element */}
-    <div className="absolute inset-0 overflow-hidden">{background}</div>
-
     {/* Content pushed to bottom */}
     <div className="relative z-10 flex h-full flex-col justify-end p-6">
-      <div className="flex transform-gpu flex-col gap-2 transition-all duration-300 group-hover:-translate-y-2">
-        <Icon className="h-8 w-8 text-xuba-green-600 dark:text-white/60 group-hover:text-xuba-green-500 dark:group-hover:text-xuba-green-400 transition-colors duration-300 mb-2" />
+      <div className="flex transform-gpu flex-col gap-3 transition-all duration-300 group-hover:-translate-y-2">
+        <Icon className="h-8 w-8 text-xuba-green-600 dark:text-xuba-green-500 group-hover:text-xuba-green-500 dark:group-hover:text-xuba-green-400 transition-colors duration-300" />
         <h3 className="text-xl font-light tracking-tight text-xuba-green-900 dark:text-white group-hover:text-xuba-green-700 dark:group-hover:text-xuba-green-400 transition-colors duration-300">
           {name}
         </h3>
