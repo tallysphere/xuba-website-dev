@@ -90,7 +90,7 @@ export default async function AboutPage() {
           label: stat.label ?? '',
           value: stat.value ?? '0',
           postfix: stat.postfix ?? '',
-        })
+        }),
       )
     : defaultStats
 
@@ -102,7 +102,9 @@ export default async function AboutPage() {
       {/* Theme-aware background: DotPattern for light, Aurora for dark - constrained to top third */}
       <div
         className='absolute top-0 left-0 right-0 h-[50vh] overflow-hidden'
-        style={{ mask: 'linear-gradient(to bottom, black 50%, transparent 100%)' }}
+        style={{
+          mask: 'linear-gradient(to bottom, black 50%, transparent 100%)',
+        }}
         aria-hidden='true'
       >
         <ThemedHeroBackground />
@@ -332,19 +334,17 @@ export default async function AboutPage() {
           >
             {teamMembers.map((member) => {
               const imageUrl = member.image
-                ? urlFor(member.image).width(500).height(500).fit('crop').url()
-                : 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&facepad=8&w=500&h=500&q=80'
+                ? urlFor(member.image).width(400).height(560).fit('crop').url()
+                : 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&facepad=8&w=400&h=560&q=80'
 
               return (
                 <li key={member._id} className='text-center lg:text-left'>
                   <Image
-                    alt={
-                      member.image?.alt ?? `${member.name} - ${member.role}`
-                    }
+                    alt={member.image?.alt ?? `${member.name} - ${member.role}`}
                     src={imageUrl}
-                    className='aspect-14/13 w-full rounded-2xl bg-xuba-green-100 dark:bg-gray-900/5 object-cover'
-                    width={500}
-                    height={500}
+                    className='aspect-5/7 w-full rounded-2xl bg-xuba-green-100 dark:bg-gray-900/5 object-cover'
+                    width={400}
+                    height={560}
                   />
                   <h3 className='mt-4 sm:mt-6 text-lg leading-8 font-semibold tracking-tight text-xuba-green-900 dark:text-white'>
                     {member.name}

@@ -51,7 +51,9 @@ export default async function OurTeamPage() {
       {/* Theme-aware background: DotPattern for light, Aurora for dark - constrained to top third */}
       <div
         className='absolute top-0 left-0 right-0 h-[50vh] overflow-hidden'
-        style={{ mask: 'linear-gradient(to bottom, black 50%, transparent 100%)' }}
+        style={{
+          mask: 'linear-gradient(to bottom, black 50%, transparent 100%)',
+        }}
         aria-hidden='true'
       >
         <ThemedHeroBackground />
@@ -86,14 +88,14 @@ export default async function OurTeamPage() {
         <ul role='list' className='w-full'>
           {teamMembers.map((member) => {
             const linkedInUrl = member.socialLinks?.find(
-              (link) => link.platform === 'linkedin'
+              (link) => link.platform === 'linkedin',
             )?.url
             const twitterUrl = member.socialLinks?.find(
-              (link) => link.platform === 'twitter'
+              (link) => link.platform === 'twitter',
             )?.url
             const imageUrl = member.image
-              ? urlFor(member.image).width(1024).height(1024).fit('crop').url()
-              : 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80'
+              ? urlFor(member.image).width(400).height(560).fit('crop').url()
+              : 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&facepad=8&w=400&h=560&q=80'
 
             return (
               <li
@@ -107,9 +109,9 @@ export default async function OurTeamPage() {
                     imageSrc={imageUrl}
                     altText={member.image?.alt ?? member.name}
                     captionText={member.role}
-                    containerHeight='280px'
+                    containerHeight='392px'
                     containerWidth='100%'
-                    imageHeight='280px'
+                    imageHeight='392px'
                     imageWidth='280px'
                     rotateAmplitude={12}
                     scaleOnHover={1.1}
