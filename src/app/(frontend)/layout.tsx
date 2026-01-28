@@ -11,7 +11,7 @@ export default async function FrontendLayout({
   children: React.ReactNode
 }>) {
   return (
-    <section className="bg-background min-h-screen overflow-x-hidden">
+    <section className='bg-background min-h-screen overflow-x-hidden'>
       <AnimatedHeader />
       {children}
       <SanityLive />
