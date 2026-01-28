@@ -133,14 +133,10 @@ export function Footer() {
                 ))}
               </ul>
             </div>
-
-           
           </div>
         </div>
-
-       
       </div>
-      <p className="w-screen mt-40 z-0 mb-0 pb-0 bg-linear-to-b from-xuba-green-50/50 to-xuba-green-100 bg-clip-text text-center text-[25vw] font-bold leading-[0.7] text-transparent dark:from-xuba-purple-800 dark:to-xuba-purple-950">
+      <p className='w-screen mt-40 z-0 mb-0 pb-0 bg-linear-to-b from-xuba-green-50/50 to-xuba-green-100 bg-clip-text text-center text-[25vw] font-bold leading-[0.7] text-transparent dark:from-xuba-purple-800 dark:to-xuba-purple-950'>
         XUBA
       </p>
     </footer>
@@ -152,7 +148,11 @@ export function Footer() {
  */
 const Logo = () => {
   return (
-    <Link href='/' className='relative z-20 flex items-center' aria-label='Xuba home'>
+    <Link
+      href='/'
+      className='relative z-20 flex items-center'
+      aria-label='Xuba home'
+    >
       <Image src='/images/logo.png' alt='Xuba logo' width={120} height={50} />
     </Link>
   )

@@ -1,9 +1,6 @@
 ---
-description: Theming guidelines for Xuba website components
-globs: ["**/*.tsx", "**/*.jsx"]
 alwaysApply: true
 ---
-
 # Xuba Theming Guidelines
 
 Before designing or modifying any component, **always reference the theme route** at `/theme` or check the file at `src/app/(frontend)/theme/page.tsx` to ensure consistent color usage.
