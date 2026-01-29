@@ -106,18 +106,16 @@ export default async function ServicePage({ params }: ServicePageProps) {
       )}
 
       {/* Rich Text Body Content */}
-      {service.bodyContent && (
-        <ServiceBody content={service.bodyContent} />
-      )}
+      {service.bodyContent && <ServiceBody content={service.bodyContent} />}
 
       {/* Benefits Section (Bento Grid) */}
-      {service.benefits && service.benefits.length > 0 && (
+      {/* {service.benefits && service.benefits.length > 0 && (
         <ServiceBenefitsBento
           title={service.benefitsTitle}
           titleHighlight={service.benefitsHighlight}
           benefits={service.benefits}
         />
-      )}
+      )} s*/}
 
       {/* FAQ Section */}
       {service.faqs && service.faqs.length > 0 && (
