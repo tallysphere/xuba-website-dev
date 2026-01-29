@@ -30,13 +30,11 @@ export function Footer() {
     { title: 'Services', href: '/services' },
     { title: 'About', href: '/about' },
     { title: 'Our Team', href: '/our-team' },
-    { title: 'Blog', href: '/blog' },
   ]
 
   const legals: FooterLink[] = [
     { title: 'Privacy Policy', href: '/privacy' },
     { title: 'Terms of Service', href: '/terms-of-service' },
-    { title: 'Cookie Policy', href: '/cookies' },
   ]
 
   const contacts: FooterLink[] = [

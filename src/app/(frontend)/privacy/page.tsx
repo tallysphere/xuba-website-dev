@@ -1,13 +1,13 @@
 import type { Metadata } from 'next'
 import { PortableText, PortableTextComponents } from 'next-sanity'
 import { sanityFetch } from '@/sanity/lib/live'
-import { TERMS_OF_SERVICE_QUERY } from '@/sanity/lib/queries'
+import { PRIVACY_POLICY_QUERY } from '@/sanity/lib/queries'
 import { ThemedHeroBackground } from '@/components/ThemedHeroBackground'
 import { urlFor } from '@/sanity/lib/image'
 import Image from 'next/image'
 
 /**
- * Terms of Service Page
+ * Privacy Policy Page
  *
  * Features:
  * - CMS-driven content from Sanity using Portable Text
@@ -17,16 +17,16 @@ import Image from 'next/image'
  */
 
 /**
- * Generate metadata for the Terms of Service page from Sanity CMS.
+ * Generate metadata for the Privacy Policy page from Sanity CMS.
  */
 export async function generateMetadata(): Promise<Metadata> {
   const { data } = await sanityFetch({
-    query: TERMS_OF_SERVICE_QUERY,
+    query: PRIVACY_POLICY_QUERY,
     stega: false,
   })
 
   return {
-    title: data?.seo?.title ?? 'Terms of Service',
+    title: data?.seo?.title ?? 'Privacy Policy',
     description: data?.seo?.description ?? undefined,
     openGraph: data?.seo?.image
       ? {
@@ -45,7 +45,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 /**
  * Custom Portable Text components styled for legal documents.
- * Uses proper hierarchy and spacing for terms/conditions content.
+ * Uses proper hierarchy and spacing for privacy policy content.
  */
 const components: PortableTextComponents = {
   block: {
@@ -148,15 +148,15 @@ const components: PortableTextComponents = {
   },
 }
 
-export default async function TermsOfServicePage() {
+export default async function PrivacyPolicyPage() {
   const { data } = await sanityFetch({
-    query: TERMS_OF_SERVICE_QUERY,
+    query: PRIVACY_POLICY_QUERY,
   })
 
   // Fallback values
   const eyebrow = data?.eyebrow ?? 'Legal'
-  const title = data?.title ?? 'Terms of Service'
-  const titleHighlight = data?.titleHighlight ?? 'Service'
+  const title = data?.title ?? 'Privacy Policy'
+  const titleHighlight = data?.titleHighlight ?? 'Policy'
   const lastUpdated = data?.lastUpdated
   const body = data?.body
 
@@ -166,7 +166,7 @@ export default async function TermsOfServicePage() {
 
   return (
     <section
-      aria-labelledby='terms-page-heading'
+      aria-labelledby='privacy-page-heading'
       className='relative isolate min-h-screen bg-white dark:bg-xuba-purple-900 flex flex-col items-center overflow-hidden'
     >
       {/* Theme-aware background: DotPattern for light, Aurora for dark */}
@@ -178,7 +178,7 @@ export default async function TermsOfServicePage() {
           {eyebrow}
         </div>
         <h1
-          id='terms-page-heading'
+          id='privacy-page-heading'
           className='text-xuba-green-900 dark:text-white md:text-7xl text-4xl sm:text-5xl font-thin tracking-tight mt-4 text-center'
         >
           {hasHighlight ? (
@@ -212,7 +212,7 @@ export default async function TermsOfServicePage() {
             <PortableText value={body} components={components} />
           ) : (
             <p className='text-xuba-green-700 dark:text-gray-300 text-center py-12'>
-              Terms of Service content coming soon.
+              Privacy Policy content coming soon.
             </p>
           )}
         </div>

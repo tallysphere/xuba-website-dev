@@ -6,8 +6,10 @@ import {
   EnvelopeIcon,
   HomeIcon,
   RocketIcon,
+  DocumentTextIcon,
+  LockIcon,
+  HelpCircleIcon,
 } from '@sanity/icons'
-// import { MenuIcon, DocumentsIcon, CommentIcon, HelpCircleIcon, LinkIcon } from '@sanity/icons'
 
 // Singleton document IDs
 const SINGLETON_IDS = [
@@ -17,6 +19,10 @@ const SINGLETON_IDS = [
   'contactPage',
   'homepage',
   'ourTeamPage',
+  'termsOfServicePage',
+  'privacyPolicyPage',
+  'servicesPage',
+  'supportPage',
 ]
 
 /**
@@ -30,10 +36,10 @@ export const structure: StructureResolver = (S) =>
     .title('Content')
     .items([
       // ===========================================
-      // ACTIVE CONTENT TYPES
+      // PAGES
       // ===========================================
 
-      // Homepage (singleton) - First item for prominence
+      // Homepage
       S.listItem()
         .title('Homepage')
         .icon(HomeIcon)
@@ -44,22 +50,18 @@ export const structure: StructureResolver = (S) =>
             .title('Homepage'),
         ),
 
-      // Site Settings (singleton)
+      // Services Page
       S.listItem()
-        .title('Site Settings')
-        .icon(CogIcon)
+        .title('Services Page')
+        .icon(RocketIcon)
         .child(
           S.document()
-            .schemaType('siteSettings')
-            .documentId('siteSettings')
-            .title('Site Settings'),
+            .schemaType('servicesPage')
+            .documentId('servicesPage')
+            .title('Services Page'),
         ),
 
-      S.listItem()
-        .title('Team Members')
-        .icon(UsersIcon)
-        .child(S.documentTypeList('teamMember').title('Team Members')),
-
+      // About Page
       S.listItem()
         .title('About Page')
         .icon(InfoOutlineIcon)
@@ -70,6 +72,7 @@ export const structure: StructureResolver = (S) =>
             .title('About Page'),
         ),
 
+      // Contact Page
       S.listItem()
         .title('Contact Page')
         .icon(EnvelopeIcon)
@@ -80,6 +83,18 @@ export const structure: StructureResolver = (S) =>
             .title('Contact Page'),
         ),
 
+      // Support Page
+      S.listItem()
+        .title('Support Page')
+        .icon(HelpCircleIcon)
+        .child(
+          S.document()
+            .schemaType('supportPage')
+            .documentId('supportPage')
+            .title('Support Page'),
+        ),
+
+      // Our Team Page
       S.listItem()
         .title('Our Team Page')
         .icon(UsersIcon)
@@ -93,50 +108,65 @@ export const structure: StructureResolver = (S) =>
       S.divider(),
 
       // ===========================================
-      // SERVICES
+      // CONTENT
       // ===========================================
+
+      // Team Members
+      S.listItem()
+        .title('Team Members')
+        .icon(UsersIcon)
+        .child(S.documentTypeList('teamMember').title('Team Members')),
+
+      // Services
       S.listItem()
         .title('Services')
         .icon(RocketIcon)
         .child(S.documentTypeList('service').title('Services')),
 
+      S.divider(),
+
       // ===========================================
-      // COMMENTED OUT - UNCOMMENT WHEN NEEDED
+      // LEGAL
       // ===========================================
 
-      // S.listItem()
-      //   .title('Pages')
-      //   .icon(DocumentsIcon)
-      //   .child(S.documentTypeList('page').title('Pages')),
+      // Terms of Service
+      S.listItem()
+        .title('Terms of Service')
+        .icon(DocumentTextIcon)
+        .child(
+          S.document()
+            .schemaType('termsOfServicePage')
+            .documentId('termsOfServicePage')
+            .title('Terms of Service'),
+        ),
 
-      // S.listItem()
-      //   .title('Testimonials')
-      //   .icon(CommentIcon)
-      //   .child(S.documentTypeList('testimonial').title('Testimonials')),
+      // Privacy Policy
+      S.listItem()
+        .title('Privacy Policy')
+        .icon(LockIcon)
+        .child(
+          S.document()
+            .schemaType('privacyPolicyPage')
+            .documentId('privacyPolicyPage')
+            .title('Privacy Policy'),
+        ),
 
-      // S.listItem()
-      //   .title('FAQs')
-      //   .icon(HelpCircleIcon)
-      //   .child(S.documentTypeList('faq').title('FAQs')),
+      S.divider(),
 
-      // S.divider(),
+      // ===========================================
+      // SETTINGS
+      // ===========================================
 
-      // S.listItem()
-      //   .title('Navigation')
-      //   .icon(MenuIcon)
-      //   .child(
-      //     S.document()
-      //       .schemaType('navigation')
-      //       .documentId('navigation')
-      //       .title('Navigation')
-      //   ),
-
-      // S.divider(),
-
-      // S.listItem()
-      //   .title('Redirects')
-      //   .icon(LinkIcon)
-      //   .child(S.documentTypeList('redirect').title('Redirects')),
+      // Site Settings
+      S.listItem()
+        .title('Site Settings')
+        .icon(CogIcon)
+        .child(
+          S.document()
+            .schemaType('siteSettings')
+            .documentId('siteSettings')
+            .title('Site Settings'),
+        ),
 
       // Filter out singletons and already-listed types from the default list
       ...S.documentTypeListItems().filter((listItem) => {
@@ -156,6 +186,10 @@ export const structure: StructureResolver = (S) =>
             'contactPage',
             'homepage',
             'ourTeamPage',
+            'termsOfServicePage',
+            'privacyPolicyPage',
+            'servicesPage',
+            'supportPage',
           ].includes(id)
         )
       }),

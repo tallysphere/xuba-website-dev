@@ -59,7 +59,7 @@
 
 3.2.1   unless otherwise agreed, the quotation shall be valid for thirty (30) days from the date of issue;
 
-3.2.2   the quotation shall be exclusive of goods and services tax unless specifically stated to the contrary; and
+3.2.2   the quotation shall be exclusive of goods and services tax unless specifically![1769729996683](image/terms-of-service/1769729996683.png) stated to the contrary; and
 
 3.2.3   the Client acknowledges that any quotation given by Xuba is based on Xuba’s knowledge at the time the quotation is given, is Xuba’s best estimate only and can be varied by Xuba if any circumstances change or the Client requires any additional Goods or Services; and
 

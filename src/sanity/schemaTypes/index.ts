@@ -21,6 +21,10 @@ import { aboutPageType } from './singletons/aboutPageType'
 import { contactPageType } from './singletons/contactPageType'
 import { homepageType } from './singletons/homepageType'
 import { ourTeamPageType } from './singletons/ourTeamPageType'
+import { termsOfServicePageType } from './singletons/termsOfServicePageType'
+import { privacyPolicyPageType } from './singletons/privacyPolicyPageType'
+import { servicesPageType } from './singletons/servicesPageType'
+import { supportPageType } from './singletons/supportPageType'
 
 // Documents
 import { pageType } from './documents/pageType'
@@ -71,6 +75,10 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     contactPageType,
     homepageType,
     ourTeamPageType,
+    termsOfServicePageType,
+    privacyPolicyPageType,
+    servicesPageType,
+    supportPageType,
 
     // Documents
     pageType,

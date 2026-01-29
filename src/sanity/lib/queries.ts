@@ -611,6 +611,90 @@ export const SITEMAP_QUERY = defineQuery(`
 `)
 
 // =============================================================================
+// Legal Pages Queries
+// =============================================================================
+
+/**
+ * Fetches Terms of Service page content.
+ * Used for the /terms-of-service page.
+ */
+export const TERMS_OF_SERVICE_QUERY = defineQuery(`
+  *[_type == "termsOfServicePage"][0]{
+    eyebrow,
+    title,
+    titleHighlight,
+    lastUpdated,
+    body,
+    seo {
+      title,
+      description,
+      "image": image.asset,
+      noIndex
+    }
+  }
+`)
+
+/**
+ * Fetches Privacy Policy page content.
+ * Used for the /privacy page.
+ */
+export const PRIVACY_POLICY_QUERY = defineQuery(`
+  *[_type == "privacyPolicyPage"][0]{
+    eyebrow,
+    title,
+    titleHighlight,
+    lastUpdated,
+    body,
+    seo {
+      title,
+      description,
+      "image": image.asset,
+      noIndex
+    }
+  }
+`)
+
+/**
+ * Fetches Services Page content.
+ * Used for the /services page hero section and SEO.
+ */
+export const SERVICES_PAGE_QUERY = defineQuery(`
+  *[_type == "servicesPage"][0]{
+    eyebrow,
+    title,
+    titleHighlight,
+    description,
+    seo {
+      title,
+      description,
+      "image": image.asset,
+      noIndex
+    }
+  }
+`)
+
+/**
+ * Fetches Support Page content.
+ * Used for the /support page including TeamViewer settings.
+ */
+export const SUPPORT_PAGE_QUERY = defineQuery(`
+  *[_type == "supportPage"][0]{
+    eyebrow,
+    title,
+    titleHighlight,
+    description,
+    teamViewerUrl,
+    teamViewerTitle,
+    seo {
+      title,
+      description,
+      "image": image.asset,
+      noIndex
+    }
+  }
+`)
+
+// =============================================================================
 // Redirect Queries
 // =============================================================================
 

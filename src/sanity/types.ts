@@ -12,7 +12,7 @@
  * ---------------------------------------------------------------------------------
  */
 
-// Source: schema.json
+// Source: src\sanity\extract.json
 export type Redirect = {
   _id: string;
   _type: "redirect";
@@ -91,39 +91,42 @@ export type Faq = {
   order?: number;
 };
 
-export type BlockContent = Array<{
-  children?: Array<{
-    marks?: Array<string>;
-    text?: string;
-    _type: "span";
-    _key: string;
-  }>;
-  style?: "normal" | "h2" | "h3" | "h4" | "blockquote";
-  listItem?: "bullet" | "number";
-  markDefs?: Array<{
-    href?: string;
-    blank?: boolean;
-    _type: "link";
-    _key: string;
-  }>;
-  level?: number;
-  _type: "block";
-  _key: string;
-} | {
-  asset?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-  };
-  media?: unknown;
-  hotspot?: SanityImageHotspot;
-  crop?: SanityImageCrop;
-  alt: string;
-  caption?: string;
-  _type: "image";
-  _key: string;
-}>;
+export type BlockContent = Array<
+  | {
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "normal" | "h2" | "h3" | "h4" | "blockquote";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        blank?: boolean;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }
+  | {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt: string;
+      caption?: string;
+      _type: "image";
+      _key: string;
+    }
+>;
 
 export type TeamMember = {
   _id: string;
@@ -150,9 +153,11 @@ export type TeamMember = {
   bio?: BlockContent;
   location?: string;
   email?: string;
-  socialLinks?: Array<{
-    _key: string;
-  } & SocialLink>;
+  socialLinks?: Array<
+    {
+      _key: string;
+    } & SocialLink
+  >;
   order?: number;
   isActive?: boolean;
 };
@@ -163,16 +168,18 @@ export type Slug = {
   source?: string;
 };
 
-export type OurTeamPage = {
+export type SupportPage = {
   _id: string;
-  _type: "ourTeamPage";
+  _type: "supportPage";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  headerEyebrow?: string;
-  headerTitle?: string;
-  headerTitleHighlight?: string;
-  headerDescription?: string;
+  eyebrow?: string;
+  title: string;
+  titleHighlight?: string;
+  description?: string;
+  teamViewerUrl: string;
+  teamViewerTitle?: string;
   seo?: Seo;
 };
 
@@ -194,6 +201,60 @@ export type Seo = {
   };
   noIndex?: boolean;
   canonicalUrl?: string;
+};
+
+export type ServicesPage = {
+  _id: string;
+  _type: "servicesPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  eyebrow?: string;
+  title: string;
+  titleHighlight?: string;
+  description?: string;
+  seo?: Seo;
+};
+
+export type PrivacyPolicyPage = {
+  _id: string;
+  _type: "privacyPolicyPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  eyebrow?: string;
+  title: string;
+  titleHighlight?: string;
+  lastUpdated?: string;
+  body: BlockContent;
+  seo?: Seo;
+};
+
+export type TermsOfServicePage = {
+  _id: string;
+  _type: "termsOfServicePage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  eyebrow?: string;
+  title: string;
+  titleHighlight?: string;
+  lastUpdated?: string;
+  body: BlockContent;
+  seo?: Seo;
+};
+
+export type OurTeamPage = {
+  _id: string;
+  _type: "ourTeamPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  headerEyebrow?: string;
+  headerTitle?: string;
+  headerTitleHighlight?: string;
+  headerDescription?: string;
+  seo?: Seo;
 };
 
 export type Homepage = {
@@ -304,36 +365,44 @@ export type Navigation = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  mainNav?: Array<{
-    _key: string;
-  } & NavItem>;
+  mainNav?: Array<
+    {
+      _key: string;
+    } & NavItem
+  >;
   ctaButton?: {
     label?: string;
     link?: Link;
   };
-  footerColumns?: Array<{
-    _key: string;
-  } & FooterColumn>;
-  legalLinks?: Array<{
-    _key: string;
-  } & Link>;
+  footerColumns?: Array<
+    {
+      _key: string;
+    } & FooterColumn
+  >;
+  legalLinks?: Array<
+    {
+      _key: string;
+    } & Link
+  >;
 };
 
 export type Link = {
   _type: "link";
   label: string;
   linkType: "internal" | "external";
-  internalLink?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "page";
-  } | {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "service";
-  };
+  internalLink?:
+    | {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "page";
+      }
+    | {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "service";
+      };
   externalUrl?: string;
   openInNewTab?: boolean;
 };
@@ -376,9 +445,32 @@ export type SiteSettings = {
     address?: string;
     businessHours?: string;
   };
-  socialLinks?: Array<{
-    _key: string;
-  } & SocialLink>;
+  socialLinks?: Array<
+    {
+      _key: string;
+    } & SocialLink
+  >;
+  localBusiness?: {
+    businessType?:
+      | "LocalBusiness"
+      | "ProfessionalService"
+      | "ComputerStore"
+      | "Organization";
+    legalName?: string;
+    description?: string;
+    streetAddress?: string;
+    city?: string;
+    region?: string;
+    postalCode?: string;
+    country?: string;
+    latitude?: number;
+    longitude?: number;
+    priceRange?: "$" | "$$" | "$$$";
+    openingHours?: Array<string>;
+    serviceArea?: Array<string>;
+    foundingDate?: string;
+    numberOfEmployees?: number;
+  };
   analytics?: {
     googleAnalyticsId?: string;
     googleTagManagerId?: string;
@@ -429,9 +521,11 @@ export type StatsSection = {
   _type: "statsSection";
   title?: string;
   subtitle?: string;
-  stats?: Array<{
-    _key: string;
-  } & Stat>;
+  stats?: Array<
+    {
+      _key: string;
+    } & Stat
+  >;
   backgroundColor?: "default" | "accent" | "dark";
 };
 
@@ -497,9 +591,11 @@ export type Hero = {
 export type FooterColumn = {
   _type: "footerColumn";
   title: string;
-  links?: Array<{
-    _key: string;
-  } & Link>;
+  links?: Array<
+    {
+      _key: string;
+    } & Link
+  >;
 };
 
 export type NavItem = {
@@ -530,7 +626,13 @@ export type Stat = {
 
 export type SocialLink = {
   _type: "socialLink";
-  platform: "facebook" | "linkedin" | "twitter" | "instagram" | "youtube" | "github";
+  platform:
+    | "facebook"
+    | "linkedin"
+    | "twitter"
+    | "instagram"
+    | "youtube"
+    | "github";
   url: string;
 };
 
@@ -615,9 +717,11 @@ export type Service = {
     _key: string;
     [internalGroqTypeReferenceTo]?: "service";
   }>;
-  features?: Array<{
-    _key: string;
-  } & Feature>;
+  features?: Array<
+    {
+      _key: string;
+    } & Feature
+  >;
   body?: BlockContent;
   seo?: Seo;
 };
@@ -630,21 +734,29 @@ export type Page = {
   _rev: string;
   title: string;
   slug: Slug;
-  pageBuilder?: Array<{
-    _key: string;
-  } & Hero | {
-    _key: string;
-  } & ServicesGrid | {
-    _key: string;
-  } & TeamGrid | {
-    _key: string;
-  } & StatsSection | {
-    _key: string;
-  } & FaqSection | {
-    _key: string;
-  } & ContactSection | {
-    _key: string;
-  } & RichText>;
+  pageBuilder?: Array<
+    | ({
+        _key: string;
+      } & Hero)
+    | ({
+        _key: string;
+      } & ServicesGrid)
+    | ({
+        _key: string;
+      } & TeamGrid)
+    | ({
+        _key: string;
+      } & StatsSection)
+    | ({
+        _key: string;
+      } & FaqSection)
+    | ({
+        _key: string;
+      } & ContactSection)
+    | ({
+        _key: string;
+      } & RichText)
+  >;
   seo?: Seo;
 };
 
@@ -744,12 +856,62 @@ export type Geopoint = {
   alt?: number;
 };
 
-export type AllSanitySchemaTypes = Redirect | Testimonial | SanityImageCrop | SanityImageHotspot | Faq | BlockContent | TeamMember | Slug | OurTeamPage | Seo | Homepage | ContactPage | AboutPage | Navigation | Link | SiteSettings | RichText | ContactSection | FaqSection | StatsSection | TeamGrid | ServicesGrid | Hero | FooterColumn | NavItem | Feature | Stat | SocialLink | Service | Page | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
+export type AllSanitySchemaTypes =
+  | Redirect
+  | Testimonial
+  | SanityImageCrop
+  | SanityImageHotspot
+  | Faq
+  | BlockContent
+  | TeamMember
+  | Slug
+  | SupportPage
+  | Seo
+  | ServicesPage
+  | PrivacyPolicyPage
+  | TermsOfServicePage
+  | OurTeamPage
+  | Homepage
+  | ContactPage
+  | AboutPage
+  | Navigation
+  | Link
+  | SiteSettings
+  | RichText
+  | ContactSection
+  | FaqSection
+  | StatsSection
+  | TeamGrid
+  | ServicesGrid
+  | Hero
+  | FooterColumn
+  | NavItem
+  | Feature
+  | Stat
+  | SocialLink
+  | Service
+  | Page
+  | SanityImagePaletteSwatch
+  | SanityImagePalette
+  | SanityImageDimensions
+  | SanityImageMetadata
+  | SanityFileAsset
+  | SanityAssetSourceData
+  | SanityImageAsset
+  | Geopoint;
+
 export declare const internalGroqTypeReferenceTo: unique symbol;
-// Source: ./src/sanity/lib/queries.ts
+
+type ArrayOf<T> = Array<
+  T & {
+    _key: string;
+  }
+>;
+
+// Source: src\sanity\lib\queries.ts
 // Variable: SITE_SETTINGS_QUERY
-// Query: *[_type == "siteSettings"][0]{    siteName,    logo,    favicon,    "defaultSeo": {      "title": coalesce(defaultSeo.title, siteName),      "description": defaultSeo.description,      "image": defaultSeo.image,      "noIndex": defaultSeo.noIndex == true    },    contact {      phone,      email,      address,      businessHours    },    socialLinks[] {      _key,      platform,      url    },    analytics {      googleAnalyticsId,      googleTagManagerId    },    contactSection {      heading,      subheading,      ctaLabel,      ctaLink    }  }
-export type SITE_SETTINGS_QUERYResult = {
+// Query: *[_type == "siteSettings"][0]{    siteName,    logo,    favicon,    "defaultSeo": {      "title": coalesce(defaultSeo.title, siteName),      "description": defaultSeo.description,      "image": defaultSeo.image,      "noIndex": defaultSeo.noIndex == true    },    contact {      phone,      email,      address,      businessHours    },    socialLinks[] {      _key,      platform,      url    },    analytics {      googleAnalyticsId,      googleTagManagerId    },    contactSection {      heading,      subheading,      ctaLabel,      ctaLink    },    localBusiness {      businessType,      legalName,      description,      streetAddress,      city,      region,      postalCode,      country,      latitude,      longitude,      priceRange,      openingHours,      serviceArea,      foundingDate,      numberOfEmployees    }  }
+export type SITE_SETTINGS_QUERY_RESULT = {
   siteName: string;
   logo: {
     asset?: {
@@ -800,7 +962,13 @@ export type SITE_SETTINGS_QUERYResult = {
   } | null;
   socialLinks: Array<{
     _key: string;
-    platform: "facebook" | "github" | "instagram" | "linkedin" | "twitter" | "youtube";
+    platform:
+      | "facebook"
+      | "github"
+      | "instagram"
+      | "linkedin"
+      | "twitter"
+      | "youtube";
     url: string;
   }> | null;
   analytics: {
@@ -813,10 +981,34 @@ export type SITE_SETTINGS_QUERYResult = {
     ctaLabel: string | null;
     ctaLink: string | null;
   } | null;
+  localBusiness: {
+    businessType:
+      | "ComputerStore"
+      | "LocalBusiness"
+      | "Organization"
+      | "ProfessionalService"
+      | null;
+    legalName: string | null;
+    description: string | null;
+    streetAddress: string | null;
+    city: string | null;
+    region: string | null;
+    postalCode: string | null;
+    country: string | null;
+    latitude: number | null;
+    longitude: number | null;
+    priceRange: "$" | "$$" | "$$$" | null;
+    openingHours: Array<string> | null;
+    serviceArea: Array<string> | null;
+    foundingDate: string | null;
+    numberOfEmployees: number | null;
+  } | null;
 } | null;
+
+// Source: src\sanity\lib\queries.ts
 // Variable: CONTACT_SECTION_QUERY
 // Query: *[_type == "siteSettings"][0]{    contact {      phone,      email,      address    },    contactSection {      heading,      subheading,      ctaLabel,      ctaLink    }  }
-export type CONTACT_SECTION_QUERYResult = {
+export type CONTACT_SECTION_QUERY_RESULT = {
   contact: {
     phone: string | null;
     email: string | null;
@@ -829,9 +1021,11 @@ export type CONTACT_SECTION_QUERYResult = {
     ctaLink: string | null;
   } | null;
 } | null;
+
+// Source: src\sanity\lib\queries.ts
 // Variable: NAVIGATION_QUERY
 // Query: *[_type == "navigation"][0]{    mainNav[] {      _key,      label,      "link": link {        linkType,        externalUrl,        openInNewTab,        "internalHref": internalLink->slug.current      },      children[] {        _key,        label,        "link": link {          linkType,          externalUrl,          openInNewTab,          "internalHref": internalLink->slug.current        }      }    },    ctaButton {      label,      "link": link {        linkType,        externalUrl,        openInNewTab,        "internalHref": internalLink->slug.current      }    },    footerColumns[] {      _key,      title,      links[] {        _key,        label,        linkType,        externalUrl,        openInNewTab,        "internalHref": internalLink->slug.current      }    },    legalLinks[] {      _key,      label,      linkType,      externalUrl,      openInNewTab,      "internalHref": internalLink->slug.current    }  }
-export type NAVIGATION_QUERYResult = {
+export type NAVIGATION_QUERY_RESULT = {
   mainNav: Array<{
     _key: string;
     label: string;
@@ -882,9 +1076,11 @@ export type NAVIGATION_QUERYResult = {
     internalHref: string | null;
   }> | null;
 } | null;
+
+// Source: src\sanity\lib\queries.ts
 // Variable: ABOUT_PAGE_QUERY
 // Query: *[_type == "aboutPage"][0]{    headerEyebrow,    headerTitle,    headerTitleHighlight,    heroTitle,    heroSubtitle,    heroImages[] {      _key,      asset,      alt,      hotspot,      crop    },    enableFullWidthImage,    fullWidthImage {      asset,      alt,      hotspot,      crop    },    missionTitle,    missionIntro,    missionBody,    stats[] {      _key,      label,      value,      postfix    },    teamTitle,    teamDescription,    "seo": {      "title": coalesce(seo.title, heroTitle, "About Us"),      "description": seo.description,      "image": seo.image,      "noIndex": seo.noIndex == true    }  }
-export type ABOUT_PAGE_QUERYResult = {
+export type ABOUT_PAGE_QUERY_RESULT = {
   headerEyebrow: string | null;
   headerTitle: string | null;
   headerTitleHighlight: string | null;
@@ -943,9 +1139,11 @@ export type ABOUT_PAGE_QUERYResult = {
     noIndex: boolean | false;
   };
 } | null;
+
+// Source: src\sanity\lib\queries.ts
 // Variable: HOMEPAGE_QUERY
 // Query: *[_type == "homepage"][0]{    // Hero Section    heroHeadlinePart1,    heroHighlightWord,    heroHeadlinePart2,    heroDescription,    heroPrimaryCta {      label,      href    },    heroSecondaryCta {      label,      href    },    // Services Section    servicesTitle,    servicesDescription,    serviceCards[] {      _key,      title,      description,      href,      ctaLabel    },    // SEO    "seo": {      "title": coalesce(seo.title, "Xuba - IT Solutions"),      "description": seo.description,      "image": seo.image,      "noIndex": seo.noIndex == true    }  }
-export type HOMEPAGE_QUERYResult = {
+export type HOMEPAGE_QUERY_RESULT = {
   heroHeadlinePart1: string | null;
   heroHighlightWord: string | null;
   heroHeadlinePart2: string | null;
@@ -985,9 +1183,11 @@ export type HOMEPAGE_QUERYResult = {
     noIndex: boolean | false;
   };
 } | null;
+
+// Source: src\sanity\lib\queries.ts
 // Variable: CONTACT_PAGE_QUERY
 // Query: {    "contactPage": *[_type == "contactPage"][0]{      eyebrow,      title,      heading,      description,      responseTimeText,      contactLabels {        addressLabel,        phoneLabel,        emailLabel      },      "seo": {        "title": coalesce(seo.title, title, "Contact Us"),        "description": seo.description,        "image": seo.image,        "noIndex": seo.noIndex == true      }    },    "siteSettings": *[_type == "siteSettings"][0]{      contact {        phone,        email,        address      }    }  }
-export type CONTACT_PAGE_QUERYResult = {
+export type CONTACT_PAGE_QUERY_RESULT = {
   contactPage: {
     eyebrow: string | null;
     title: string;
@@ -1025,9 +1225,11 @@ export type CONTACT_PAGE_QUERYResult = {
     } | null;
   } | null;
 };
+
+// Source: src\sanity\lib\queries.ts
 // Variable: PAGE_QUERY
 // Query: *[_type == "page" && slug.current == $slug][0]{    _id,    _type,    title,    "slug": slug.current,    "seo": {      "title": coalesce(seo.title, title),      "description": coalesce(seo.description, ""),      "image": seo.image,      "noIndex": seo.noIndex == true,      "canonicalUrl": seo.canonicalUrl    },    pageBuilder[] {      _key,      _type,      ...,      _type == "servicesGrid" => {        ...,        services[]-> {          _id,          title,          "slug": slug.current,          shortDescription,          icon,          featuredImage        }      },      _type == "teamGrid" => {        ...,        teamMembers[]-> {          _id,          name,          "slug": slug.current,          role,          image,          location,          socialLinks        }      },      _type == "faqSection" => {        ...,        faqs[]-> {          _id,          question,          answer,          category        }      }    }  }
-export type PAGE_QUERYResult = {
+export type PAGE_QUERY_RESULT = {
   _id: string;
   _type: "page";
   title: string;
@@ -1050,140 +1252,156 @@ export type PAGE_QUERYResult = {
     noIndex: boolean | false;
     canonicalUrl: string | null;
   };
-  pageBuilder: Array<{
-    _key: string;
-    _type: "contactSection";
-    title?: string;
-    subtitle?: string;
-    showContactForm?: boolean;
-    showContactInfo?: boolean;
-    showMap?: boolean;
-    backgroundColor?: "accent" | "dark" | "default";
-  } | {
-    _key: string;
-    _type: "faqSection";
-    title?: string;
-    subtitle?: string;
-    faqs: Array<{
-      _id: string;
-      question: string;
-      answer: BlockContent;
-      category: "billing" | "general" | "services" | "support" | null;
-    }> | null;
-    filterByCategory?: "" | "billing" | "general" | "services" | "support";
-    limit?: number;
-    showContactCta?: boolean;
-  } | {
-    _key: string;
-    _type: "hero";
-    title: string;
-    subtitle?: string;
-    backgroundImage?: {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
-      media?: unknown;
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      alt?: string;
-      _type: "image";
-    };
-    cta?: Array<{
-      label: string;
-      link?: Link;
-      variant?: "outline" | "primary" | "secondary";
-      _type: "ctaButton";
-      _key: string;
-    }>;
-    alignment?: "center" | "left" | "right";
-    size?: "full" | "lg" | "md" | "sm";
-  } | {
-    _key: string;
-    _type: "richText";
-    title?: string;
-    body: BlockContent;
-    maxWidth?: "full" | "lg" | "md" | "prose";
-    alignment?: "center" | "left";
-  } | {
-    _key: string;
-    _type: "servicesGrid";
-    title?: string;
-    subtitle?: string;
-    services: Array<{
-      _id: string;
-      title: string;
-      slug: string;
-      shortDescription: string;
-      icon: string | null;
-      featuredImage: {
-        asset?: {
-          _ref: string;
-          _type: "reference";
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-        };
-        media?: unknown;
-        hotspot?: SanityImageHotspot;
-        crop?: SanityImageCrop;
-        alt?: string;
-        _type: "image";
-      } | null;
-    }> | null;
-    showAllLink?: boolean;
-    columns?: 2 | 3 | 4;
-  } | {
-    _key: string;
-    _type: "statsSection";
-    title?: string;
-    subtitle?: string;
-    stats?: Array<{
-      _key: string;
-    } & Stat>;
-    backgroundColor?: "accent" | "dark" | "default";
-  } | {
-    _key: string;
-    _type: "teamGrid";
-    title?: string;
-    subtitle?: string;
-    teamMembers: Array<{
-      _id: string;
-      name: string;
-      slug: string;
-      role: string;
-      image: {
-        asset?: {
-          _ref: string;
-          _type: "reference";
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-        };
-        media?: unknown;
-        hotspot?: SanityImageHotspot;
-        crop?: SanityImageCrop;
-        alt?: string;
-        _type: "image";
-      } | null;
-      location: string | null;
-      socialLinks: Array<{
+  pageBuilder: Array<
+    | {
         _key: string;
-      } & SocialLink> | null;
-    }> | null;
-    limit?: number;
-    showBio?: boolean;
-    columns?: 2 | 3 | 4;
-  }> | null;
+        _type: "contactSection";
+        title?: string;
+        subtitle?: string;
+        showContactForm?: boolean;
+        showContactInfo?: boolean;
+        showMap?: boolean;
+        backgroundColor?: "accent" | "dark" | "default";
+      }
+    | {
+        _key: string;
+        _type: "faqSection";
+        title?: string;
+        subtitle?: string;
+        faqs: Array<{
+          _id: string;
+          question: string;
+          answer: BlockContent;
+          category: "billing" | "general" | "services" | "support" | null;
+        }> | null;
+        filterByCategory?: "" | "billing" | "general" | "services" | "support";
+        limit?: number;
+        showContactCta?: boolean;
+      }
+    | {
+        _key: string;
+        _type: "hero";
+        title: string;
+        subtitle?: string;
+        backgroundImage?: {
+          asset?: {
+            _ref: string;
+            _type: "reference";
+            _weak?: boolean;
+            [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+          };
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          alt?: string;
+          _type: "image";
+        };
+        cta?: Array<{
+          label: string;
+          link?: Link;
+          variant?: "outline" | "primary" | "secondary";
+          _type: "ctaButton";
+          _key: string;
+        }>;
+        alignment?: "center" | "left" | "right";
+        size?: "full" | "lg" | "md" | "sm";
+      }
+    | {
+        _key: string;
+        _type: "richText";
+        title?: string;
+        body: BlockContent;
+        maxWidth?: "full" | "lg" | "md" | "prose";
+        alignment?: "center" | "left";
+      }
+    | {
+        _key: string;
+        _type: "servicesGrid";
+        title?: string;
+        subtitle?: string;
+        services: Array<{
+          _id: string;
+          title: string;
+          slug: string;
+          shortDescription: string;
+          icon: string | null;
+          featuredImage: {
+            asset?: {
+              _ref: string;
+              _type: "reference";
+              _weak?: boolean;
+              [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+            };
+            media?: unknown;
+            hotspot?: SanityImageHotspot;
+            crop?: SanityImageCrop;
+            alt?: string;
+            _type: "image";
+          } | null;
+        }> | null;
+        showAllLink?: boolean;
+        columns?: 2 | 3 | 4;
+      }
+    | {
+        _key: string;
+        _type: "statsSection";
+        title?: string;
+        subtitle?: string;
+        stats?: Array<
+          {
+            _key: string;
+          } & Stat
+        >;
+        backgroundColor?: "accent" | "dark" | "default";
+      }
+    | {
+        _key: string;
+        _type: "teamGrid";
+        title?: string;
+        subtitle?: string;
+        teamMembers: Array<{
+          _id: string;
+          name: string;
+          slug: string;
+          role: string;
+          image: {
+            asset?: {
+              _ref: string;
+              _type: "reference";
+              _weak?: boolean;
+              [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+            };
+            media?: unknown;
+            hotspot?: SanityImageHotspot;
+            crop?: SanityImageCrop;
+            alt?: string;
+            _type: "image";
+          } | null;
+          location: string | null;
+          socialLinks: Array<
+            {
+              _key: string;
+            } & SocialLink
+          > | null;
+        }> | null;
+        limit?: number;
+        showBio?: boolean;
+        columns?: 2 | 3 | 4;
+      }
+  > | null;
 } | null;
+
+// Source: src\sanity\lib\queries.ts
 // Variable: PAGE_SLUGS_QUERY
 // Query: *[_type == "page" && defined(slug.current)]{    "slug": slug.current  }
-export type PAGE_SLUGS_QUERYResult = Array<{
+export type PAGE_SLUGS_QUERY_RESULT = Array<{
   slug: string;
 }>;
+
+// Source: src\sanity\lib\queries.ts
 // Variable: SERVICES_QUERY
 // Query: *[_type == "service"] | order(order asc, title asc) {    _id,    title,    "slug": slug.current,    shortDescription,    icon,    featuredImage  }
-export type SERVICES_QUERYResult = Array<{
+export type SERVICES_QUERY_RESULT = Array<{
   _id: string;
   title: string;
   slug: string;
@@ -1203,9 +1421,11 @@ export type SERVICES_QUERYResult = Array<{
     _type: "image";
   } | null;
 }>;
+
+// Source: src\sanity\lib\queries.ts
 // Variable: SERVICE_QUERY
 // Query: *[_type == "service" && slug.current == $slug][0]{    _id,    _type,    title,    "slug": slug.current,    shortDescription,    icon,    featuredImage,        // Hero Section    heroImage {      asset,      alt,      hotspot,      crop    },    tagline,    taglineHighlight,    subtitle,        // Introduction Section    introText,    introHighlights,        // Rich Text Body Content    bodyContent,        // Benefits Section    benefitsTitle,    benefitsHighlight,    benefits[] {      _key,      title,      description,      icon    },        // What We Handle Section    servicesTitle,    servicesTitleHighlight,    serviceItems,        // FAQ Section    faqTitle,    faqTitleHighlight,    faqs[] {      _key,      question,      answer    },        // Contact Mini-CTA    contactCta {      enabled,      heading,      buttonText,      buttonLink    },        // CTA Section    ctaHeadline,    ctaHighlight,    ctaSubtext,    ctaButtonText,    ctaButtonLink,        // Related Services (with thumbnails)    relatedServices[]-> {      _id,      title,      "slug": slug.current,      shortDescription,      tagline,      icon,      featuredImage {        asset,        alt,        hotspot,        crop      }    },        // Legacy fields (for backward compatibility)    features[] {      _key,      title,      description,      icon    },    body,        // SEO    "seo": {      "title": coalesce(seo.title, title),      "description": coalesce(seo.description, shortDescription),      "image": coalesce(seo.image, featuredImage),      "noIndex": seo.noIndex == true,      "canonicalUrl": seo.canonicalUrl    }  }
-export type SERVICE_QUERYResult = {
+export type SERVICE_QUERY_RESULT = {
   _id: string;
   _type: "service";
   title: string;
@@ -1300,42 +1520,49 @@ export type SERVICE_QUERYResult = {
   seo: {
     title: string;
     description: string;
-    image: {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
-      media?: unknown;
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      alt?: string;
-      _type: "image";
-    } | {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
-      media?: unknown;
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      _type: "image";
-    } | null;
+    image:
+      | {
+          asset?: {
+            _ref: string;
+            _type: "reference";
+            _weak?: boolean;
+            [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+          };
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          alt?: string;
+          _type: "image";
+        }
+      | {
+          asset?: {
+            _ref: string;
+            _type: "reference";
+            _weak?: boolean;
+            [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+          };
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          _type: "image";
+        }
+      | null;
     noIndex: boolean | false;
     canonicalUrl: string | null;
   };
 } | null;
+
+// Source: src\sanity\lib\queries.ts
 // Variable: SERVICE_SLUGS_QUERY
 // Query: *[_type == "service" && defined(slug.current)]{    "slug": slug.current  }
-export type SERVICE_SLUGS_QUERYResult = Array<{
+export type SERVICE_SLUGS_QUERY_RESULT = Array<{
   slug: string;
 }>;
+
+// Source: src\sanity\lib\queries.ts
 // Variable: OUR_TEAM_PAGE_QUERY
 // Query: *[_type == "ourTeamPage"][0]{    headerEyebrow,    headerTitle,    headerTitleHighlight,    headerDescription,    "seo": {      "title": coalesce(seo.title, "Our Team"),      "description": seo.description,      "image": seo.image,      "noIndex": seo.noIndex == true    }  }
-export type OUR_TEAM_PAGE_QUERYResult = {
+export type OUR_TEAM_PAGE_QUERY_RESULT = {
   headerEyebrow: string | null;
   headerTitle: string | null;
   headerTitleHighlight: string | null;
@@ -1358,9 +1585,11 @@ export type OUR_TEAM_PAGE_QUERYResult = {
     noIndex: boolean | false;
   };
 } | null;
+
+// Source: src\sanity\lib\queries.ts
 // Variable: TEAM_MEMBERS_QUERY
 // Query: *[_type == "teamMember" && isActive == true] | order(order asc, name asc) {    _id,    name,    "slug": slug.current,    role,    image,    bio,    location,    email,    socialLinks[] {      _key,      platform,      url    }  }
-export type TEAM_MEMBERS_QUERYResult = Array<{
+export type TEAM_MEMBERS_QUERY_RESULT = Array<{
   _id: string;
   name: string;
   slug: string;
@@ -1383,13 +1612,21 @@ export type TEAM_MEMBERS_QUERYResult = Array<{
   email: string | null;
   socialLinks: Array<{
     _key: string;
-    platform: "facebook" | "github" | "instagram" | "linkedin" | "twitter" | "youtube";
+    platform:
+      | "facebook"
+      | "github"
+      | "instagram"
+      | "linkedin"
+      | "twitter"
+      | "youtube";
     url: string;
   }> | null;
 }>;
+
+// Source: src\sanity\lib\queries.ts
 // Variable: TEAM_MEMBER_QUERY
 // Query: *[_type == "teamMember" && slug.current == $slug][0]{    _id,    name,    "slug": slug.current,    role,    image,    bio,    location,    email,    socialLinks[] {      _key,      platform,      url    }  }
-export type TEAM_MEMBER_QUERYResult = {
+export type TEAM_MEMBER_QUERY_RESULT = {
   _id: string;
   name: string;
   slug: string;
@@ -1412,21 +1649,31 @@ export type TEAM_MEMBER_QUERYResult = {
   email: string | null;
   socialLinks: Array<{
     _key: string;
-    platform: "facebook" | "github" | "instagram" | "linkedin" | "twitter" | "youtube";
+    platform:
+      | "facebook"
+      | "github"
+      | "instagram"
+      | "linkedin"
+      | "twitter"
+      | "youtube";
     url: string;
   }> | null;
 } | null;
+
+// Source: src\sanity\lib\queries.ts
 // Variable: FAQS_QUERY
 // Query: *[_type == "faq" && ($category == "" || category == $category)] | order(order asc) {    _id,    question,    answer,    category  }
-export type FAQS_QUERYResult = Array<{
+export type FAQS_QUERY_RESULT = Array<{
   _id: string;
   question: string;
   answer: BlockContent;
   category: "billing" | "general" | "services" | "support" | null;
 }>;
+
+// Source: src\sanity\lib\queries.ts
 // Variable: TESTIMONIALS_QUERY
 // Query: *[_type == "testimonial"] | order(featured desc, order asc) {    _id,    quote,    author,    role,    company,    image,    companyLogo,    featured  }
-export type TESTIMONIALS_QUERYResult = Array<{
+export type TESTIMONIALS_QUERY_RESULT = Array<{
   _id: string;
   quote: string;
   author: string;
@@ -1458,9 +1705,11 @@ export type TESTIMONIALS_QUERYResult = Array<{
   } | null;
   featured: boolean | null;
 }>;
+
+// Source: src\sanity\lib\queries.ts
 // Variable: FEATURED_TESTIMONIALS_QUERY
 // Query: *[_type == "testimonial" && featured == true] | order(order asc) {    _id,    quote,    author,    role,    company,    image,    companyLogo  }
-export type FEATURED_TESTIMONIALS_QUERYResult = Array<{
+export type FEATURED_TESTIMONIALS_QUERY_RESULT = Array<{
   _id: string;
   quote: string;
   author: string;
@@ -1491,9 +1740,11 @@ export type FEATURED_TESTIMONIALS_QUERYResult = Array<{
     _type: "image";
   } | null;
 }>;
+
+// Source: src\sanity\lib\queries.ts
 // Variable: SITEMAP_QUERY
 // Query: {    "pages": *[_type == "page" && !(seo.noIndex == true) && defined(slug.current)]{      "slug": slug.current,      _updatedAt    },    "services": *[_type == "service" && !(seo.noIndex == true) && defined(slug.current)]{      "slug": slug.current,      _updatedAt    }  }
-export type SITEMAP_QUERYResult = {
+export type SITEMAP_QUERY_RESULT = {
   pages: Array<{
     slug: string;
     _updatedAt: string;
@@ -1503,9 +1754,99 @@ export type SITEMAP_QUERYResult = {
     _updatedAt: string;
   }>;
 };
+
+// Source: src\sanity\lib\queries.ts
+// Variable: TERMS_OF_SERVICE_QUERY
+// Query: *[_type == "termsOfServicePage"][0]{    eyebrow,    title,    titleHighlight,    lastUpdated,    body,    seo {      title,      description,      "image": image.asset,      noIndex    }  }
+export type TERMS_OF_SERVICE_QUERY_RESULT = {
+  eyebrow: string | null;
+  title: string;
+  titleHighlight: string | null;
+  lastUpdated: string | null;
+  body: BlockContent;
+  seo: {
+    title: string | null;
+    description: string | null;
+    image: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    } | null;
+    noIndex: boolean | null;
+  } | null;
+} | null;
+
+// Source: src\sanity\lib\queries.ts
+// Variable: PRIVACY_POLICY_QUERY
+// Query: *[_type == "privacyPolicyPage"][0]{    eyebrow,    title,    titleHighlight,    lastUpdated,    body,    seo {      title,      description,      "image": image.asset,      noIndex    }  }
+export type PRIVACY_POLICY_QUERY_RESULT = {
+  eyebrow: string | null;
+  title: string;
+  titleHighlight: string | null;
+  lastUpdated: string | null;
+  body: BlockContent;
+  seo: {
+    title: string | null;
+    description: string | null;
+    image: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    } | null;
+    noIndex: boolean | null;
+  } | null;
+} | null;
+
+// Source: src\sanity\lib\queries.ts
+// Variable: SERVICES_PAGE_QUERY
+// Query: *[_type == "servicesPage"][0]{    eyebrow,    title,    titleHighlight,    description,    seo {      title,      description,      "image": image.asset,      noIndex    }  }
+export type SERVICES_PAGE_QUERY_RESULT = {
+  eyebrow: string | null;
+  title: string;
+  titleHighlight: string | null;
+  description: string | null;
+  seo: {
+    title: string | null;
+    description: string | null;
+    image: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    } | null;
+    noIndex: boolean | null;
+  } | null;
+} | null;
+
+// Source: src\sanity\lib\queries.ts
+// Variable: SUPPORT_PAGE_QUERY
+// Query: *[_type == "supportPage"][0]{    eyebrow,    title,    titleHighlight,    description,    teamViewerUrl,    teamViewerTitle,    seo {      title,      description,      "image": image.asset,      noIndex    }  }
+export type SUPPORT_PAGE_QUERY_RESULT = {
+  eyebrow: string | null;
+  title: string;
+  titleHighlight: string | null;
+  description: string | null;
+  teamViewerUrl: string;
+  teamViewerTitle: string | null;
+  seo: {
+    title: string | null;
+    description: string | null;
+    image: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    } | null;
+    noIndex: boolean | null;
+  } | null;
+} | null;
+
+// Source: src\sanity\lib\queries.ts
 // Variable: REDIRECTS_QUERY
 // Query: *[_type == "redirect" && isEnabled == true]{    source,    destination,    permanent  }
-export type REDIRECTS_QUERYResult = Array<{
+export type REDIRECTS_QUERY_RESULT = Array<{
   source: string;
   destination: string;
   permanent: boolean | null;
@@ -1515,24 +1856,28 @@ export type REDIRECTS_QUERYResult = Array<{
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "\n  *[_type == \"siteSettings\"][0]{\n    siteName,\n    logo,\n    favicon,\n    \"defaultSeo\": {\n      \"title\": coalesce(defaultSeo.title, siteName),\n      \"description\": defaultSeo.description,\n      \"image\": defaultSeo.image,\n      \"noIndex\": defaultSeo.noIndex == true\n    },\n    contact {\n      phone,\n      email,\n      address,\n      businessHours\n    },\n    socialLinks[] {\n      _key,\n      platform,\n      url\n    },\n    analytics {\n      googleAnalyticsId,\n      googleTagManagerId\n    },\n    contactSection {\n      heading,\n      subheading,\n      ctaLabel,\n      ctaLink\n    }\n  }\n": SITE_SETTINGS_QUERYResult;
-    "\n  *[_type == \"siteSettings\"][0]{\n    contact {\n      phone,\n      email,\n      address\n    },\n    contactSection {\n      heading,\n      subheading,\n      ctaLabel,\n      ctaLink\n    }\n  }\n": CONTACT_SECTION_QUERYResult;
-    "\n  *[_type == \"navigation\"][0]{\n    mainNav[] {\n      _key,\n      label,\n      \"link\": link {\n        linkType,\n        externalUrl,\n        openInNewTab,\n        \"internalHref\": internalLink->slug.current\n      },\n      children[] {\n        _key,\n        label,\n        \"link\": link {\n          linkType,\n          externalUrl,\n          openInNewTab,\n          \"internalHref\": internalLink->slug.current\n        }\n      }\n    },\n    ctaButton {\n      label,\n      \"link\": link {\n        linkType,\n        externalUrl,\n        openInNewTab,\n        \"internalHref\": internalLink->slug.current\n      }\n    },\n    footerColumns[] {\n      _key,\n      title,\n      links[] {\n        _key,\n        label,\n        linkType,\n        externalUrl,\n        openInNewTab,\n        \"internalHref\": internalLink->slug.current\n      }\n    },\n    legalLinks[] {\n      _key,\n      label,\n      linkType,\n      externalUrl,\n      openInNewTab,\n      \"internalHref\": internalLink->slug.current\n    }\n  }\n": NAVIGATION_QUERYResult;
-    "\n  *[_type == \"aboutPage\"][0]{\n    headerEyebrow,\n    headerTitle,\n    headerTitleHighlight,\n    heroTitle,\n    heroSubtitle,\n    heroImages[] {\n      _key,\n      asset,\n      alt,\n      hotspot,\n      crop\n    },\n    enableFullWidthImage,\n    fullWidthImage {\n      asset,\n      alt,\n      hotspot,\n      crop\n    },\n    missionTitle,\n    missionIntro,\n    missionBody,\n    stats[] {\n      _key,\n      label,\n      value,\n      postfix\n    },\n    teamTitle,\n    teamDescription,\n    \"seo\": {\n      \"title\": coalesce(seo.title, heroTitle, \"About Us\"),\n      \"description\": seo.description,\n      \"image\": seo.image,\n      \"noIndex\": seo.noIndex == true\n    }\n  }\n": ABOUT_PAGE_QUERYResult;
-    "\n  *[_type == \"homepage\"][0]{\n    // Hero Section\n    heroHeadlinePart1,\n    heroHighlightWord,\n    heroHeadlinePart2,\n    heroDescription,\n    heroPrimaryCta {\n      label,\n      href\n    },\n    heroSecondaryCta {\n      label,\n      href\n    },\n    // Services Section\n    servicesTitle,\n    servicesDescription,\n    serviceCards[] {\n      _key,\n      title,\n      description,\n      href,\n      ctaLabel\n    },\n    // SEO\n    \"seo\": {\n      \"title\": coalesce(seo.title, \"Xuba - IT Solutions\"),\n      \"description\": seo.description,\n      \"image\": seo.image,\n      \"noIndex\": seo.noIndex == true\n    }\n  }\n": HOMEPAGE_QUERYResult;
-    "\n  {\n    \"contactPage\": *[_type == \"contactPage\"][0]{\n      eyebrow,\n      title,\n      heading,\n      description,\n      responseTimeText,\n      contactLabels {\n        addressLabel,\n        phoneLabel,\n        emailLabel\n      },\n      \"seo\": {\n        \"title\": coalesce(seo.title, title, \"Contact Us\"),\n        \"description\": seo.description,\n        \"image\": seo.image,\n        \"noIndex\": seo.noIndex == true\n      }\n    },\n    \"siteSettings\": *[_type == \"siteSettings\"][0]{\n      contact {\n        phone,\n        email,\n        address\n      }\n    }\n  }\n": CONTACT_PAGE_QUERYResult;
-    "\n  *[_type == \"page\" && slug.current == $slug][0]{\n    _id,\n    _type,\n    title,\n    \"slug\": slug.current,\n    \"seo\": {\n      \"title\": coalesce(seo.title, title),\n      \"description\": coalesce(seo.description, \"\"),\n      \"image\": seo.image,\n      \"noIndex\": seo.noIndex == true,\n      \"canonicalUrl\": seo.canonicalUrl\n    },\n    pageBuilder[] {\n      _key,\n      _type,\n      ...,\n      _type == \"servicesGrid\" => {\n        ...,\n        services[]-> {\n          _id,\n          title,\n          \"slug\": slug.current,\n          shortDescription,\n          icon,\n          featuredImage\n        }\n      },\n      _type == \"teamGrid\" => {\n        ...,\n        teamMembers[]-> {\n          _id,\n          name,\n          \"slug\": slug.current,\n          role,\n          image,\n          location,\n          socialLinks\n        }\n      },\n      _type == \"faqSection\" => {\n        ...,\n        faqs[]-> {\n          _id,\n          question,\n          answer,\n          category\n        }\n      }\n    }\n  }\n": PAGE_QUERYResult;
-    "\n  *[_type == \"page\" && defined(slug.current)]{\n    \"slug\": slug.current\n  }\n": PAGE_SLUGS_QUERYResult;
-    "\n  *[_type == \"service\"] | order(order asc, title asc) {\n    _id,\n    title,\n    \"slug\": slug.current,\n    shortDescription,\n    icon,\n    featuredImage\n  }\n": SERVICES_QUERYResult;
-    "\n  *[_type == \"service\" && slug.current == $slug][0]{\n    _id,\n    _type,\n    title,\n    \"slug\": slug.current,\n    shortDescription,\n    icon,\n    featuredImage,\n    \n    // Hero Section\n    heroImage {\n      asset,\n      alt,\n      hotspot,\n      crop\n    },\n    tagline,\n    taglineHighlight,\n    subtitle,\n    \n    // Introduction Section\n    introText,\n    introHighlights,\n    \n    // Rich Text Body Content\n    bodyContent,\n    \n    // Benefits Section\n    benefitsTitle,\n    benefitsHighlight,\n    benefits[] {\n      _key,\n      title,\n      description,\n      icon\n    },\n    \n    // What We Handle Section\n    servicesTitle,\n    servicesTitleHighlight,\n    serviceItems,\n    \n    // FAQ Section\n    faqTitle,\n    faqTitleHighlight,\n    faqs[] {\n      _key,\n      question,\n      answer\n    },\n    \n    // Contact Mini-CTA\n    contactCta {\n      enabled,\n      heading,\n      buttonText,\n      buttonLink\n    },\n    \n    // CTA Section\n    ctaHeadline,\n    ctaHighlight,\n    ctaSubtext,\n    ctaButtonText,\n    ctaButtonLink,\n    \n    // Related Services (with thumbnails)\n    relatedServices[]-> {\n      _id,\n      title,\n      \"slug\": slug.current,\n      shortDescription,\n      tagline,\n      icon,\n      featuredImage {\n        asset,\n        alt,\n        hotspot,\n        crop\n      }\n    },\n    \n    // Legacy fields (for backward compatibility)\n    features[] {\n      _key,\n      title,\n      description,\n      icon\n    },\n    body,\n    \n    // SEO\n    \"seo\": {\n      \"title\": coalesce(seo.title, title),\n      \"description\": coalesce(seo.description, shortDescription),\n      \"image\": coalesce(seo.image, featuredImage),\n      \"noIndex\": seo.noIndex == true,\n      \"canonicalUrl\": seo.canonicalUrl\n    }\n  }\n": SERVICE_QUERYResult;
-    "\n  *[_type == \"service\" && defined(slug.current)]{\n    \"slug\": slug.current\n  }\n": SERVICE_SLUGS_QUERYResult;
-    "\n  *[_type == \"ourTeamPage\"][0]{\n    headerEyebrow,\n    headerTitle,\n    headerTitleHighlight,\n    headerDescription,\n    \"seo\": {\n      \"title\": coalesce(seo.title, \"Our Team\"),\n      \"description\": seo.description,\n      \"image\": seo.image,\n      \"noIndex\": seo.noIndex == true\n    }\n  }\n": OUR_TEAM_PAGE_QUERYResult;
-    "\n  *[_type == \"teamMember\" && isActive == true] | order(order asc, name asc) {\n    _id,\n    name,\n    \"slug\": slug.current,\n    role,\n    image,\n    bio,\n    location,\n    email,\n    socialLinks[] {\n      _key,\n      platform,\n      url\n    }\n  }\n": TEAM_MEMBERS_QUERYResult;
-    "\n  *[_type == \"teamMember\" && slug.current == $slug][0]{\n    _id,\n    name,\n    \"slug\": slug.current,\n    role,\n    image,\n    bio,\n    location,\n    email,\n    socialLinks[] {\n      _key,\n      platform,\n      url\n    }\n  }\n": TEAM_MEMBER_QUERYResult;
-    "\n  *[_type == \"faq\" && ($category == \"\" || category == $category)] | order(order asc) {\n    _id,\n    question,\n    answer,\n    category\n  }\n": FAQS_QUERYResult;
-    "\n  *[_type == \"testimonial\"] | order(featured desc, order asc) {\n    _id,\n    quote,\n    author,\n    role,\n    company,\n    image,\n    companyLogo,\n    featured\n  }\n": TESTIMONIALS_QUERYResult;
-    "\n  *[_type == \"testimonial\" && featured == true] | order(order asc) {\n    _id,\n    quote,\n    author,\n    role,\n    company,\n    image,\n    companyLogo\n  }\n": FEATURED_TESTIMONIALS_QUERYResult;
-    "\n  {\n    \"pages\": *[_type == \"page\" && !(seo.noIndex == true) && defined(slug.current)]{\n      \"slug\": slug.current,\n      _updatedAt\n    },\n    \"services\": *[_type == \"service\" && !(seo.noIndex == true) && defined(slug.current)]{\n      \"slug\": slug.current,\n      _updatedAt\n    }\n  }\n": SITEMAP_QUERYResult;
-    "\n  *[_type == \"redirect\" && isEnabled == true]{\n    source,\n    destination,\n    permanent\n  }\n": REDIRECTS_QUERYResult;
+    '\n  *[_type == "siteSettings"][0]{\n    siteName,\n    logo,\n    favicon,\n    "defaultSeo": {\n      "title": coalesce(defaultSeo.title, siteName),\n      "description": defaultSeo.description,\n      "image": defaultSeo.image,\n      "noIndex": defaultSeo.noIndex == true\n    },\n    contact {\n      phone,\n      email,\n      address,\n      businessHours\n    },\n    socialLinks[] {\n      _key,\n      platform,\n      url\n    },\n    analytics {\n      googleAnalyticsId,\n      googleTagManagerId\n    },\n    contactSection {\n      heading,\n      subheading,\n      ctaLabel,\n      ctaLink\n    },\n    localBusiness {\n      businessType,\n      legalName,\n      description,\n      streetAddress,\n      city,\n      region,\n      postalCode,\n      country,\n      latitude,\n      longitude,\n      priceRange,\n      openingHours,\n      serviceArea,\n      foundingDate,\n      numberOfEmployees\n    }\n  }\n': SITE_SETTINGS_QUERY_RESULT;
+    '\n  *[_type == "siteSettings"][0]{\n    contact {\n      phone,\n      email,\n      address\n    },\n    contactSection {\n      heading,\n      subheading,\n      ctaLabel,\n      ctaLink\n    }\n  }\n': CONTACT_SECTION_QUERY_RESULT;
+    '\n  *[_type == "navigation"][0]{\n    mainNav[] {\n      _key,\n      label,\n      "link": link {\n        linkType,\n        externalUrl,\n        openInNewTab,\n        "internalHref": internalLink->slug.current\n      },\n      children[] {\n        _key,\n        label,\n        "link": link {\n          linkType,\n          externalUrl,\n          openInNewTab,\n          "internalHref": internalLink->slug.current\n        }\n      }\n    },\n    ctaButton {\n      label,\n      "link": link {\n        linkType,\n        externalUrl,\n        openInNewTab,\n        "internalHref": internalLink->slug.current\n      }\n    },\n    footerColumns[] {\n      _key,\n      title,\n      links[] {\n        _key,\n        label,\n        linkType,\n        externalUrl,\n        openInNewTab,\n        "internalHref": internalLink->slug.current\n      }\n    },\n    legalLinks[] {\n      _key,\n      label,\n      linkType,\n      externalUrl,\n      openInNewTab,\n      "internalHref": internalLink->slug.current\n    }\n  }\n': NAVIGATION_QUERY_RESULT;
+    '\n  *[_type == "aboutPage"][0]{\n    headerEyebrow,\n    headerTitle,\n    headerTitleHighlight,\n    heroTitle,\n    heroSubtitle,\n    heroImages[] {\n      _key,\n      asset,\n      alt,\n      hotspot,\n      crop\n    },\n    enableFullWidthImage,\n    fullWidthImage {\n      asset,\n      alt,\n      hotspot,\n      crop\n    },\n    missionTitle,\n    missionIntro,\n    missionBody,\n    stats[] {\n      _key,\n      label,\n      value,\n      postfix\n    },\n    teamTitle,\n    teamDescription,\n    "seo": {\n      "title": coalesce(seo.title, heroTitle, "About Us"),\n      "description": seo.description,\n      "image": seo.image,\n      "noIndex": seo.noIndex == true\n    }\n  }\n': ABOUT_PAGE_QUERY_RESULT;
+    '\n  *[_type == "homepage"][0]{\n    // Hero Section\n    heroHeadlinePart1,\n    heroHighlightWord,\n    heroHeadlinePart2,\n    heroDescription,\n    heroPrimaryCta {\n      label,\n      href\n    },\n    heroSecondaryCta {\n      label,\n      href\n    },\n    // Services Section\n    servicesTitle,\n    servicesDescription,\n    serviceCards[] {\n      _key,\n      title,\n      description,\n      href,\n      ctaLabel\n    },\n    // SEO\n    "seo": {\n      "title": coalesce(seo.title, "Xuba - IT Solutions"),\n      "description": seo.description,\n      "image": seo.image,\n      "noIndex": seo.noIndex == true\n    }\n  }\n': HOMEPAGE_QUERY_RESULT;
+    '\n  {\n    "contactPage": *[_type == "contactPage"][0]{\n      eyebrow,\n      title,\n      heading,\n      description,\n      responseTimeText,\n      contactLabels {\n        addressLabel,\n        phoneLabel,\n        emailLabel\n      },\n      "seo": {\n        "title": coalesce(seo.title, title, "Contact Us"),\n        "description": seo.description,\n        "image": seo.image,\n        "noIndex": seo.noIndex == true\n      }\n    },\n    "siteSettings": *[_type == "siteSettings"][0]{\n      contact {\n        phone,\n        email,\n        address\n      }\n    }\n  }\n': CONTACT_PAGE_QUERY_RESULT;
+    '\n  *[_type == "page" && slug.current == $slug][0]{\n    _id,\n    _type,\n    title,\n    "slug": slug.current,\n    "seo": {\n      "title": coalesce(seo.title, title),\n      "description": coalesce(seo.description, ""),\n      "image": seo.image,\n      "noIndex": seo.noIndex == true,\n      "canonicalUrl": seo.canonicalUrl\n    },\n    pageBuilder[] {\n      _key,\n      _type,\n      ...,\n      _type == "servicesGrid" => {\n        ...,\n        services[]-> {\n          _id,\n          title,\n          "slug": slug.current,\n          shortDescription,\n          icon,\n          featuredImage\n        }\n      },\n      _type == "teamGrid" => {\n        ...,\n        teamMembers[]-> {\n          _id,\n          name,\n          "slug": slug.current,\n          role,\n          image,\n          location,\n          socialLinks\n        }\n      },\n      _type == "faqSection" => {\n        ...,\n        faqs[]-> {\n          _id,\n          question,\n          answer,\n          category\n        }\n      }\n    }\n  }\n': PAGE_QUERY_RESULT;
+    '\n  *[_type == "page" && defined(slug.current)]{\n    "slug": slug.current\n  }\n': PAGE_SLUGS_QUERY_RESULT;
+    '\n  *[_type == "service"] | order(order asc, title asc) {\n    _id,\n    title,\n    "slug": slug.current,\n    shortDescription,\n    icon,\n    featuredImage\n  }\n': SERVICES_QUERY_RESULT;
+    '\n  *[_type == "service" && slug.current == $slug][0]{\n    _id,\n    _type,\n    title,\n    "slug": slug.current,\n    shortDescription,\n    icon,\n    featuredImage,\n    \n    // Hero Section\n    heroImage {\n      asset,\n      alt,\n      hotspot,\n      crop\n    },\n    tagline,\n    taglineHighlight,\n    subtitle,\n    \n    // Introduction Section\n    introText,\n    introHighlights,\n    \n    // Rich Text Body Content\n    bodyContent,\n    \n    // Benefits Section\n    benefitsTitle,\n    benefitsHighlight,\n    benefits[] {\n      _key,\n      title,\n      description,\n      icon\n    },\n    \n    // What We Handle Section\n    servicesTitle,\n    servicesTitleHighlight,\n    serviceItems,\n    \n    // FAQ Section\n    faqTitle,\n    faqTitleHighlight,\n    faqs[] {\n      _key,\n      question,\n      answer\n    },\n    \n    // Contact Mini-CTA\n    contactCta {\n      enabled,\n      heading,\n      buttonText,\n      buttonLink\n    },\n    \n    // CTA Section\n    ctaHeadline,\n    ctaHighlight,\n    ctaSubtext,\n    ctaButtonText,\n    ctaButtonLink,\n    \n    // Related Services (with thumbnails)\n    relatedServices[]-> {\n      _id,\n      title,\n      "slug": slug.current,\n      shortDescription,\n      tagline,\n      icon,\n      featuredImage {\n        asset,\n        alt,\n        hotspot,\n        crop\n      }\n    },\n    \n    // Legacy fields (for backward compatibility)\n    features[] {\n      _key,\n      title,\n      description,\n      icon\n    },\n    body,\n    \n    // SEO\n    "seo": {\n      "title": coalesce(seo.title, title),\n      "description": coalesce(seo.description, shortDescription),\n      "image": coalesce(seo.image, featuredImage),\n      "noIndex": seo.noIndex == true,\n      "canonicalUrl": seo.canonicalUrl\n    }\n  }\n': SERVICE_QUERY_RESULT;
+    '\n  *[_type == "service" && defined(slug.current)]{\n    "slug": slug.current\n  }\n': SERVICE_SLUGS_QUERY_RESULT;
+    '\n  *[_type == "ourTeamPage"][0]{\n    headerEyebrow,\n    headerTitle,\n    headerTitleHighlight,\n    headerDescription,\n    "seo": {\n      "title": coalesce(seo.title, "Our Team"),\n      "description": seo.description,\n      "image": seo.image,\n      "noIndex": seo.noIndex == true\n    }\n  }\n': OUR_TEAM_PAGE_QUERY_RESULT;
+    '\n  *[_type == "teamMember" && isActive == true] | order(order asc, name asc) {\n    _id,\n    name,\n    "slug": slug.current,\n    role,\n    image,\n    bio,\n    location,\n    email,\n    socialLinks[] {\n      _key,\n      platform,\n      url\n    }\n  }\n': TEAM_MEMBERS_QUERY_RESULT;
+    '\n  *[_type == "teamMember" && slug.current == $slug][0]{\n    _id,\n    name,\n    "slug": slug.current,\n    role,\n    image,\n    bio,\n    location,\n    email,\n    socialLinks[] {\n      _key,\n      platform,\n      url\n    }\n  }\n': TEAM_MEMBER_QUERY_RESULT;
+    '\n  *[_type == "faq" && ($category == "" || category == $category)] | order(order asc) {\n    _id,\n    question,\n    answer,\n    category\n  }\n': FAQS_QUERY_RESULT;
+    '\n  *[_type == "testimonial"] | order(featured desc, order asc) {\n    _id,\n    quote,\n    author,\n    role,\n    company,\n    image,\n    companyLogo,\n    featured\n  }\n': TESTIMONIALS_QUERY_RESULT;
+    '\n  *[_type == "testimonial" && featured == true] | order(order asc) {\n    _id,\n    quote,\n    author,\n    role,\n    company,\n    image,\n    companyLogo\n  }\n': FEATURED_TESTIMONIALS_QUERY_RESULT;
+    '\n  {\n    "pages": *[_type == "page" && !(seo.noIndex == true) && defined(slug.current)]{\n      "slug": slug.current,\n      _updatedAt\n    },\n    "services": *[_type == "service" && !(seo.noIndex == true) && defined(slug.current)]{\n      "slug": slug.current,\n      _updatedAt\n    }\n  }\n': SITEMAP_QUERY_RESULT;
+    '\n  *[_type == "termsOfServicePage"][0]{\n    eyebrow,\n    title,\n    titleHighlight,\n    lastUpdated,\n    body,\n    seo {\n      title,\n      description,\n      "image": image.asset,\n      noIndex\n    }\n  }\n': TERMS_OF_SERVICE_QUERY_RESULT;
+    '\n  *[_type == "privacyPolicyPage"][0]{\n    eyebrow,\n    title,\n    titleHighlight,\n    lastUpdated,\n    body,\n    seo {\n      title,\n      description,\n      "image": image.asset,\n      noIndex\n    }\n  }\n': PRIVACY_POLICY_QUERY_RESULT;
+    '\n  *[_type == "servicesPage"][0]{\n    eyebrow,\n    title,\n    titleHighlight,\n    description,\n    seo {\n      title,\n      description,\n      "image": image.asset,\n      noIndex\n    }\n  }\n': SERVICES_PAGE_QUERY_RESULT;
+    '\n  *[_type == "supportPage"][0]{\n    eyebrow,\n    title,\n    titleHighlight,\n    description,\n    teamViewerUrl,\n    teamViewerTitle,\n    seo {\n      title,\n      description,\n      "image": image.asset,\n      noIndex\n    }\n  }\n': SUPPORT_PAGE_QUERY_RESULT;
+    '\n  *[_type == "redirect" && isEnabled == true]{\n    source,\n    destination,\n    permanent\n  }\n': REDIRECTS_QUERY_RESULT;
   }
 }
