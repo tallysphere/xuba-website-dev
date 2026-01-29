@@ -1,7 +1,8 @@
-import type { Metadata } from "next";
-import { Poppins, Raleway } from 'next/font/google'
-import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
+import type { Metadata } from 'next'
+import { Poppins } from 'next/font/google'
+import './globals.css'
+import { ThemeProvider } from '@/components/theme-provider'
+import { JsonLd } from '@/components/JsonLd'
 
 export const metadata: Metadata = {
   title:
@@ -19,14 +20,17 @@ const raleway = Poppins({
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className="overflow-x-hidden">
+    <html lang='en' suppressHydrationWarning className='overflow-x-hidden'>
+      <head>
+        <JsonLd />
+      </head>
       <body className={`${raleway.className} antialiased overflow-x-hidden`}>
         <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
+          attribute='class'
+          defaultTheme='dark'
           enableSystem
           disableTransitionOnChange
         >
@@ -34,5 +38,5 @@ export default function RootLayout({
         </ThemeProvider>
       </body>
     </html>
-  );
+  )
 }

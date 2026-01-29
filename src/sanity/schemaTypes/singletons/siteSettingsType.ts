@@ -37,7 +37,8 @@ export const siteSettingsType = defineType({
       name: 'defaultSeo',
       title: 'Default SEO',
       type: 'seo',
-      description: 'Default SEO settings used when pages do not specify their own',
+      description:
+        'Default SEO settings used when pages do not specify their own',
     }),
     defineField({
       name: 'contact',
@@ -75,6 +76,122 @@ export const siteSettingsType = defineType({
       title: 'Social Links',
       type: 'array',
       of: [defineArrayMember({ type: 'socialLink' })],
+    }),
+    defineField({
+      name: 'localBusiness',
+      title: 'Local Business (JSON-LD)',
+      type: 'object',
+      description:
+        'Structured data for search engines (Organization/LocalBusiness schema)',
+      fields: [
+        defineField({
+          name: 'businessType',
+          title: 'Business Type',
+          type: 'string',
+          description: 'Schema.org type',
+          options: {
+            list: [
+              { title: 'Local Business', value: 'LocalBusiness' },
+              { title: 'IT Service', value: 'ProfessionalService' },
+              { title: 'Computer Store', value: 'ComputerStore' },
+              { title: 'Organization', value: 'Organization' },
+            ],
+          },
+          initialValue: 'ProfessionalService',
+        }),
+        defineField({
+          name: 'legalName',
+          title: 'Legal Business Name',
+          type: 'string',
+          description: 'Official registered business name',
+        }),
+        defineField({
+          name: 'description',
+          title: 'Business Description',
+          type: 'text',
+          rows: 3,
+          description: 'Short description of your business for search engines',
+        }),
+        defineField({
+          name: 'streetAddress',
+          title: 'Street Address',
+          type: 'string',
+        }),
+        defineField({
+          name: 'city',
+          title: 'City',
+          type: 'string',
+          initialValue: 'Hamilton',
+        }),
+        defineField({
+          name: 'region',
+          title: 'Region/State',
+          type: 'string',
+          initialValue: 'Waikato',
+        }),
+        defineField({
+          name: 'postalCode',
+          title: 'Postal Code',
+          type: 'string',
+        }),
+        defineField({
+          name: 'country',
+          title: 'Country',
+          type: 'string',
+          initialValue: 'NZ',
+        }),
+        defineField({
+          name: 'latitude',
+          title: 'Latitude',
+          type: 'number',
+          description: 'GPS latitude coordinate',
+        }),
+        defineField({
+          name: 'longitude',
+          title: 'Longitude',
+          type: 'number',
+          description: 'GPS longitude coordinate',
+        }),
+        defineField({
+          name: 'priceRange',
+          title: 'Price Range',
+          type: 'string',
+          description: 'Relative price range',
+          options: {
+            list: [
+              { title: '$ - Budget', value: '$' },
+              { title: '$$ - Moderate', value: '$$' },
+              { title: '$$$ - Premium', value: '$$$' },
+            ],
+          },
+        }),
+        defineField({
+          name: 'openingHours',
+          title: 'Opening Hours',
+          type: 'array',
+          description:
+            'Business hours in schema.org format (e.g., "Mo-Fr 08:30-17:00")',
+          of: [{ type: 'string' }],
+        }),
+        defineField({
+          name: 'serviceArea',
+          title: 'Service Area',
+          type: 'array',
+          description: 'Areas/cities you serve',
+          of: [{ type: 'string' }],
+        }),
+        defineField({
+          name: 'foundingDate',
+          title: 'Founding Date',
+          type: 'date',
+          description: 'When the business was founded',
+        }),
+        defineField({
+          name: 'numberOfEmployees',
+          title: 'Number of Employees',
+          type: 'number',
+        }),
+      ],
     }),
     defineField({
       name: 'analytics',

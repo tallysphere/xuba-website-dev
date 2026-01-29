@@ -12,10 +12,15 @@ import { blockContentType } from './shared/blockContentType'
 
 // Singletons
 import { siteSettingsType } from './singletons/siteSettingsType'
-import { navigationType, navItemType, footerColumnType } from './singletons/navigationType'
+import {
+  navigationType,
+  navItemType,
+  footerColumnType,
+} from './singletons/navigationType'
 import { aboutPageType } from './singletons/aboutPageType'
 import { contactPageType } from './singletons/contactPageType'
 import { homepageType } from './singletons/homepageType'
+import { ourTeamPageType } from './singletons/ourTeamPageType'
 
 // Documents
 import { pageType } from './documents/pageType'
@@ -65,6 +70,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     aboutPageType,
     contactPageType,
     homepageType,
+    ourTeamPageType,
 
     // Documents
     pageType,

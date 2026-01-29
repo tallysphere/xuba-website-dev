@@ -1,14 +1,28 @@
 import type { StructureResolver } from 'sanity/structure'
-import { CogIcon, UsersIcon, InfoOutlineIcon, EnvelopeIcon, HomeIcon, RocketIcon } from '@sanity/icons'
+import {
+  CogIcon,
+  UsersIcon,
+  InfoOutlineIcon,
+  EnvelopeIcon,
+  HomeIcon,
+  RocketIcon,
+} from '@sanity/icons'
 // import { MenuIcon, DocumentsIcon, CommentIcon, HelpCircleIcon, LinkIcon } from '@sanity/icons'
 
 // Singleton document IDs
-const SINGLETON_IDS = ['siteSettings', 'navigation', 'aboutPage', 'contactPage', 'homepage']
+const SINGLETON_IDS = [
+  'siteSettings',
+  'navigation',
+  'aboutPage',
+  'contactPage',
+  'homepage',
+  'ourTeamPage',
+]
 
 /**
  * Custom Studio structure with organized sections and singletons.
  * Singletons are enforced here via fixed document IDs.
- * 
+ *
  * @see https://www.sanity.io/docs/structure-builder-cheat-sheet
  */
 export const structure: StructureResolver = (S) =>
@@ -27,7 +41,7 @@ export const structure: StructureResolver = (S) =>
           S.document()
             .schemaType('homepage')
             .documentId('homepage')
-            .title('Homepage')
+            .title('Homepage'),
         ),
 
       // Site Settings (singleton)
@@ -38,7 +52,7 @@ export const structure: StructureResolver = (S) =>
           S.document()
             .schemaType('siteSettings')
             .documentId('siteSettings')
-            .title('Site Settings')
+            .title('Site Settings'),
         ),
 
       S.listItem()
@@ -53,7 +67,7 @@ export const structure: StructureResolver = (S) =>
           S.document()
             .schemaType('aboutPage')
             .documentId('aboutPage')
-            .title('About Page')
+            .title('About Page'),
         ),
 
       S.listItem()
@@ -63,7 +77,17 @@ export const structure: StructureResolver = (S) =>
           S.document()
             .schemaType('contactPage')
             .documentId('contactPage')
-            .title('Contact Page')
+            .title('Contact Page'),
+        ),
+
+      S.listItem()
+        .title('Our Team Page')
+        .icon(UsersIcon)
+        .child(
+          S.document()
+            .schemaType('ourTeamPage')
+            .documentId('ourTeamPage')
+            .title('Our Team Page'),
         ),
 
       S.divider(),
@@ -115,14 +139,24 @@ export const structure: StructureResolver = (S) =>
       //   .child(S.documentTypeList('redirect').title('Redirects')),
 
       // Filter out singletons and already-listed types from the default list
-      ...S.documentTypeListItems().filter(
-        (listItem) => {
-          const id = listItem.getId()
-          return (
-            id &&
-            !SINGLETON_IDS.includes(id) &&
-            !['page', 'service', 'teamMember', 'testimonial', 'faq', 'redirect', 'navigation', 'aboutPage', 'contactPage', 'homepage'].includes(id)
-          )
-        }
-      ),
+      ...S.documentTypeListItems().filter((listItem) => {
+        const id = listItem.getId()
+        return (
+          id &&
+          !SINGLETON_IDS.includes(id) &&
+          ![
+            'page',
+            'service',
+            'teamMember',
+            'testimonial',
+            'faq',
+            'redirect',
+            'navigation',
+            'aboutPage',
+            'contactPage',
+            'homepage',
+            'ourTeamPage',
+          ].includes(id)
+        )
+      }),
     ])

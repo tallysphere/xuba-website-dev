@@ -39,6 +39,23 @@ export const SITE_SETTINGS_QUERY = defineQuery(`
       subheading,
       ctaLabel,
       ctaLink
+    },
+    localBusiness {
+      businessType,
+      legalName,
+      description,
+      streetAddress,
+      city,
+      region,
+      postalCode,
+      country,
+      latitude,
+      longitude,
+      priceRange,
+      openingHours,
+      serviceArea,
+      foundingDate,
+      numberOfEmployees
     }
   }
 `)
@@ -450,6 +467,29 @@ export const SERVICE_QUERY = defineQuery(`
 export const SERVICE_SLUGS_QUERY = defineQuery(`
   *[_type == "service" && defined(slug.current)]{
     "slug": slug.current
+  }
+`)
+
+// =============================================================================
+// Our Team Page Query
+// =============================================================================
+
+/**
+ * Fetches the Our Team Page singleton content.
+ * Used on the /our-team page for header content.
+ */
+export const OUR_TEAM_PAGE_QUERY = defineQuery(`
+  *[_type == "ourTeamPage"][0]{
+    headerEyebrow,
+    headerTitle,
+    headerTitleHighlight,
+    headerDescription,
+    "seo": {
+      "title": coalesce(seo.title, "Our Team"),
+      "description": seo.description,
+      "image": seo.image,
+      "noIndex": seo.noIndex == true
+    }
   }
 `)
 

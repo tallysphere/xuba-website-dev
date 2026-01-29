@@ -1,8 +1,12 @@
 'use server'
 
 import { Resend } from 'resend'
+import { client } from '@/sanity/lib/client'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
+
+// Fallback email if Sanity fetch fails
+const FALLBACK_RECIPIENT = 'hello@xuba.co.nz'
 
 export type ContactFormData = {
   firstName: string
@@ -17,15 +21,34 @@ export type SendEmailResponse = {
   error?: string
 }
 
+/**
+ * Fetches the contact email from Sanity site settings.
+ * Returns fallback email if fetch fails.
+ */
+async function getRecipientEmail(): Promise<string> {
+  try {
+    const result = await client.fetch<{ contact?: { email?: string } } | null>(
+      `*[_type == "siteSettings"][0]{ contact { email } }`,
+    )
+    return result?.contact?.email || FALLBACK_RECIPIENT
+  } catch (error) {
+    console.error('Failed to fetch recipient email from Sanity:', error)
+    return FALLBACK_RECIPIENT
+  }
+}
+
 export async function sendContactEmail(
-  formData: ContactFormData
+  formData: ContactFormData,
 ): Promise<SendEmailResponse> {
   const { firstName, lastName, email, phone, message } = formData
 
   try {
+    // Fetch recipient email from Sanity CMS
+    const recipientEmail = await getRecipientEmail()
+
     const { error } = await resend.emails.send({
       from: 'Xuba Contact Form <noreply@notifications.tallysphere.com>',
-      to: 'hello@xuba.co.nz',
+      to: recipientEmail,
       replyTo: email,
       subject: `New Contact from ${firstName} ${lastName}`,
       html: `
@@ -83,12 +106,18 @@ export async function sendContactEmail(
 
     if (error) {
       console.error('Resend error:', error)
-      return { success: false, error: 'Failed to send email. Please try again.' }
+      return {
+        success: false,
+        error: 'Failed to send email. Please try again.',
+      }
     }
 
     return { success: true }
   } catch (error) {
     console.error('Send email error:', error)
-    return { success: false, error: 'An unexpected error occurred. Please try again.' }
+    return {
+      success: false,
+      error: 'An unexpected error occurred. Please try again.',
+    }
   }
 }

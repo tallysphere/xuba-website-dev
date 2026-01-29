@@ -4,7 +4,11 @@ import { ThemedHeroBackground } from '@/components/ThemedHeroBackground'
 import TiltedCard from '@/components/TiltedCard/TiltedCard'
 import Link from 'next/link'
 import { sanityFetch } from '@/sanity/lib/live'
-import { TEAM_MEMBERS_QUERY, CONTACT_SECTION_QUERY } from '@/sanity/lib/queries'
+import {
+  TEAM_MEMBERS_QUERY,
+  CONTACT_SECTION_QUERY,
+  OUR_TEAM_PAGE_QUERY,
+} from '@/sanity/lib/queries'
 import { urlFor } from '@/sanity/lib/image'
 
 /**
@@ -12,25 +16,52 @@ import { urlFor } from '@/sanity/lib/image'
  *
  * Features:
  * - Theme-aware styling (light and dark mode)
- * - Sanity CMS integration for team members
+ * - Sanity CMS integration for team members and page content
  * - Tilted card hover effects for team photos
  * - Social links integration
  * - Accessible with proper ARIA attributes
- * - SEO optimized with metadata
+ * - SEO optimized with metadata from Sanity
  */
 
-export const metadata: Metadata = {
-  title: 'Our Team | Xuba IT Solutions',
-  description:
-    'Meet our dedicated team of IT professionals. With 15 years in the industry, we are committed to delivering exceptional IT support and solutions.',
+/**
+ * Generate metadata for the Our Team page from Sanity CMS.
+ */
+export async function generateMetadata(): Promise<Metadata> {
+  const { data: pageData } = await sanityFetch({
+    query: OUR_TEAM_PAGE_QUERY,
+    stega: false,
+  })
+
+  return {
+    title: pageData?.seo?.title ?? 'Our Team | Xuba IT Solutions',
+    description:
+      pageData?.seo?.description ??
+      'Meet our dedicated team of IT professionals. With 15 years in the industry, we are committed to delivering exceptional IT support and solutions.',
+    openGraph: pageData?.seo?.image?.asset
+      ? {
+          images: [
+            {
+              url: urlFor(pageData.seo.image).width(1200).height(630).url(),
+              width: 1200,
+              height: 630,
+            },
+          ],
+        }
+      : undefined,
+    robots: pageData?.seo?.noIndex
+      ? { index: false, follow: false }
+      : undefined,
+  }
 }
 
 export default async function OurTeamPage() {
-  // Fetch team members and contact section data in parallel
-  const [{ data: teamMembers }, { data: contactData }] = await Promise.all([
-    sanityFetch({ query: TEAM_MEMBERS_QUERY }),
-    sanityFetch({ query: CONTACT_SECTION_QUERY }),
-  ])
+  // Fetch page content, team members, and contact section data in parallel
+  const [{ data: pageData }, { data: teamMembers }, { data: contactData }] =
+    await Promise.all([
+      sanityFetch({ query: OUR_TEAM_PAGE_QUERY }),
+      sanityFetch({ query: TEAM_MEMBERS_QUERY }),
+      sanityFetch({ query: CONTACT_SECTION_QUERY }),
+    ])
 
   // Contact section props
   const contactProps = {
@@ -64,23 +95,24 @@ export default async function OurTeamPage() {
         <header className='max-w-4xl flex flex-col items-center justify-center pb-8 sm:pb-20'>
           <div className='flex flex-col items-center justify-center'>
             <span className='text-xuba-green-500 text-xs sm:text-sm md:text-lg font-light tracking-widest text-center uppercase'>
-              About The Team
+              {pageData?.headerEyebrow ?? 'About The Team'}
             </span>
             <h1
               id='our-team-heading'
               className='text-xuba-green-900 dark:text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-thin tracking-tight mt-4 text-center'
             >
-              Meet{' '}
+              {pageData?.headerTitle ?? 'Meet'}{' '}
               <span className='text-xuba-green-500 drop-shadow-xl drop-shadow-xuba-green-500/10'>
-                Our Team
+                {pageData?.headerTitleHighlight ?? 'Our Team'}
               </span>
             </h1>
           </div>
           <p className='mt-4 sm:mt-6 text-base sm:text-lg leading-7 sm:leading-8 text-xuba-green-700 dark:text-gray-300 text-center max-w-3xl px-4'>
-            With 15 years in the industry and IT in the blood, they are match
+            {pageData?.headerDescription ??
+              `With 15 years in the industry and IT in the blood, they are match
             fit and rearing to go. In order to create lasting bonds, we learn
-            our client&apos;s business and where they are headed and how we can
-            meet them there.
+            our client's business and where they are headed and how we can
+            meet them there.`}
           </p>
         </header>
 
