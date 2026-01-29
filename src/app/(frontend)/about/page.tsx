@@ -111,183 +111,122 @@ export default async function AboutPage() {
       </div>
 
       {/* Page Header */}
-      <header className='relative z-10 flex flex-col items-center justify-center px-4 sm:px-6 md:mt-0 mt-20'>
+      <header className='relative z-10 flex flex-col items-center justify-center px-4 sm:px-6 md:mt-0 mt-20 pb-12 sm:pb-16 lg:pb-20'>
         <span className='text-xuba-green-500 text-sm sm:text-lg font-light tracking-widest mt-12 sm:mt-20 text-center uppercase'>
-          Who Are We?
+          {aboutPage?.headerEyebrow ?? 'Who Are We?'}
         </span>
         <h1
           id='about-page-heading'
           className='text-xuba-green-900 dark:text-white text-4xl sm:text-5xl md:text-7xl font-thin tracking-tight mt-4 text-center max-w-4xl'
         >
-          Our{' '}
+          {aboutPage?.headerTitle ?? 'Our'}{' '}
           <span className='text-xuba-green-500 drop-shadow-xl drop-shadow-xuba-green-500/10'>
-            Team
+            {aboutPage?.headerTitleHighlight ?? 'Team'}
           </span>
         </h1>
       </header>
 
       <main className='relative isolate z-10 w-full'>
-        {/* Hero section */}
-        <div className='relative isolate -z-10'>
-          {/* Decorative gradient blob */}
-          <div
-            aria-hidden='true'
-            className='absolute top-0 right-0 left-1/2 -z-10 -ml-24 transform-gpu overflow-hidden blur-3xl lg:ml-24 xl:ml-48'
-          >
-            <div
-              style={{
-                clipPath:
-                  'polygon(63.1% 29.5%, 100% 17.1%, 76.6% 3%, 48.4% 0%, 44.6% 4.7%, 54.5% 25.3%, 59.8% 49%, 55.2% 57.8%, 44.4% 57.2%, 27.8% 47.9%, 35.1% 81.5%, 0% 97.7%, 39.2% 100%, 35.2% 81.4%, 97.2% 52.8%, 63.1% 29.5%)',
-              }}
-              className='aspect-801/1036 w-200.25 bg-linear-to-tr from-xuba-green-500/20 to-xuba-green-700/20 dark:from-xuba-green-500 dark:to-xuba-green-700 opacity-40'
-            />
-          </div>
-
-          <div className='px-4 sm:px-6 lg:px-8'>
-            <div className='mx-auto max-w-7xl pt-16 sm:pt-24 lg:pt-36 pb-16 sm:pb-24 lg:pb-32'>
-              <div className='mx-auto max-w-2xl gap-x-14 lg:mx-0 lg:flex lg:max-w-none lg:items-center'>
-                {/* Hero Text */}
-                <div className='relative w-full lg:max-w-xl lg:shrink-0 xl:max-w-2xl'>
-                  <h2 className='text-2xl sm:text-3xl lg:text-5xl font-semibold tracking-tight text-pretty text-xuba-green-900 dark:text-white text-center lg:text-left'>
-                    {aboutPage?.heroTitle ?? 'Clever IT & Clever People'}
-                  </h2>
-                  <p className='mt-6 sm:mt-8 text-base sm:text-lg lg:text-xl font-medium text-pretty text-xuba-green-700 dark:text-white text-center lg:text-left'>
-                    {aboutPage?.heroSubtitle ??
-                      `Xuba was conceived from a shared vision for faster, smarter
+        {/* Hero section - "Our People" style with landscape images */}
+        <div className='overflow-hidden pt-8 sm:pt-12 lg:pt-16'>
+          <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
+            <div className='mx-auto grid max-w-2xl grid-cols-1 gap-x-12 gap-y-16 lg:mx-0 lg:max-w-none lg:min-w-full lg:flex-none lg:gap-y-8'>
+              {/* Hero Text */}
+              <div className='lg:col-end-1 lg:w-full lg:max-w-lg lg:pb-8'>
+                <h2 className='text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-xuba-green-900 dark:text-white text-center lg:text-left'>
+                  {aboutPage?.heroTitle ?? 'Clever IT & Clever People'}
+                </h2>
+                <p className='mt-6 text-lg sm:text-xl leading-8 text-xuba-green-700 dark:text-gray-300 text-center lg:text-left'>
+                  {aboutPage?.heroSubtitle ??
+                    `Xuba was conceived from a shared vision for faster, smarter
                     IT technology coupled with bright spark, cut above the rest
                     IT support service. We believe in quick. We believe in
                     quality. And we're passionately committed to doing
                     things better. The result? It's really quite simple; we
                     help our clients sleep at night.`}
-                  </p>
-                </div>
-
-                {/* Hero image grid */}
-                {aboutPage?.heroImages && aboutPage.heroImages.length > 0 && (
-                  <div className='mt-8 sm:mt-14 lg:mt-0 flex justify-center lg:justify-end gap-4 sm:gap-8 lg:pl-0'>
-                    {/* Column 1 */}
-                    <div className='w-32 sm:w-44 flex-none space-y-4 sm:space-y-8 pt-16 sm:pt-32 lg:order-last lg:pt-36 xl:order-0 xl:pt-80'>
-                      {aboutPage.heroImages[0]?.asset && (
-                        <div className='relative'>
-                          <Image
-                            alt={
-                              aboutPage.heroImages[0].alt ?? 'About us image'
-                            }
-                            src={urlFor(aboutPage.heroImages[0])
-                              .width(400)
-                              .height(528)
-                              .fit('crop')
-                              .url()}
-                            className='aspect-2/3 w-full rounded-xl bg-xuba-green-100 dark:bg-gray-900/5 object-cover shadow-lg'
-                            width={400}
-                            height={528}
-                          />
-                          <div
-                            className='pointer-events-none absolute inset-0 rounded-xl ring-1 ring-xuba-green-200 dark:ring-gray-900/10 ring-inset'
-                            aria-hidden='true'
-                          />
-                        </div>
-                      )}
-                    </div>
-                    {/* Column 2 */}
-                    <div className='w-32 sm:w-44 flex-none space-y-4 sm:space-y-8 pt-8 sm:pt-52 lg:pt-36'>
-                      {aboutPage.heroImages[1]?.asset && (
-                        <div className='relative'>
-                          <Image
-                            alt={
-                              aboutPage.heroImages[1].alt ?? 'About us image'
-                            }
-                            src={urlFor(aboutPage.heroImages[1])
-                              .width(400)
-                              .height(528)
-                              .fit('crop')
-                              .url()}
-                            className='aspect-2/3 w-full rounded-xl bg-xuba-green-100 dark:bg-gray-900/5 object-cover shadow-lg'
-                            width={400}
-                            height={528}
-                          />
-                          <div
-                            className='pointer-events-none absolute inset-0 rounded-xl ring-1 ring-xuba-green-200 dark:ring-gray-900/10 ring-inset'
-                            aria-hidden='true'
-                          />
-                        </div>
-                      )}
-                      {aboutPage.heroImages[2]?.asset && (
-                        <div className='relative'>
-                          <Image
-                            alt={
-                              aboutPage.heroImages[2].alt ?? 'About us image'
-                            }
-                            src={urlFor(aboutPage.heroImages[2])
-                              .width(400)
-                              .height(528)
-                              .fit('crop')
-                              .url()}
-                            className='aspect-2/3 w-full rounded-xl bg-xuba-green-100 dark:bg-gray-900/5 object-cover shadow-lg'
-                            width={400}
-                            height={528}
-                          />
-                          <div
-                            className='pointer-events-none absolute inset-0 rounded-xl ring-1 ring-xuba-green-200 dark:ring-gray-900/10 ring-inset'
-                            aria-hidden='true'
-                          />
-                        </div>
-                      )}
-                    </div>
-                    {/* Column 3 */}
-                    <div className='w-32 sm:w-44 flex-none space-y-4 sm:space-y-8 pt-16 sm:pt-32 lg:pt-0'>
-                      {aboutPage.heroImages[3]?.asset && (
-                        <div className='relative'>
-                          <Image
-                            alt={
-                              aboutPage.heroImages[3].alt ?? 'About us image'
-                            }
-                            src={urlFor(aboutPage.heroImages[3])
-                              .width(400)
-                              .height(528)
-                              .fit('crop')
-                              .url()}
-                            className='aspect-2/3 w-full rounded-xl bg-xuba-green-100 dark:bg-gray-900/5 object-cover shadow-lg'
-                            width={400}
-                            height={528}
-                          />
-                          <div
-                            className='pointer-events-none absolute inset-0 rounded-xl ring-1 ring-xuba-green-200 dark:ring-gray-900/10 ring-inset'
-                            aria-hidden='true'
-                          />
-                        </div>
-                      )}
-                      {aboutPage.heroImages[4]?.asset && (
-                        <div className='relative'>
-                          <Image
-                            alt={
-                              aboutPage.heroImages[4].alt ?? 'About us image'
-                            }
-                            src={urlFor(aboutPage.heroImages[4])
-                              .width(400)
-                              .height(528)
-                              .fit('crop')
-                              .url()}
-                            className='aspect-2/3 w-full rounded-xl bg-xuba-green-100 dark:bg-gray-900/5 object-cover shadow-lg'
-                            width={400}
-                            height={528}
-                          />
-                          <div
-                            className='pointer-events-none absolute inset-0 rounded-xl ring-1 ring-xuba-green-200 dark:ring-gray-900/10 ring-inset'
-                            aria-hidden='true'
-                          />
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                )}
+                </p>
               </div>
+
+              {/* Hero Images - Landscape layout */}
+              {aboutPage?.heroImages && aboutPage.heroImages.length > 0 && (
+                <div className='flex flex-wrap items-start justify-end gap-6 sm:gap-8 lg:contents'>
+                  {/* Large image - top right */}
+                  {aboutPage.heroImages[0]?.asset && (
+                    <div className='w-0 flex-auto lg:ml-auto lg:w-auto lg:flex-none lg:self-end'>
+                      <Image
+                        alt={aboutPage.heroImages[0].alt ?? 'About us image'}
+                        src={urlFor(aboutPage.heroImages[0])
+                          .width(1152)
+                          .height(823)
+                          .fit('crop')
+                          .url()}
+                        className='aspect-7/5 w-148 max-w-none rounded-2xl bg-xuba-green-100 dark:bg-gray-800 object-cover'
+                        width={1152}
+                        height={823}
+                      />
+                    </div>
+                  )}
+
+                  <div className='contents lg:col-span-2 lg:col-end-2 lg:ml-auto lg:flex lg:w-148 lg:items-start lg:justify-end lg:gap-x-8'>
+                    {/* Small image - bottom left of grid */}
+                    {aboutPage.heroImages[1]?.asset && (
+                      <div className='order-first flex w-64 flex-none justify-end self-end max-sm:w-40 lg:w-auto'>
+                        <Image
+                          alt={aboutPage.heroImages[1].alt ?? 'About us image'}
+                          src={urlFor(aboutPage.heroImages[1])
+                            .width(768)
+                            .height(604)
+                            .fit('crop')
+                            .url()}
+                          className='aspect-4/3 w-[24rem] max-w-none flex-none rounded-2xl bg-xuba-green-100 dark:bg-gray-800 object-cover'
+                          width={768}
+                          height={604}
+                        />
+                      </div>
+                    )}
+
+                    {/* Medium image - center */}
+                    {aboutPage.heroImages[2]?.asset && (
+                      <div className='flex w-96 flex-auto justify-end lg:w-auto lg:flex-none'>
+                        <Image
+                          alt={aboutPage.heroImages[2].alt ?? 'About us image'}
+                          src={urlFor(aboutPage.heroImages[2])
+                            .width(1152)
+                            .height(842)
+                            .fit('crop')
+                            .url()}
+                          className='aspect-7/5 w-148 max-w-none flex-none rounded-2xl bg-xuba-green-100 dark:bg-gray-800 object-cover max-sm:w-120'
+                          width={1152}
+                          height={842}
+                        />
+                      </div>
+                    )}
+
+                    {/* Small image - bottom right */}
+                    {aboutPage.heroImages[3]?.asset && (
+                      <div className='hidden sm:block sm:w-0 sm:flex-auto lg:w-auto lg:flex-none'>
+                        <Image
+                          alt={aboutPage.heroImages[3].alt ?? 'About us image'}
+                          src={urlFor(aboutPage.heroImages[3])
+                            .width(768)
+                            .height(604)
+                            .fit('crop')
+                            .url()}
+                          className='aspect-4/3 w-[24rem] max-w-none rounded-2xl bg-xuba-green-100 dark:bg-gray-800 object-cover'
+                          width={768}
+                          height={604}
+                        />
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
 
         {/* Mission Section */}
-        <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-10 sm:-mt-12 lg:xl:-mt-8'>
+        <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-24 sm:mt-32'>
           <div className='mx-auto max-w-2xl lg:mx-0 lg:max-w-none'>
             <h2 className='text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-pretty text-xuba-green-900 dark:text-white text-center lg:text-left'>
               {aboutPage?.missionTitle ?? 'Our mission'}

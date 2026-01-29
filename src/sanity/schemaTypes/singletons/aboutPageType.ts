@@ -11,12 +11,33 @@ export const aboutPageType = defineType({
   type: 'document',
   icon: UsersIcon,
   fields: [
+    // Page Header
+    defineField({
+      name: 'headerEyebrow',
+      title: 'Header Eyebrow',
+      type: 'string',
+      description: 'Small text above the main title (e.g., "Who Are We?")',
+    }),
+    defineField({
+      name: 'headerTitle',
+      title: 'Header Title',
+      type: 'string',
+      description: 'First part of the page title (e.g., "Our")',
+    }),
+    defineField({
+      name: 'headerTitleHighlight',
+      title: 'Header Title Highlight',
+      type: 'string',
+      description: 'Highlighted/accent word in the title (e.g., "Team")',
+    }),
+
     // Hero Section
     defineField({
       name: 'heroTitle',
       title: 'Hero Title',
       type: 'string',
-      description: 'Main headline for the about page (e.g., "Clever IT & Clever People")',
+      description:
+        'Main headline for the about page (e.g., "Clever IT & Clever People")',
       validation: (rule) => rule.required(),
     }),
     defineField({
@@ -30,7 +51,8 @@ export const aboutPageType = defineType({
       name: 'heroImages',
       title: 'Hero Images',
       type: 'array',
-      description: 'Gallery images for the hero section (5 images recommended)',
+      description:
+        'Gallery images for the hero section (4 landscape images recommended)',
       of: [
         defineArrayMember({
           type: 'image',
@@ -47,7 +69,36 @@ export const aboutPageType = defineType({
           ],
         }),
       ],
-      validation: (rule) => rule.max(5).warning('Maximum 5 images recommended for the hero grid'),
+      validation: (rule) =>
+        rule.max(4).warning('Maximum 4 images for the hero grid'),
+    }),
+
+    // Full-width Image Section
+    defineField({
+      name: 'enableFullWidthImage',
+      title: 'Enable Full-width Image',
+      type: 'boolean',
+      description:
+        'Show a full-width image between the hero and mission sections',
+      initialValue: false,
+    }),
+    defineField({
+      name: 'fullWidthImage',
+      title: 'Full-width Image',
+      type: 'image',
+      description: 'A wide landscape image (aspect 5:2 recommended)',
+      options: {
+        hotspot: true,
+      },
+      fields: [
+        defineField({
+          name: 'alt',
+          title: 'Alt Text',
+          type: 'string',
+          description: 'Alternative text for accessibility',
+        }),
+      ],
+      hidden: ({ parent }) => !parent?.enableFullWidthImage,
     }),
 
     // Mission Section
@@ -77,7 +128,8 @@ export const aboutPageType = defineType({
       name: 'stats',
       title: 'Statistics',
       type: 'array',
-      description: 'Key statistics to display (e.g., years in business, clients, projects)',
+      description:
+        'Key statistics to display (e.g., years in business, clients, projects)',
       of: [
         defineArrayMember({
           type: 'object',

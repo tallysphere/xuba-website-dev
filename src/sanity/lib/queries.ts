@@ -130,10 +130,20 @@ export const NAVIGATION_QUERY = defineQuery(`
  */
 export const ABOUT_PAGE_QUERY = defineQuery(`
   *[_type == "aboutPage"][0]{
+    headerEyebrow,
+    headerTitle,
+    headerTitleHighlight,
     heroTitle,
     heroSubtitle,
     heroImages[] {
       _key,
+      asset,
+      alt,
+      hotspot,
+      crop
+    },
+    enableFullWidthImage,
+    fullWidthImage {
       asset,
       alt,
       hotspot,
