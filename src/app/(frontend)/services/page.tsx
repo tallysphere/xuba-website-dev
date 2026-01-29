@@ -54,12 +54,12 @@ export default async function ServicesPage() {
       {/* Hero Section */}
       <section
         aria-labelledby='services-page-heading'
-        className='relative bg-white dark:bg-xuba-purple-900 py-20 sm:py-32 overflow-hidden'
+        className='relative bg-white dark:bg-xuba-purple-900 py-20 sm:py-32 lg:py-56 overflow-hidden'
       >
         {/* Theme-aware background: DotPattern for light, Aurora for dark */}
         <ThemedHeroBackground />
 
-        <div className='relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
+        <div className='relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-20 md:mt-0'>
           <div className='flex flex-col items-center justify-center text-center'>
             <span className='text-xuba-green-500 text-sm sm:text-lg font-light tracking-widest uppercase'>
               What We Do
