@@ -72,9 +72,9 @@ const HomeHero = ({
       <div className='relative z-20 h-full w-full'>
         <div className='relative flex h-full w-full flex-col items-center justify-center'>
           {/* Decorative side lines - hidden on mobile */}
-          <div className='hidden md:block' aria-hidden='true'>
+          {/* <div className='hidden md:block' aria-hidden='true'>
             <SideLines />
-          </div>
+          </div> */}
 
           <div className='relative z-20 flex w-full max-w-7xl flex-col items-center justify-center px-4 py-8 md:px-8 md:py-12'>
             {/* Main Headline */}
