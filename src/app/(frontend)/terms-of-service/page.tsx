@@ -25,6 +25,8 @@ export async function generateMetadata(): Promise<Metadata> {
     stega: false,
   })
 
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://xuba.co.nz'
+
   return {
     title: data?.seo?.title ?? 'Terms of Service',
     description: data?.seo?.description ?? undefined,
@@ -40,6 +42,9 @@ export async function generateMetadata(): Promise<Metadata> {
         }
       : undefined,
     robots: data?.seo?.noIndex ? { index: false, follow: false } : undefined,
+    alternates: {
+      canonical: data?.seo?.canonicalUrl || `${baseUrl}/terms-of-service`,
+    },
   }
 }
 

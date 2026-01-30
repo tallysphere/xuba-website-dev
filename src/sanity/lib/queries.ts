@@ -181,7 +181,8 @@ export const ABOUT_PAGE_QUERY = defineQuery(`
       "title": coalesce(seo.title, heroTitle, "About Us"),
       "description": seo.description,
       "image": seo.image,
-      "noIndex": seo.noIndex == true
+      "noIndex": seo.noIndex == true,
+      "canonicalUrl": seo.canonicalUrl
     }
   }
 `)
@@ -224,7 +225,8 @@ export const HOMEPAGE_QUERY = defineQuery(`
       "title": coalesce(seo.title, "Xuba - IT Solutions"),
       "description": seo.description,
       "image": seo.image,
-      "noIndex": seo.noIndex == true
+      "noIndex": seo.noIndex == true,
+      "canonicalUrl": seo.canonicalUrl
     }
   }
 `)
@@ -254,7 +256,8 @@ export const CONTACT_PAGE_QUERY = defineQuery(`
         "title": coalesce(seo.title, title, "Contact Us"),
         "description": seo.description,
         "image": seo.image,
-        "noIndex": seo.noIndex == true
+        "noIndex": seo.noIndex == true,
+        "canonicalUrl": seo.canonicalUrl
       }
     },
     "siteSettings": *[_type == "siteSettings"][0]{
@@ -488,7 +491,8 @@ export const OUR_TEAM_PAGE_QUERY = defineQuery(`
       "title": coalesce(seo.title, "Our Team"),
       "description": seo.description,
       "image": seo.image,
-      "noIndex": seo.noIndex == true
+      "noIndex": seo.noIndex == true,
+      "canonicalUrl": seo.canonicalUrl
     }
   }
 `)
@@ -629,7 +633,8 @@ export const TERMS_OF_SERVICE_QUERY = defineQuery(`
       title,
       description,
       "image": image.asset,
-      noIndex
+      noIndex,
+      canonicalUrl
     }
   }
 `)
@@ -649,7 +654,8 @@ export const PRIVACY_POLICY_QUERY = defineQuery(`
       title,
       description,
       "image": image.asset,
-      noIndex
+      noIndex,
+      canonicalUrl
     }
   }
 `)
@@ -668,7 +674,8 @@ export const SERVICES_PAGE_QUERY = defineQuery(`
       title,
       description,
       "image": image.asset,
-      noIndex
+      noIndex,
+      canonicalUrl
     }
   }
 `)
@@ -689,7 +696,8 @@ export const SUPPORT_PAGE_QUERY = defineQuery(`
       title,
       description,
       "image": image.asset,
-      noIndex
+      noIndex,
+      canonicalUrl
     }
   }
 `)

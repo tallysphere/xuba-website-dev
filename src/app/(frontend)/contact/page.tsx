@@ -1,10 +1,5 @@
 import type { Metadata } from 'next'
-import {
-  Building2Icon,
-  ClockIcon,
-  MailIcon,
-  PhoneCallIcon,
-} from 'lucide-react'
+import { Building2Icon, ClockIcon, MailIcon, PhoneCallIcon } from 'lucide-react'
 import { sanityFetch } from '@/sanity/lib/live'
 import { CONTACT_PAGE_QUERY } from '@/sanity/lib/queries'
 import { ContactForm } from '@/components/ContactForm'
@@ -31,6 +26,7 @@ export async function generateMetadata(): Promise<Metadata> {
   })
 
   const contactPage = data?.contactPage
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://xuba.co.nz'
 
   return {
     title: contactPage?.seo?.title ?? 'Contact Us',
@@ -46,7 +42,12 @@ export async function generateMetadata(): Promise<Metadata> {
           ],
         }
       : undefined,
-    robots: contactPage?.seo?.noIndex ? { index: false, follow: false } : undefined,
+    robots: contactPage?.seo?.noIndex
+      ? { index: false, follow: false }
+      : undefined,
+    alternates: {
+      canonical: contactPage?.seo?.canonicalUrl || `${baseUrl}/contact`,
+    },
   }
 }
 
@@ -62,9 +63,11 @@ export default async function ContactPage() {
   const eyebrow = contactPage?.eyebrow ?? 'Get in Touch'
   const title = contactPage?.title ?? 'Contact Us'
   const heading = contactPage?.heading ?? "WE'D LOVE TO HEAR FROM YOU"
-  const description = contactPage?.description ?? 
-    "In our world, we love clients who demand a premium product and service, who expect nothing but the best, refuse to cut corners and have an affinity for new perspective. If this sounds like you, we should meet."
-  const responseTimeText = contactPage?.responseTimeText ?? 'We typically respond within 24 hours'
+  const description =
+    contactPage?.description ??
+    'In our world, we love clients who demand a premium product and service, who expect nothing but the best, refuse to cut corners and have an affinity for new perspective. If this sounds like you, we should meet.'
+  const responseTimeText =
+    contactPage?.responseTimeText ?? 'We typically respond within 24 hours'
 
   // Contact labels
   const addressLabel = contactPage?.contactLabels?.addressLabel ?? 'Visit Us'
@@ -72,7 +75,9 @@ export default async function ContactPage() {
   const emailLabel = contactPage?.contactLabels?.emailLabel ?? 'Email Us'
 
   // Contact info from Site Settings
-  const address = siteSettings?.contact?.address ?? '15 King Street, Frankton, Hamilton, New Zealand'
+  const address =
+    siteSettings?.contact?.address ??
+    '15 King Street, Frankton, Hamilton, New Zealand'
   const phone = siteSettings?.contact?.phone ?? '0800 33 22 11'
   const email = siteSettings?.contact?.email ?? 'hello@xuba.co.nz'
 
@@ -119,7 +124,10 @@ export default async function ContactPage() {
           <div className='mx-auto max-w-xl lg:mx-0 lg:max-w-lg'>
             <h2 className='text-lg md:text-3xl font-light tracking-tight text-pretty text-xuba-green-900 dark:text-white sm:text-3xl text-center md:text-start'>
               {heading}
-              <span className='block w-16 h-1 bg-xuba-green-500 mt-4 mx-auto md:mx-0' aria-hidden='true' />
+              <span
+                className='block w-16 h-1 bg-xuba-green-500 mt-4 mx-auto md:mx-0'
+                aria-hidden='true'
+              />
             </h2>
             <p className='mt-6 text-xuba-green-900 dark:text-gray-300 text-base text-center md:text-start leading-relaxed'>
               {description}
@@ -201,10 +209,11 @@ export default async function ContactPage() {
 
             {/* Response Time */}
             <div className='mt-10 flex items-center gap-3 text-xuba-green-600 dark:text-gray-400'>
-              <ClockIcon className='w-5 h-5 text-xuba-green-500' aria-hidden='true' />
-              <span className='text-sm'>
-                {responseTimeText}
-              </span>
+              <ClockIcon
+                className='w-5 h-5 text-xuba-green-500'
+                aria-hidden='true'
+              />
+              <span className='text-sm'>{responseTimeText}</span>
             </div>
           </div>
         </div>

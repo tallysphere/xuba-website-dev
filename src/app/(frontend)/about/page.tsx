@@ -32,6 +32,8 @@ export async function generateMetadata(): Promise<Metadata> {
     stega: false,
   })
 
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://xuba.co.nz'
+
   return {
     title: aboutPage?.seo?.title ?? 'About Us | Xuba IT Solutions',
     description: aboutPage?.seo?.description ?? undefined,
@@ -49,6 +51,9 @@ export async function generateMetadata(): Promise<Metadata> {
     robots: aboutPage?.seo?.noIndex
       ? { index: false, follow: false }
       : undefined,
+    alternates: {
+      canonical: aboutPage?.seo?.canonicalUrl || `${baseUrl}/about`,
+    },
   }
 }
 

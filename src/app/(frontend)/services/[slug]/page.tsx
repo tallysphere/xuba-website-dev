@@ -54,6 +54,8 @@ export async function generateMetadata({
     }
   }
 
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://xuba.co.nz'
+
   return {
     title: service.seo?.title ?? service.title,
     description: service.seo?.description ?? service.shortDescription,
@@ -69,6 +71,9 @@ export async function generateMetadata({
         }
       : undefined,
     robots: service.seo?.noIndex ? { index: false, follow: false } : undefined,
+    alternates: {
+      canonical: service.seo?.canonicalUrl || `${baseUrl}/services/${slug}`,
+    },
   }
 }
 

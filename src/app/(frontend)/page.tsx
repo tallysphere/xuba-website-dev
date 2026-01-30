@@ -16,6 +16,8 @@ export async function generateMetadata(): Promise<Metadata> {
     stega: false,
   })
 
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://xuba.co.nz'
+
   return {
     title: homepage?.seo?.title ?? 'Xuba - IT Solutions',
     description: homepage?.seo?.description ?? undefined,
@@ -30,7 +32,12 @@ export async function generateMetadata(): Promise<Metadata> {
           ],
         }
       : undefined,
-    robots: homepage?.seo?.noIndex ? { index: false, follow: false } : undefined,
+    robots: homepage?.seo?.noIndex
+      ? { index: false, follow: false }
+      : undefined,
+    alternates: {
+      canonical: homepage?.seo?.canonicalUrl || baseUrl,
+    },
   }
 }
 
@@ -46,7 +53,9 @@ export default async function Home() {
     headlinePart1: homepage?.heroHeadlinePart1 ?? 'Looking for a',
     highlightWord: homepage?.heroHighlightWord ?? 'dedicated',
     headlinePart2: homepage?.heroHeadlinePart2 ?? 'IT Support?',
-    description: homepage?.heroDescription ?? "You've come to the right place. We offer a robust range of IT support products and services to save you money, keep your systems happy, improve efficiency and help you work smarter.",
+    description:
+      homepage?.heroDescription ??
+      "You've come to the right place. We offer a robust range of IT support products and services to save you money, keep your systems happy, improve efficiency and help you work smarter.",
     primaryCta: {
       label: homepage?.heroPrimaryCta?.label ?? 'Explore our Services',
       href: homepage?.heroPrimaryCta?.href ?? '/services',
@@ -60,7 +69,9 @@ export default async function Home() {
   // Services section props
   const servicesProps = {
     title: homepage?.servicesTitle ?? 'One-Stop IT Solutions',
-    description: homepage?.servicesDescription ?? 'Explore our comprehensive IT services designed to streamline your business operations',
+    description:
+      homepage?.servicesDescription ??
+      'Explore our comprehensive IT services designed to streamline your business operations',
     serviceCards: homepage?.serviceCards ?? [],
   }
 
