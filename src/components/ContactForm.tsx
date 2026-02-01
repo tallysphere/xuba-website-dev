@@ -12,14 +12,36 @@ import { sendContactEmail } from '@/app/actions/send-contact-email'
 
 // Zod validation schema
 const contactFormSchema = z.object({
-  firstName: z.string().min(1, 'First name is required').max(50, 'First name is too long'),
-  lastName: z.string().min(1, 'Last name is required').max(50, 'Last name is too long'),
-  email: z.string().min(1, 'Email is required').email('Please enter a valid email'),
+  firstName: z
+    .string()
+    .min(1, 'First name is required')
+    .max(50, 'First name is too long'),
+  lastName: z
+    .string()
+    .min(1, 'Last name is required')
+    .max(50, 'Last name is too long'),
+  email: z
+    .string()
+    .min(1, 'Email is required')
+    .email('Please enter a valid email'),
   phone: z.string().optional(),
-  message: z.string().min(10, 'Message must be at least 10 characters').max(2000, 'Message is too long'),
+  message: z
+    .string()
+    .min(10, 'Message must be at least 10 characters')
+    .max(2000, 'Message is too long'),
 })
 
 type ContactFormValues = z.infer<typeof contactFormSchema>
+
+type ContactFormProps = {
+  submitButtonText?: string
+  successTitle?: string
+  successMessage?: string
+  privacyText?: string
+  privacyLinkText?: string
+  privacyLinkUrl?: string
+  privacyAfterText?: string
+}
 
 /**
  * Contact form component with validation and email submission.
@@ -29,8 +51,17 @@ type ContactFormValues = z.infer<typeof contactFormSchema>
  * - Form validation with Zod
  * - Accessible form fields with proper labels
  * - Loading and success states
+ * - CMS-driven text content
  */
-export function ContactForm() {
+export function ContactForm({
+  submitButtonText = 'Send Message',
+  successTitle = 'Message Sent!',
+  successMessage = "Thank you for reaching out. We'll get back to you within 24 hours.",
+  privacyText = 'By submitting this form, you agree to our',
+  privacyLinkText = 'Privacy Policy',
+  privacyLinkUrl = '/privacy',
+  privacyAfterText = '. Your information will never be shared with third parties.',
+}: ContactFormProps) {
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
 
@@ -52,9 +83,9 @@ export function ContactForm() {
 
   const onSubmit = async (data: ContactFormValues) => {
     setSubmitError(null)
-    
+
     const result = await sendContactEmail(data)
-    
+
     if (result.success) {
       setIsSubmitted(true)
       reset()
@@ -69,11 +100,16 @@ export function ContactForm() {
       <div className='px-6 pt-0 pb-24 sm:pb-32 lg:px-8 lg:py-48'>
         <div className='mx-auto max-w-xl lg:mr-0 lg:max-w-lg flex flex-col items-center justify-center text-center py-16'>
           <div className='w-20 h-20 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center mb-6'>
-            <CheckCircleIcon className='w-10 h-10 text-gray-700 dark:text-white' aria-hidden='true' />
+            <CheckCircleIcon
+              className='w-10 h-10 text-gray-700 dark:text-white'
+              aria-hidden='true'
+            />
           </div>
-          <h3 className='text-2xl font-semibold text-gray-900 dark:text-white mb-3'>Message Sent!</h3>
+          <h3 className='text-2xl font-semibold text-gray-900 dark:text-white mb-3'>
+            {successTitle}
+          </h3>
           <p className='text-gray-600 dark:text-gray-400 mb-8'>
-            Thank you for reaching out. We&apos;ll get back to you within 24 hours.
+            {successMessage}
           </p>
           <Button
             type='button'
@@ -111,11 +147,15 @@ export function ContactForm() {
                 autoComplete='given-name'
                 {...register('firstName')}
                 className={`block w-full h-12 rounded-none border dark:bg-white/5 px-3.5 py-2 text-base text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:border-gray-900 focus:ring-1 focus:ring-gray-900 dark:focus:border-white dark:focus:ring-white transition-all duration-200 ${
-                  errors.firstName ? 'border-red-500' : 'border-gray-600 dark:border-white'
+                  errors.firstName
+                    ? 'border-red-500'
+                    : 'border-gray-600 dark:border-white'
                 }`}
               />
               {errors.firstName && (
-                <p className='mt-1 text-sm text-red-500 dark:text-red-400'>{errors.firstName.message}</p>
+                <p className='mt-1 text-sm text-red-500 dark:text-red-400'>
+                  {errors.firstName.message}
+                </p>
               )}
             </div>
           </div>
@@ -136,11 +176,15 @@ export function ContactForm() {
                 autoComplete='family-name'
                 {...register('lastName')}
                 className={`block w-full h-12 rounded-none border dark:bg-white/5 px-3.5 py-2 text-base text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:border-gray-900 focus:ring-1 focus:ring-gray-900 dark:focus:border-white dark:focus:ring-white transition-all duration-200 ${
-                  errors.lastName ? 'border-red-500' : 'border-gray-600 dark:border-white'
+                  errors.lastName
+                    ? 'border-red-500'
+                    : 'border-gray-600 dark:border-white'
                 }`}
               />
               {errors.lastName && (
-                <p className='mt-1 text-sm text-red-500 dark:text-red-400'>{errors.lastName.message}</p>
+                <p className='mt-1 text-sm text-red-500 dark:text-red-400'>
+                  {errors.lastName.message}
+                </p>
               )}
             </div>
           </div>
@@ -161,11 +205,15 @@ export function ContactForm() {
                 autoComplete='email'
                 {...register('email')}
                 className={`block w-full h-12 rounded-none border dark:bg-white/5 px-3.5 py-2 text-base text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:border-gray-900 focus:ring-1 focus:ring-gray-900 dark:focus:border-white dark:focus:ring-white transition-all duration-200 ${
-                  errors.email ? 'border-red-500' : 'border-gray-600 dark:border-white'
+                  errors.email
+                    ? 'border-red-500'
+                    : 'border-gray-600 dark:border-white'
                 }`}
               />
               {errors.email && (
-                <p className='mt-1 text-sm text-red-500 dark:text-red-400'>{errors.email.message}</p>
+                <p className='mt-1 text-sm text-red-500 dark:text-red-400'>
+                  {errors.email.message}
+                </p>
               )}
             </div>
           </div>
@@ -205,11 +253,15 @@ export function ContactForm() {
                 placeholder='Tell us about your project...'
                 {...register('message')}
                 className={`block w-full h-32 rounded-none border dark:bg-white/5 px-3.5 py-2 text-base text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:border-gray-900 focus:ring-1 focus:ring-gray-900 dark:focus:border-white dark:focus:ring-white transition-all duration-200 resize-none ${
-                  errors.message ? 'border-red-500' : 'border-gray-600 dark:border-white'
+                  errors.message
+                    ? 'border-red-500'
+                    : 'border-gray-600 dark:border-white'
                 }`}
               />
               {errors.message && (
-                <p className='mt-1 text-sm text-red-500 dark:text-red-400'>{errors.message.message}</p>
+                <p className='mt-1 text-sm text-red-500 dark:text-red-400'>
+                  {errors.message.message}
+                </p>
               )}
             </div>
           </div>
@@ -217,8 +269,13 @@ export function ContactForm() {
 
         {/* Error Message */}
         {submitError && (
-          <div className='mt-6 p-4 bg-red-500/10 border border-red-500/30 rounded-lg' role='alert'>
-            <p className='text-sm text-red-500 dark:text-red-400'>{submitError}</p>
+          <div
+            className='mt-6 p-4 bg-red-500/10 border border-red-500/30 rounded-lg'
+            role='alert'
+          >
+            <p className='text-sm text-red-500 dark:text-red-400'>
+              {submitError}
+            </p>
           </div>
         )}
 
@@ -236,14 +293,24 @@ export function ContactForm() {
             <span className='flex items-center justify-center gap-2'>
               {isSubmitting ? (
                 <>
-                  <Loader2Icon className='w-5 h-5 animate-spin' aria-hidden='true' />
-                  <span className='text-lg font-medium tracking-tight'>Sending...</span>
+                  <Loader2Icon
+                    className='w-5 h-5 animate-spin'
+                    aria-hidden='true'
+                  />
+                  <span className='text-lg font-medium tracking-tight'>
+                    Sending...
+                  </span>
                 </>
               ) : (
                 <>
-                  <span className='text-lg font-medium tracking-tight'>Send Message</span>
+                  <span className='text-lg font-medium tracking-tight'>
+                    {submitButtonText}
+                  </span>
                   <span className='w-0 overflow-hidden transition-all duration-300 group-hover:w-5 group-disabled:group-hover:w-0'>
-                    <ArrowRightIcon className='h-5 w-5 text-gray-700 dark:text-white' aria-hidden='true' />
+                    <ArrowRightIcon
+                      className='h-5 w-5 text-gray-700 dark:text-white'
+                      aria-hidden='true'
+                    />
                   </span>
                 </>
               )}
@@ -253,14 +320,14 @@ export function ContactForm() {
 
         {/* Privacy Note */}
         <p className='mt-4 text-sm text-gray-500 dark:text-gray-400 text-center'>
-          By submitting this form, you agree to our{' '}
+          {privacyText}{' '}
           <a
-            href='/privacy'
+            href={privacyLinkUrl}
             className='text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white underline underline-offset-2'
           >
-            Privacy Policy
+            {privacyLinkText}
           </a>
-          . Your information will never be shared with third parties.
+          {privacyAfterText}
         </p>
       </div>
     </form>

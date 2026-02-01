@@ -74,6 +74,25 @@ export default async function ContactPage() {
   const phoneLabel = contactPage?.contactLabels?.phoneLabel ?? 'Call Us'
   const emailLabel = contactPage?.contactLabels?.emailLabel ?? 'Email Us'
 
+  // Form settings
+  const formSettings = {
+    submitButtonText:
+      contactPage?.formSettings?.submitButtonText ?? 'Send Message',
+    successTitle: contactPage?.formSettings?.successTitle ?? 'Message Sent!',
+    successMessage:
+      contactPage?.formSettings?.successMessage ??
+      "Thank you for reaching out. We'll get back to you within 24 hours.",
+    privacyText:
+      contactPage?.formSettings?.privacyText ??
+      'By submitting this form, you agree to our',
+    privacyLinkText:
+      contactPage?.formSettings?.privacyLinkText ?? 'Privacy Policy',
+    privacyLinkUrl: contactPage?.formSettings?.privacyLinkUrl ?? '/privacy',
+    privacyAfterText:
+      contactPage?.formSettings?.privacyAfterText ??
+      '. Your information will never be shared with third parties.',
+  }
+
   // Contact info from Site Settings
   const address =
     siteSettings?.contact?.address ??
@@ -219,7 +238,7 @@ export default async function ContactPage() {
         </div>
 
         {/* Right Column - Contact Form (Client Component) */}
-        <ContactForm />
+        <ContactForm {...formSettings} />
       </div>
     </section>
   )

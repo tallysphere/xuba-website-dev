@@ -277,6 +277,19 @@ export type Homepage = {
     description?: string;
     href?: string;
     ctaLabel?: string;
+    image?: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+    };
     _key: string;
   }>;
   seo?: Seo;
@@ -297,6 +310,15 @@ export type ContactPage = {
     addressLabel?: string;
     phoneLabel?: string;
     emailLabel?: string;
+  };
+  formSettings?: {
+    submitButtonText?: string;
+    successTitle?: string;
+    successMessage?: string;
+    privacyText?: string;
+    privacyLinkText?: string;
+    privacyLinkUrl?: string;
+    privacyAfterText?: string;
   };
   seo?: Seo;
 };
@@ -1043,7 +1065,7 @@ export type ABOUT_PAGE_QUERYResult = {
   };
 } | null;
 // Variable: HOMEPAGE_QUERY
-// Query: *[_type == "homepage"][0]{    // Hero Section    heroHeadlinePart1,    heroHighlightWord,    heroHeadlinePart2,    heroDescription,    heroPrimaryCta {      label,      href    },    heroSecondaryCta {      label,      href    },    // Services Section    servicesTitle,    servicesDescription,    serviceCards[] {      _key,      title,      description,      href,      ctaLabel    },    // SEO    "seo": {      "title": coalesce(seo.title, "Xuba - IT Solutions"),      "description": seo.description,      "image": seo.image,      "noIndex": seo.noIndex == true,      "canonicalUrl": seo.canonicalUrl    }  }
+// Query: *[_type == "homepage"][0]{    // Hero Section    heroHeadlinePart1,    heroHighlightWord,    heroHeadlinePart2,    heroDescription,    heroPrimaryCta {      label,      href    },    heroSecondaryCta {      label,      href    },    // Services Section    servicesTitle,    servicesDescription,    serviceCards[] {      _key,      title,      description,      href,      ctaLabel,      image {        asset,        alt,        hotspot,        crop      }    },    // SEO    "seo": {      "title": coalesce(seo.title, "Xuba - IT Solutions"),      "description": seo.description,      "image": seo.image,      "noIndex": seo.noIndex == true,      "canonicalUrl": seo.canonicalUrl    }  }
 export type HOMEPAGE_QUERYResult = {
   heroHeadlinePart1: string | null;
   heroHighlightWord: string | null;
@@ -1065,6 +1087,17 @@ export type HOMEPAGE_QUERYResult = {
     description: string | null;
     href: string | null;
     ctaLabel: string | null;
+    image: {
+      asset: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      } | null;
+      alt: string | null;
+      hotspot: SanityImageHotspot | null;
+      crop: SanityImageCrop | null;
+    } | null;
   }> | null;
   seo: {
     title: string | "Xuba - IT Solutions";
@@ -1086,7 +1119,7 @@ export type HOMEPAGE_QUERYResult = {
   };
 } | null;
 // Variable: CONTACT_PAGE_QUERY
-// Query: {    "contactPage": *[_type == "contactPage"][0]{      eyebrow,      title,      heading,      description,      responseTimeText,      contactLabels {        addressLabel,        phoneLabel,        emailLabel      },      "seo": {        "title": coalesce(seo.title, title, "Contact Us"),        "description": seo.description,        "image": seo.image,        "noIndex": seo.noIndex == true,        "canonicalUrl": seo.canonicalUrl      }    },    "siteSettings": *[_type == "siteSettings"][0]{      contact {        phone,        email,        address      }    }  }
+// Query: {    "contactPage": *[_type == "contactPage"][0]{      eyebrow,      title,      heading,      description,      responseTimeText,      contactLabels {        addressLabel,        phoneLabel,        emailLabel      },      formSettings {        submitButtonText,        successTitle,        successMessage,        privacyText,        privacyLinkText,        privacyLinkUrl,        privacyAfterText      },      "seo": {        "title": coalesce(seo.title, title, "Contact Us"),        "description": seo.description,        "image": seo.image,        "noIndex": seo.noIndex == true,        "canonicalUrl": seo.canonicalUrl      }    },    "siteSettings": *[_type == "siteSettings"][0]{      contact {        phone,        email,        address      }    }  }
 export type CONTACT_PAGE_QUERYResult = {
   contactPage: {
     eyebrow: string | null;
@@ -1098,6 +1131,15 @@ export type CONTACT_PAGE_QUERYResult = {
       addressLabel: string | null;
       phoneLabel: string | null;
       emailLabel: string | null;
+    } | null;
+    formSettings: {
+      submitButtonText: string | null;
+      successTitle: string | null;
+      successMessage: string | null;
+      privacyText: string | null;
+      privacyLinkText: string | null;
+      privacyLinkUrl: string | null;
+      privacyAfterText: string | null;
     } | null;
     seo: {
       title: string;
@@ -1706,8 +1748,8 @@ declare module "@sanity/client" {
     "\n  *[_type == \"siteSettings\"][0]{\n    contact {\n      phone,\n      email,\n      address\n    },\n    contactSection {\n      heading,\n      subheading,\n      ctaLabel,\n      ctaLink\n    }\n  }\n": CONTACT_SECTION_QUERYResult;
     "\n  *[_type == \"navigation\"][0]{\n    mainNav[] {\n      _key,\n      label,\n      \"link\": link {\n        linkType,\n        externalUrl,\n        openInNewTab,\n        \"internalHref\": internalLink->slug.current\n      },\n      children[] {\n        _key,\n        label,\n        \"link\": link {\n          linkType,\n          externalUrl,\n          openInNewTab,\n          \"internalHref\": internalLink->slug.current\n        }\n      }\n    },\n    ctaButton {\n      label,\n      \"link\": link {\n        linkType,\n        externalUrl,\n        openInNewTab,\n        \"internalHref\": internalLink->slug.current\n      }\n    },\n    footerColumns[] {\n      _key,\n      title,\n      links[] {\n        _key,\n        label,\n        linkType,\n        externalUrl,\n        openInNewTab,\n        \"internalHref\": internalLink->slug.current\n      }\n    },\n    legalLinks[] {\n      _key,\n      label,\n      linkType,\n      externalUrl,\n      openInNewTab,\n      \"internalHref\": internalLink->slug.current\n    }\n  }\n": NAVIGATION_QUERYResult;
     "\n  *[_type == \"aboutPage\"][0]{\n    headerEyebrow,\n    headerTitle,\n    headerTitleHighlight,\n    heroTitle,\n    heroSubtitle,\n    heroImages[] {\n      _key,\n      asset,\n      alt,\n      hotspot,\n      crop\n    },\n    enableFullWidthImage,\n    fullWidthImage {\n      asset,\n      alt,\n      hotspot,\n      crop\n    },\n    missionTitle,\n    missionIntro,\n    missionBody,\n    stats[] {\n      _key,\n      label,\n      value,\n      postfix\n    },\n    teamTitle,\n    teamDescription,\n    \"seo\": {\n      \"title\": coalesce(seo.title, heroTitle, \"About Us\"),\n      \"description\": seo.description,\n      \"image\": seo.image,\n      \"noIndex\": seo.noIndex == true,\n      \"canonicalUrl\": seo.canonicalUrl\n    }\n  }\n": ABOUT_PAGE_QUERYResult;
-    "\n  *[_type == \"homepage\"][0]{\n    // Hero Section\n    heroHeadlinePart1,\n    heroHighlightWord,\n    heroHeadlinePart2,\n    heroDescription,\n    heroPrimaryCta {\n      label,\n      href\n    },\n    heroSecondaryCta {\n      label,\n      href\n    },\n    // Services Section\n    servicesTitle,\n    servicesDescription,\n    serviceCards[] {\n      _key,\n      title,\n      description,\n      href,\n      ctaLabel\n    },\n    // SEO\n    \"seo\": {\n      \"title\": coalesce(seo.title, \"Xuba - IT Solutions\"),\n      \"description\": seo.description,\n      \"image\": seo.image,\n      \"noIndex\": seo.noIndex == true,\n      \"canonicalUrl\": seo.canonicalUrl\n    }\n  }\n": HOMEPAGE_QUERYResult;
-    "\n  {\n    \"contactPage\": *[_type == \"contactPage\"][0]{\n      eyebrow,\n      title,\n      heading,\n      description,\n      responseTimeText,\n      contactLabels {\n        addressLabel,\n        phoneLabel,\n        emailLabel\n      },\n      \"seo\": {\n        \"title\": coalesce(seo.title, title, \"Contact Us\"),\n        \"description\": seo.description,\n        \"image\": seo.image,\n        \"noIndex\": seo.noIndex == true,\n        \"canonicalUrl\": seo.canonicalUrl\n      }\n    },\n    \"siteSettings\": *[_type == \"siteSettings\"][0]{\n      contact {\n        phone,\n        email,\n        address\n      }\n    }\n  }\n": CONTACT_PAGE_QUERYResult;
+    "\n  *[_type == \"homepage\"][0]{\n    // Hero Section\n    heroHeadlinePart1,\n    heroHighlightWord,\n    heroHeadlinePart2,\n    heroDescription,\n    heroPrimaryCta {\n      label,\n      href\n    },\n    heroSecondaryCta {\n      label,\n      href\n    },\n    // Services Section\n    servicesTitle,\n    servicesDescription,\n    serviceCards[] {\n      _key,\n      title,\n      description,\n      href,\n      ctaLabel,\n      image {\n        asset,\n        alt,\n        hotspot,\n        crop\n      }\n    },\n    // SEO\n    \"seo\": {\n      \"title\": coalesce(seo.title, \"Xuba - IT Solutions\"),\n      \"description\": seo.description,\n      \"image\": seo.image,\n      \"noIndex\": seo.noIndex == true,\n      \"canonicalUrl\": seo.canonicalUrl\n    }\n  }\n": HOMEPAGE_QUERYResult;
+    "\n  {\n    \"contactPage\": *[_type == \"contactPage\"][0]{\n      eyebrow,\n      title,\n      heading,\n      description,\n      responseTimeText,\n      contactLabels {\n        addressLabel,\n        phoneLabel,\n        emailLabel\n      },\n      formSettings {\n        submitButtonText,\n        successTitle,\n        successMessage,\n        privacyText,\n        privacyLinkText,\n        privacyLinkUrl,\n        privacyAfterText\n      },\n      \"seo\": {\n        \"title\": coalesce(seo.title, title, \"Contact Us\"),\n        \"description\": seo.description,\n        \"image\": seo.image,\n        \"noIndex\": seo.noIndex == true,\n        \"canonicalUrl\": seo.canonicalUrl\n      }\n    },\n    \"siteSettings\": *[_type == \"siteSettings\"][0]{\n      contact {\n        phone,\n        email,\n        address\n      }\n    }\n  }\n": CONTACT_PAGE_QUERYResult;
     "\n  *[_type == \"page\" && slug.current == $slug][0]{\n    _id,\n    _type,\n    title,\n    \"slug\": slug.current,\n    \"seo\": {\n      \"title\": coalesce(seo.title, title),\n      \"description\": coalesce(seo.description, \"\"),\n      \"image\": seo.image,\n      \"noIndex\": seo.noIndex == true,\n      \"canonicalUrl\": seo.canonicalUrl\n    },\n    pageBuilder[] {\n      _key,\n      _type,\n      ...,\n      _type == \"servicesGrid\" => {\n        ...,\n        services[]-> {\n          _id,\n          title,\n          \"slug\": slug.current,\n          shortDescription,\n          icon,\n          featuredImage\n        }\n      },\n      _type == \"teamGrid\" => {\n        ...,\n        teamMembers[]-> {\n          _id,\n          name,\n          \"slug\": slug.current,\n          role,\n          image,\n          location,\n          socialLinks\n        }\n      },\n      _type == \"faqSection\" => {\n        ...,\n        faqs[]-> {\n          _id,\n          question,\n          answer,\n          category\n        }\n      }\n    }\n  }\n": PAGE_QUERYResult;
     "\n  *[_type == \"page\" && defined(slug.current)]{\n    \"slug\": slug.current\n  }\n": PAGE_SLUGS_QUERYResult;
     "\n  *[_type == \"service\"] | order(order asc, title asc) {\n    _id,\n    title,\n    \"slug\": slug.current,\n    shortDescription,\n    icon,\n    featuredImage\n  }\n": SERVICES_QUERYResult;

@@ -9,16 +9,20 @@ import { BackgroundGrids } from '@/components/BackgroundGrids'
 import { ArrowRightIcon } from 'lucide-react'
 import Link from 'next/link'
 import { Spotlight } from '@/components/Spotlight'
+import { urlFor } from '@/sanity/lib/image'
 
 /**
  * Lazy load Globe component (heavy WebGL) to improve initial page load.
  */
-const Globe = dynamic(() => import('@/components/Globe').then((mod) => mod.Globe), {
-  ssr: false,
-  loading: () => (
-    <div className='h-60 w-full bg-linear-to-b from-xuba-purple-800/50 to-transparent animate-pulse' />
-  ),
-})
+const Globe = dynamic(
+  () => import('@/components/Globe').then((mod) => mod.Globe),
+  {
+    ssr: false,
+    loading: () => (
+      <div className='h-60 w-full bg-linear-to-b from-xuba-purple-800/50 to-transparent animate-pulse' />
+    ),
+  }
+)
 
 /**
  * Service card data structure from Sanity CMS.
@@ -33,6 +37,13 @@ interface ServiceCardData {
   href: string | null
   /** Call-to-action button label */
   ctaLabel: string | null
+  /** Optional card image from Sanity */
+  image?: {
+    asset?: unknown
+    alt?: string | null
+    hotspot?: unknown
+    crop?: unknown
+  } | null
 }
 
 /**
@@ -118,7 +129,6 @@ export function HomeServices({
       aria-labelledby='services-heading'
       className='relative h-full bg-white dark:bg-xuba-purple-900 p-0 m-0 overflow-hidden'
     >
-
       <div className='mx-auto my-20 w-full max-w-7xl px-4 md:px-8'>
         <Header>
           <h2
@@ -166,8 +176,15 @@ export function HomeServices({
             <CardSkeletonBody>
               <div className='ml-6 mt-2 h-full w-full rounded-xl border border-gray-100 bg-gray-50/50 p-4 dark:border-xuba-purple-600 dark:bg-xuba-purple-800'>
                 <Image
-                  src='https://assets.aceternity.com/pro/dashboard.webp'
-                  alt='IT Support dashboard showing helpdesk ticket management'
+                  src={
+                    getCard(1).image?.asset
+                      ? urlFor(getCard(1).image!).width(500).height(500).url()
+                      : 'https://assets.aceternity.com/pro/dashboard.webp'
+                  }
+                  alt={
+                    getCard(1).image?.alt ??
+                    'IT Support dashboard showing helpdesk ticket management'
+                  }
                   width={500}
                   height={500}
                   className='w-full rounded-lg object-cover'
@@ -209,8 +226,15 @@ export function HomeServices({
             <CardSkeletonBody>
               <div className='ml-6 mt-2 h-full w-full rounded-xl border border-gray-100 bg-gray-50/50 p-4 dark:border-xuba-purple-600 dark:bg-xuba-purple-800'>
                 <Image
-                  src='https://assets.aceternity.com/pro/dashboard.webp'
-                  alt='System deployment configuration dashboard'
+                  src={
+                    getCard(3).image?.asset
+                      ? urlFor(getCard(3).image!).width(500).height(500).url()
+                      : 'https://assets.aceternity.com/pro/dashboard.webp'
+                  }
+                  alt={
+                    getCard(3).image?.alt ??
+                    'System deployment configuration dashboard'
+                  }
                   width={500}
                   height={500}
                   className='w-full rounded-lg object-cover'
@@ -255,8 +279,15 @@ export function HomeServices({
             <CardSkeletonBody>
               <div className='ml-6 mt-2 h-full w-full rounded-xl border border-gray-100 bg-gray-50/50 p-4 dark:border-xuba-purple-600 dark:bg-xuba-purple-800'>
                 <Image
-                  src='https://assets.aceternity.com/pro/dashboard.webp'
-                  alt='SMB IT guidance and analytics dashboard'
+                  src={
+                    getCard(5).image?.asset
+                      ? urlFor(getCard(5).image!).width(500).height(500).url()
+                      : 'https://assets.aceternity.com/pro/dashboard.webp'
+                  }
+                  alt={
+                    getCard(5).image?.alt ??
+                    'SMB IT guidance and analytics dashboard'
+                  }
                   width={500}
                   height={500}
                   className='w-full rounded-lg object-cover'

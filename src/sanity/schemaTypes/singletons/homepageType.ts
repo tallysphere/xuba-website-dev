@@ -144,16 +144,36 @@ export const homepageType = defineType({
               type: 'string',
               description: 'Button text (e.g., "Explore Cloud Technology")',
             }),
+            defineField({
+              name: 'image',
+              title: 'Card Image',
+              type: 'image',
+              description:
+                'Optional image for cards that display images (cards 2, 4, 6)',
+              options: {
+                hotspot: true,
+              },
+              fields: [
+                defineField({
+                  name: 'alt',
+                  title: 'Alt Text',
+                  type: 'string',
+                  description: 'Describe the image for accessibility',
+                }),
+              ],
+            }),
           ],
           preview: {
             select: {
               title: 'title',
               subtitle: 'ctaLabel',
+              media: 'image',
             },
           },
         }),
       ],
-      validation: (rule) => rule.max(6).warning('Maximum 6 service cards recommended'),
+      validation: (rule) =>
+        rule.max(6).warning('Maximum 6 service cards recommended'),
     }),
 
     // ===========================================

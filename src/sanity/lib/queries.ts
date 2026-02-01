@@ -218,7 +218,13 @@ export const HOMEPAGE_QUERY = defineQuery(`
       title,
       description,
       href,
-      ctaLabel
+      ctaLabel,
+      image {
+        asset,
+        alt,
+        hotspot,
+        crop
+      }
     },
     // SEO
     "seo": {
@@ -251,6 +257,15 @@ export const CONTACT_PAGE_QUERY = defineQuery(`
         addressLabel,
         phoneLabel,
         emailLabel
+      },
+      formSettings {
+        submitButtonText,
+        successTitle,
+        successMessage,
+        privacyText,
+        privacyLinkText,
+        privacyLinkUrl,
+        privacyAfterText
       },
       "seo": {
         "title": coalesce(seo.title, title, "Contact Us"),

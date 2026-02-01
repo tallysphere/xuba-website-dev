@@ -82,6 +82,64 @@ export const contactPageType = defineType({
       ],
     }),
 
+    // Form Settings
+    defineField({
+      name: 'formSettings',
+      title: 'Form Settings',
+      type: 'object',
+      description: 'Settings for the contact form',
+      fields: [
+        defineField({
+          name: 'submitButtonText',
+          title: 'Submit Button Text',
+          type: 'string',
+          initialValue: 'Send Message',
+        }),
+        defineField({
+          name: 'successTitle',
+          title: 'Success Title',
+          type: 'string',
+          description: 'Title shown after form submission',
+          initialValue: 'Message Sent!',
+        }),
+        defineField({
+          name: 'successMessage',
+          title: 'Success Message',
+          type: 'string',
+          description: 'Message shown after form submission',
+          initialValue: "Thank you for reaching out. We'll get back to you within 24 hours.",
+        }),
+        defineField({
+          name: 'privacyText',
+          title: 'Privacy Notice Text',
+          type: 'string',
+          description: 'Text before the privacy link (e.g., "By submitting this form, you agree to our")',
+          initialValue: 'By submitting this form, you agree to our',
+        }),
+        defineField({
+          name: 'privacyLinkText',
+          title: 'Privacy Link Text',
+          type: 'string',
+          description: 'Text for the privacy policy link',
+          initialValue: 'Privacy Policy',
+        }),
+        defineField({
+          name: 'privacyLinkUrl',
+          title: 'Privacy Link URL',
+          type: 'string',
+          description: 'URL for the privacy policy page',
+          initialValue: '/privacy',
+        }),
+        defineField({
+          name: 'privacyAfterText',
+          title: 'Privacy After Text',
+          type: 'string',
+          description: 'Text after the privacy link',
+          initialValue: '. Your information will never be shared with third parties.',
+        }),
+      ],
+    }),
+
     // SEO
     defineField({
       name: 'seo',
