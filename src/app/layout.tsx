@@ -3,6 +3,7 @@ import { Poppins } from 'next/font/google'
 import './globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
 import { JsonLd } from '@/components/JsonLd'
+import { Analytics as AnalyticsComponent } from '@/components/Analytics'
 
 /**
  * Base URL for the site - used for generating absolute URLs in metadata.
@@ -116,6 +117,7 @@ export default function RootLayout({
       <head>
         <JsonLd />
       </head>
+      <AnalyticsComponent />
       <body className={`${raleway.className} antialiased overflow-x-hidden`}>
         <ThemeProvider
           attribute='class'
