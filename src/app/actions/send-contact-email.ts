@@ -14,11 +14,47 @@ export type ContactFormData = {
   email: string
   phone?: string
   message: string
+  turnstileToken: string
 }
 
 export type SendEmailResponse = {
   success: boolean
   error?: string
+}
+
+/**
+ * Verifies the Turnstile token with Cloudflare's API.
+ * Returns true if valid, false otherwise.
+ */
+async function verifyTurnstileToken(token: string): Promise<boolean> {
+  const secretKey = process.env.TURNSTILE_SECRET_KEY
+
+  if (!secretKey) {
+    console.error('TURNSTILE_SECRET_KEY is not configured')
+    return false
+  }
+
+  try {
+    const response = await fetch(
+      'https://challenges.cloudflare.com/turnstile/v0/siteverify',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+          secret: secretKey,
+          response: token,
+        }),
+      }
+    )
+
+    const result = await response.json()
+    return result.success === true
+  } catch (error) {
+    console.error('Turnstile verification error:', error)
+    return false
+  }
 }
 
 /**
@@ -28,7 +64,7 @@ export type SendEmailResponse = {
 async function getRecipientEmail(): Promise<string> {
   try {
     const result = await client.fetch<{ contact?: { email?: string } } | null>(
-      `*[_type == "siteSettings"][0]{ contact { email } }`,
+      `*[_type == "siteSettings"][0]{ contact { email } }`
     )
     return result?.contact?.email || FALLBACK_RECIPIENT
   } catch (error) {
@@ -38,11 +74,21 @@ async function getRecipientEmail(): Promise<string> {
 }
 
 export async function sendContactEmail(
-  formData: ContactFormData,
+  formData: ContactFormData
 ): Promise<SendEmailResponse> {
-  const { firstName, lastName, email, phone, message } = formData
+  const { firstName, lastName, email, phone, message, turnstileToken } =
+    formData
 
   try {
+    // Verify Turnstile token first
+    const isValidToken = await verifyTurnstileToken(turnstileToken)
+    if (!isValidToken) {
+      return {
+        success: false,
+        error: 'Security verification failed. Please try again.',
+      }
+    }
+
     // Fetch recipient email from Sanity CMS
     const recipientEmail = await getRecipientEmail()
 

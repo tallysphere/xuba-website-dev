@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
+import { Turnstile } from '@marsidev/react-turnstile'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -64,6 +65,16 @@ export function ContactForm({
 }: ContactFormProps) {
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null)
+  const [turnstileError, setTurnstileError] = useState<string | null>(null)
+  // Key to force Turnstile remount/reset
+  const [turnstileKey, setTurnstileKey] = useState(0)
+
+  // Helper to reset Turnstile widget by changing its key
+  const resetTurnstile = () => {
+    setTurnstileKey((prev) => prev + 1)
+    setTurnstileToken(null)
+  }
 
   const {
     register,
@@ -84,13 +95,26 @@ export function ContactForm({
   const onSubmit = async (data: ContactFormValues) => {
     setSubmitError(null)
 
-    const result = await sendContactEmail(data)
+    // Check for Turnstile token
+    if (!turnstileToken) {
+      setSubmitError('Please complete the security verification.')
+      return
+    }
+
+    const result = await sendContactEmail({
+      ...data,
+      turnstileToken,
+    })
 
     if (result.success) {
       setIsSubmitted(true)
       reset()
+      // Reset Turnstile for potential future submissions
+      resetTurnstile()
     } else {
       setSubmitError(result.error || 'Something went wrong. Please try again.')
+      // Reset Turnstile on error so user can retry
+      resetTurnstile()
     }
   }
 
@@ -267,6 +291,35 @@ export function ContactForm({
           </div>
         </div>
 
+        {/* Turnstile Widget */}
+        <div className='mt-6 flex justify-center'>
+          <Turnstile
+            key={turnstileKey}
+            siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
+            onSuccess={(token) => {
+              setTurnstileToken(token)
+              setTurnstileError(null)
+            }}
+            onError={() => {
+              setTurnstileError(
+                'Security verification failed. Please try again.'
+              )
+              setTurnstileToken(null)
+            }}
+            onExpire={() => {
+              setTurnstileToken(null)
+            }}
+            options={{
+              theme: 'auto',
+            }}
+          />
+        </div>
+        {turnstileError && (
+          <p className='mt-2 text-sm text-red-500 dark:text-red-400 text-center'>
+            {turnstileError}
+          </p>
+        )}
+
         {/* Error Message */}
         {submitError && (
           <div
@@ -280,10 +333,10 @@ export function ContactForm({
         )}
 
         {/* Submit Button */}
-        <div className='mt-10'>
+        <div className='mt-6'>
           <Button
             type='submit'
-            disabled={isSubmitting}
+            disabled={isSubmitting || !turnstileToken}
             className='group relative cursor-pointer w-full rounded-none border-2 px-3 py-6 text-center font-medium transition-all duration-300
               hover:scale-105 active:scale-[0.98]
               bg-gray-100 border-gray-600 text-gray-700 shadow-lg
