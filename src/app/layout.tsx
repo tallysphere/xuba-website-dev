@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { Poppins } from 'next/font/google'
+import { connection } from 'next/server'
 import './globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
 import { JsonLd } from '@/components/JsonLd'
@@ -107,11 +108,23 @@ const raleway = Poppins({
   weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
 })
 
-export default function RootLayout({
+/**
+ * Root layout component with dynamic rendering for CSP nonce support.
+ *
+ * The connection() call forces dynamic rendering, which is required for
+ * nonce-based Content Security Policy to work correctly. Each request
+ * generates a fresh nonce that must be applied at render time.
+ *
+ * @see https://nextjs.org/docs/app/guides/content-security-policy#forcing-dynamic-rendering
+ */
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  // Force dynamic rendering for CSP nonce support
+  await connection()
+
   return (
     <html lang='en' suppressHydrationWarning className='overflow-x-hidden'>
       <head>

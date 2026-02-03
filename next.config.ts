@@ -1,22 +1,47 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  /* config options here */
   reactCompiler: true,
+
+  /**
+   * Image optimisation configuration
+   *
+   * Using remotePatterns (recommended) instead of deprecated domains array.
+   * All external image sources used in the site are listed here.
+   */
   images: {
-    domains: [
-      'assets.aceternity.com',
-      'images.unsplash.com',
-      'unsplash.com',
-      'tailwindcss.com',
-    ],
     remotePatterns: [
+      // Sanity CMS images
       {
         protocol: 'https',
         hostname: 'cdn.sanity.io',
       },
+      // Aceternity UI component images
+      {
+        protocol: 'https',
+        hostname: 'assets.aceternity.com',
+      },
+      // Unsplash stock photos
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'unsplash.com',
+      },
+      // Pravatar placeholder avatars
+      {
+        protocol: 'https',
+        hostname: 'i.pravatar.cc',
+      },
+      // Tailwind CSS assets (if used)
+      {
+        protocol: 'https',
+        hostname: 'tailwindcss.com',
+      },
     ],
   },
-};
+}
 
-export default nextConfig;
+export default nextConfig
