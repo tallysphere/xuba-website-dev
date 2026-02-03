@@ -21,9 +21,16 @@ const cspHeader = `
     https://www.google-analytics.com
     https://googletagmanager.com
     https://challenges.cloudflare.com
-    https://va.vercel-scripts.com;
+    https://*.cloudflare.com
+    https://static.cloudflareinsights.com
+    https://va.vercel-scripts.com
+    https://vercel.live
+    https://*.vercel.live
+    https://*.vercel.com;
   style-src 'self' 'unsafe-inline'
-    https://fonts.googleapis.com;
+    https://fonts.googleapis.com
+    https://vercel.live
+    https://*.vercel.live;
   img-src 'self' blob: data:
     https://cdn.sanity.io
     https://assets.aceternity.com
@@ -32,9 +39,15 @@ const cspHeader = `
     https://www.google-analytics.com
     https://www.googletagmanager.com
     https://*.google-analytics.com
-    https://*.googletagmanager.com;
+    https://*.googletagmanager.com
+    https://vercel.live
+    https://*.vercel.live
+    https://vercel.com
+    https://*.vercel.com;
   font-src 'self'
     https://fonts.gstatic.com
+    https://vercel.live
+    https://*.vercel.live
     data:;
   connect-src 'self'
     https://*.sanity.io
@@ -47,11 +60,21 @@ const cspHeader = `
     https://googletagmanager.com
     https://*.googletagmanager.com
     https://challenges.cloudflare.com
+    https://*.cloudflare.com
+    https://cloudflareinsights.com
+    https://*.cloudflareinsights.com
     https://vercel.live
+    https://*.vercel.live
+    https://*.vercel.com
     https://*.vercel-insights.com
-    https://va.vercel-scripts.com;
+    https://va.vercel-scripts.com
+    wss://ws-us3.pusher.com
+    wss://*.pusher.com;
   frame-src 'self'
-    https://challenges.cloudflare.com;
+    https://challenges.cloudflare.com
+    https://*.cloudflare.com
+    https://vercel.live
+    https://*.vercel.live;
   frame-ancestors 'self';
   object-src 'none';
   base-uri 'self';
