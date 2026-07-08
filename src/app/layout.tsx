@@ -12,6 +12,25 @@ import { Analytics as AnalyticsComponent } from '@/components/Analytics'
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://xuba.co.nz'
 
 /**
+ * Only the canonical production domain may be indexed by search engines.
+ *
+ * The dev deployment (xuba.kalq.co.nz) runs as the *production* deployment of
+ * its own Vercel project, so `VERCEL_ENV` reports "production" there too and
+ * cannot be used to tell environments apart. The reliable discriminator is the
+ * host: index only when the site is served from the real production domain.
+ * Every other deployment (dev, Vercel previews) is served `noindex, nofollow`.
+ */
+const PRODUCTION_HOSTS = new Set(['xuba.co.nz', 'www.xuba.co.nz'])
+
+const isProductionSite = (() => {
+  try {
+    return PRODUCTION_HOSTS.has(new URL(baseUrl).hostname)
+  } catch {
+    return false
+  }
+})()
+
+/**
  * Viewport configuration for the site.
  * Separated from metadata as per Next.js 14+ conventions.
  *
@@ -84,17 +103,23 @@ export const metadata: Metadata = {
       'Dedicated IT support partner in Hamilton, New Zealand. Cloud technology, Helpdesk support, Server security, and SMB IT guidance.',
     images: ['/images/og-image.png'],
   },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
+  robots: isProductionSite
+    ? {
+        index: true,
+        follow: true,
+        googleBot: {
+          index: true,
+          follow: true,
+          'max-video-preview': -1,
+          'max-image-preview': 'large',
+          'max-snippet': -1,
+        },
+      }
+    : {
+        index: false,
+        follow: false,
+        googleBot: { index: false, follow: false },
+      },
   alternates: {
     canonical: baseUrl,
   },

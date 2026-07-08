@@ -93,7 +93,29 @@ const cspHeader = `
  * - Protocol downgrade attacks (HSTS)
  * - Unwanted browser features (Permissions-Policy)
  */
+/**
+ * Only the canonical production domain may be indexed by search engines.
+ * Every other deployment (dev at xuba.kalq.co.nz, Vercel previews, etc.) gets an
+ * `X-Robots-Tag: noindex, nofollow` response header. This is evaluated at build
+ * time from NEXT_PUBLIC_SITE_URL, which each Vercel project sets to its own host.
+ */
+const PRODUCTION_HOSTS = new Set(['xuba.co.nz', 'www.xuba.co.nz'])
+
+const isProductionSite = (() => {
+  try {
+    return PRODUCTION_HOSTS.has(
+      new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://xuba.co.nz').hostname,
+    )
+  } catch {
+    return false
+  }
+})()
+
 const securityHeaders = [
+  // Block indexing on every non-production deployment.
+  ...(isProductionSite
+    ? []
+    : [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }]),
   {
     key: 'Content-Security-Policy',
     value: cspHeader
